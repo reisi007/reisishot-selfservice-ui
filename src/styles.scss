@@ -3,3 +3,46 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg
+  }
+
+  p {
+    @apply mt-4 mb-4
+  }
+
+  html, body, .content, #app {
+    @apply h-full
+  }
+
+  button {
+    @apply h-12 px-6 m-2 text-lg transition-colors duration-150 rounded-lg focus:ring;
+  }
+
+  input {
+    @apply border border-gray-200 p-2;
+    &.ng-touched {
+      &.ng-invalid {
+        @apply focus:border-gray-200 border-red-500
+      }
+
+      &.ng-valid {
+        @apply focus:border-gray-200 border-reisishot-light
+      }
+    }
+  }
+
+  pre {
+    @apply whitespace-pre text-left font-mono bg-gray-100 w-full;
+  }
+}
