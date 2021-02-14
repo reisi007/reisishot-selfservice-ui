@@ -24,6 +24,10 @@
     <button class="bg-reisishot text-center" (click)="addEmail()">+</button>
     <button class="bg-red-500 text-center" (click)="removeEmail()">-</button>
   </div>
+  <button (click)="sendForm()" [disabled]="!emailForm.valid"
+          class="w-full md:w-1/3 bg-reisishot">
+    Neuen Vertrag erstellen
+  </button>
   <pre> {{emails|json}}</pre>
   <pre> {{emailForm.status|json}}</pre>
 </div>

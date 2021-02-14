@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {EmailForm} from './EmailFormValue';
+import {EmailForm} from '../../../data/EmailFormValue';
 import {trackByIndex} from '../../../trackByUtils';
 
 @Component({
@@ -47,5 +47,10 @@ export class CreateContractComponent implements OnInit {
 
   trackByIndex(index: number, o: object) {
     return trackByIndex(index, o);
+  }
+
+  sendForm() {
+    const emails = this.emails;
+    console.log('Sent', emails);
   }
 }
