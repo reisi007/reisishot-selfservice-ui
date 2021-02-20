@@ -4,11 +4,13 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CreateContractComponent} from './contract/create/create-contract/create-contract.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {PersonComponent} from './contract/create/create-contract/person/person.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateContractComponent,
+    PersonComponent,
   ],
   imports: [
     BrowserModule,

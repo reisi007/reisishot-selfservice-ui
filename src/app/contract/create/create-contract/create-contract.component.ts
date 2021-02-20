@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {EmailForm} from '../../../data/EmailFormValue';
 import {trackByIndex} from '../../../trackByUtils';
+import {beforeToday} from './person/age.validator';
 
 @Component({
   selector: 'app-create-contract',
@@ -25,7 +26,11 @@ export class CreateContractComponent implements OnInit {
 
   private static createItem() {
     return new FormGroup({
-      email: new FormControl('', [Validators.required]),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      birthday: new FormControl('', [Validators.required, beforeToday]),
+      age: new FormControl('', [Validators.required]),
     });
   }
 
