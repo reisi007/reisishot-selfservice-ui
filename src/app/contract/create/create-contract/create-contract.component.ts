@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {EmailForm} from '../../../data/EmailFormValue';
 import {trackByIndex} from '../../../trackByUtils';
-import {beforeToday} from './person/age.validator';
+import {afterNow, beforeNow} from '../../../commons/datetime.validator';
 import {ApiService} from '../../api/api.service';
 import {Observable} from 'rxjs';
 
@@ -24,7 +24,7 @@ export class CreateContractComponent implements OnInit {
   availableContracts: Observable<string[]> = this.apiService.getContracts();
 
   get emailArray(): FormArray {
-    return this.emailForm.get('emails') as FormArray;
+    return this.emailForm.get('persons') as FormArray;
   }
 
   get emails(): EmailForm {
@@ -36,16 +36,17 @@ export class CreateContractComponent implements OnInit {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      birthday: new FormControl('', [Validators.required, beforeToday]),
+      birthday: new FormControl('', [Validators.required, beforeNow]),
     });
   }
 
   ngOnInit(): void {
     this.emailForm = this.formBuilder.group({
-      emails: this.formBuilder.array([CreateContractComponent.createItem()]),
+      persons: this.formBuilder.array([CreateContractComponent.createItem()]),
       user: new FormControl('', [Validators.required]),
       pwd: new FormControl('', [Validators.required]),
       contractType: new FormControl('', [Validators.required]),
+      endDatetime: new FormControl('', [Validators.required, afterNow]),
     });
   }
 

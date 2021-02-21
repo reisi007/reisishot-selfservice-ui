@@ -4,7 +4,7 @@
   <form [formGroup]="emailForm">
     <ul>
       <li class="py-2"
-          formArrayName="emails"
+          formArrayName="persons"
           *ngFor="let item of emailArray.controls; let i = index; trackBy: trackByIndex"
       >
         <app-person [cnt]="i" [person]="item"></app-person>
@@ -26,9 +26,16 @@
       <select formControlName="contractType"
               class="w-full md:w-1/3"
       >
-        <option value="" selected disabled>Vertrag auswählen</option>
+        <option value selected disabled>Vertrag auswählen</option>
         <option *ngFor="let item of availableContracts | async" [value]="item">{{item | prettyFilename}}</option>
       </select>
+    </div>
+    <div>
+      <label class="flex flex-row mx-auto items-baseline w-full md:w-1/3">
+        <span>Unterschreibbar bis:&nbsp;</span>
+        <input class="flex-grow" type="datetime-local" formControlName="endDatetime"
+               placeholder="Vertrag ist gültig bis"/>
+      </label>
     </div>
     <button (click)="sendForm()" [disabled]="!emailForm.valid"
             class="w-full md:w-1/3 bg-reisishot">
@@ -36,5 +43,6 @@
     </button>
   </form>
   <pre> {{emailForm.value|json}}</pre>
-  <pre> {{emailForm.status|json}}</pre>
+  <br>
+  <pre> Formular Status: {{emailForm.status}}</pre>
 </div>
