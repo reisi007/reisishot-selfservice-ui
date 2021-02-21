@@ -46,7 +46,7 @@ export class CreateContractComponent implements OnInit {
       user: new FormControl('', [Validators.required]),
       pwd: new FormControl('', [Validators.required]),
       contractType: new FormControl('', [Validators.required]),
-      endDatetime: new FormControl('', [Validators.required, afterNow]),
+      dueDate: new FormControl('', [Validators.required, afterNow]),
     });
   }
 

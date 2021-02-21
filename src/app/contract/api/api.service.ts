@@ -11,14 +11,14 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
+  private static buildUrl(...paths: string[]) {
+    return environment.baseUrl + '/' + paths.join('/');
+  }
+
   public getContracts(): Observable<Array<string>> {
     return this.http
                .get<Array<string>>(
-                 this.buildUrl('api', 'availableContracts.php'),
+                 ApiService.buildUrl('api', 'contract-templates_get.php'),
                );
-  }
-
-  private buildUrl(...paths: string[]) {
-    return environment.baseUrl + '/' + paths.join('/');
   }
 }
