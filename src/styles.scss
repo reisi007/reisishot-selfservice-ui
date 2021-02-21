@@ -29,8 +29,9 @@
     @apply border h-12 px-6 m-2 text-lg transition-colors duration-150 rounded-lg focus:ring disabled:opacity-75 disabled:bg-gray-600 disabled:text-gray-200;
   }
 
-  input {
+  input, select {
     @apply border border-gray-200 p-2;
+
     &.ng-touched {
       &.ng-invalid {
         @apply focus:border-gray-200 border-red-500
@@ -39,6 +40,14 @@
       &.ng-valid {
         @apply focus:border-gray-200 border-reisishot-light
       }
+    }
+
+    &.ng-pristine {
+      @apply text-gray-400;
+    }
+
+    option {
+      @apply text-black;
     }
   }
 

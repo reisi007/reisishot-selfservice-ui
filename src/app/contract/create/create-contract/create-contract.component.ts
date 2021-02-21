@@ -4,6 +4,7 @@ import {EmailForm} from '../../../data/EmailFormValue';
 import {trackByIndex} from '../../../trackByUtils';
 import {beforeToday} from './person/age.validator';
 import {ApiService} from '../../api/api.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-create-contract',
@@ -20,6 +21,8 @@ export class CreateContractComponent implements OnInit {
 
   emailForm: FormGroup;
 
+  availableContracts: Observable<string[]> = this.apiService.getContracts();
+
   get emailArray(): FormArray {
     return this.emailForm.get('emails') as FormArray;
   }
@@ -34,18 +37,16 @@ export class CreateContractComponent implements OnInit {
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       birthday: new FormControl('', [Validators.required, beforeToday]),
-      age: new FormControl('', [Validators.required]),
     });
   }
 
   ngOnInit(): void {
     this.emailForm = this.formBuilder.group({
       emails: this.formBuilder.array([CreateContractComponent.createItem()]),
+      user: new FormControl('', [Validators.required]),
+      pwd: new FormControl('', [Validators.required]),
+      contractType: new FormControl('', [Validators.required]),
     });
-
-    // TODO have a select
-    this.apiService.getContracts()
-        .subscribe(data => console.log('http request', data));
   }
 
   addEmail() {

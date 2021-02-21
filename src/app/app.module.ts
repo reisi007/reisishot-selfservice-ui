@@ -7,12 +7,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {PersonComponent} from './contract/create/create-contract/person/person.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpErrorInterceptor} from './commons/HttpErrorInterceptor';
+import {PrettyFilenamePipe} from './contract/create/create-contract/pretty-filename/pretty-filename.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateContractComponent,
     PersonComponent,
+    PrettyFilenamePipe,
   ],
   imports: [
     BrowserModule,

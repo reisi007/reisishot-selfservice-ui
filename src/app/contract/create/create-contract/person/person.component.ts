@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {AbstractControl} from '@angular/forms';
 import * as dayjs from 'dayjs';
 
 @Component({
@@ -13,7 +13,7 @@ export class PersonComponent implements OnInit {
   cnt: number;
 
   @Input()
-  person: FormGroup;
+  person: AbstractControl;
 
   constructor() {
   }
