@@ -1,15 +1,24 @@
 import {Injectable} from '@angular/core';
-import {Environment} from './environment';
 import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
 
-  // TODO change to private
-  public environment: Environment = environment;
+  constructor(private http: HttpClient) {
+  }
 
-  constructor() {
+  public getContracts(): Observable<Array<string>> {
+    return this.http
+               .get<Array<string>>(
+                 this.buildUrl('api', 'availableContracts.php'),
+               );
+  }
+
+  private buildUrl(...paths: string[]) {
+    return environment.baseUrl + '/' + paths.join('/');
   }
 }

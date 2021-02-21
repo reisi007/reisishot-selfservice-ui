@@ -42,6 +42,10 @@ export class CreateContractComponent implements OnInit {
     this.emailForm = this.formBuilder.group({
       emails: this.formBuilder.array([CreateContractComponent.createItem()]),
     });
+
+    // TODO have a select
+    this.apiService.getContracts()
+        .subscribe(data => console.log('http request', data));
   }
 
   addEmail() {
@@ -60,6 +64,6 @@ export class CreateContractComponent implements OnInit {
 
   sendForm() {
     const emails = this.emails;
-    console.log('Sent', emails, 'to', this.apiService.environment.baseUrl);
+    console.log('Sent', emails);
   }
 }
