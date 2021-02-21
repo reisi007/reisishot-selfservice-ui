@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 import {EmailForm} from '../../../data/EmailFormValue';
 import {trackByIndex} from '../../../trackByUtils';
 import {beforeToday} from './person/age.validator';
+import {ApiService} from '../../api/api.service';
 
 @Component({
   selector: 'app-create-contract',
@@ -11,7 +12,10 @@ import {beforeToday} from './person/age.validator';
 })
 export class CreateContractComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private apiService: ApiService,
+    private formBuilder: FormBuilder,
+  ) {
   }
 
   emailForm: FormGroup;
@@ -56,6 +60,6 @@ export class CreateContractComponent implements OnInit {
 
   sendForm() {
     const emails = this.emails;
-    console.log('Sent', emails);
+    console.log('Sent', emails, 'to', this.apiService.environment.baseUrl);
   }
 }
