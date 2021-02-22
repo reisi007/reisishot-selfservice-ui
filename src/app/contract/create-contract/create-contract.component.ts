@@ -5,7 +5,6 @@ import {trackByIndex} from '../../trackByUtils';
 import {afterNow, beforeNow} from '../../commons/datetime.validator';
 import {ApiService} from '../api/api.service';
 import {Observable} from 'rxjs';
-import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-contract',
@@ -17,7 +16,7 @@ export class CreateContractComponent implements OnInit {
   emailForm: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
 
-  formState = 'not sent';
+  formSentState = {error: '', completed: false, sent: false};
 
   constructor(
     private apiService: ApiService,
@@ -69,12 +68,15 @@ export class CreateContractComponent implements OnInit {
 
   sendForm() {
     this.apiService.createContract(this.emailForm.value)
-        .pipe(
-          catchError((err => this.formState = err.toString())),
-        ).subscribe(param => {
-      this.formState = 'success=' + param;
-    });
+        .subscribe(
+          () => this.formSentState.completed = true,
+          () => {
+            this.formSentState.sent = false;
+            this.formSentState.error = 'Fehler beim Senden des Formulars!';
+          },
+        )
+    ;
 
-    this.formState = 'sent';
+    this.formSentState.sent = true;
   }
 }

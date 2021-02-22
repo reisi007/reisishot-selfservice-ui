@@ -13,7 +13,7 @@ export class DisplayContractComponent implements OnInit {
   email: string;
   accessKey: string;
 
-  contractData: GetContractResponse;
+  contractData: GetContractResponse = undefined;
 
   constructor(
     private route: ActivatedRoute,

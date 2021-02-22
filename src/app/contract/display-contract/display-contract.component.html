@@ -1,4 +1,4 @@
-<div class="text-center p-6">
+<div class="text-center p-6" *ngIf="contractData!== undefined">
   <div *ngIf="contractData; then content else nullMsg"></div>
 </div>
 
