@@ -1,0 +1,16 @@
+<div class="text-center p-6">
+  <div *ngIf="contractData; then content else nullMsg"></div>
+</div>
+
+<ng-template #content>
+  <div class="bg-reisishot text-white text-xl p-4">
+    {{email}}
+  </div>
+  <div>TODO</div>
+  <pre>
+    {{ contractData | json}}
+  </pre>
+</ng-template>
+<ng-template #nullMsg>
+  <h1 class="bg-red-500 p-4">Dieser Vertrag konnte nicht gefunden werden.</h1>
+</ng-template>

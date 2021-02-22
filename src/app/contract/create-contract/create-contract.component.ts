@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {EmailForm} from '../../../data/EmailFormValue';
-import {trackByIndex} from '../../../trackByUtils';
-import {afterNow, beforeNow} from '../../../commons/datetime.validator';
-import {ApiService} from '../../api/api.service';
+import {EmailForm} from '../../data/EmailFormValue';
+import {trackByIndex} from '../../trackByUtils';
+import {afterNow, beforeNow} from '../../commons/datetime.validator';
+import {ApiService} from '../api/api.service';
 import {Observable} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-contract',
@@ -13,15 +14,16 @@ import {Observable} from 'rxjs';
 })
 export class CreateContractComponent implements OnInit {
 
+  emailForm: FormGroup;
+  availableContracts: Observable<string[]> = this.apiService.getContracts();
+
+  formState = 'not sent';
+
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
   ) {
   }
-
-  emailForm: FormGroup;
-
-  availableContracts: Observable<string[]> = this.apiService.getContracts();
 
   get emailArray(): FormArray {
     return this.emailForm.get('persons') as FormArray;
@@ -47,6 +49,7 @@ export class CreateContractComponent implements OnInit {
       pwd: new FormControl('', [Validators.required]),
       contractType: new FormControl('', [Validators.required]),
       dueDate: new FormControl('', [Validators.required, afterNow]),
+      baseUrl: new FormControl(window.location.origin, [Validators.required]),
     });
   }
 
@@ -65,7 +68,13 @@ export class CreateContractComponent implements OnInit {
   }
 
   sendForm() {
-    const emails = this.emails;
-    console.log('Sent', emails);
+    this.apiService.createContract(this.emailForm.value)
+        .pipe(
+          catchError((err => this.formState = err.toString())),
+        ).subscribe(param => {
+      this.formState = 'success=' + param;
+    });
+
+    this.formState = 'sent';
   }
 }
