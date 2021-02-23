@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ApiService} from '../api/api.service';
 import {GetContractResponse} from '../api/getContractResponse';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-display-contract',
@@ -31,4 +32,15 @@ export class DisplayContractComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  formatDueDate(dateString: string): string {
+    return dayjs(dateString).format('DD.MM.YYYY HH:mm');
+  }
+
+  formatBirthday(dateString: string): string {
+    return dayjs(dateString).format('DD.MM.YYYY');
+  }
+
+  sign(): void {
+    console.log('Sign requested');
+  }
 }

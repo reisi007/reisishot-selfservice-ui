@@ -4,9 +4,15 @@
 
 <ng-template #content>
   <div class="bg-reisishot text-white text-xl p-4">
-    {{email}}
+    Von {{contractData.firstname}} {{contractData.lastname}} ({{email}} / {{formatBirthday(contractData.birthday)}})
+    bis {{formatDueDate(contractData.due_date)}} zu
+    unterschreiben
   </div>
-  <div>TODO</div>
+  <div class="m-2 p-2 border border-solid border-black" [innerHTML]="contractData.markdown | markdown "></div>
+  <small>Hash: {{contractData.hash_value}} ({{contractData.hash_algo}})</small>
+  <div>
+    <button (click)="sign()">Unterschreiben</button>
+  </div>
   <pre>
     {{ contractData | json}}
   </pre>
