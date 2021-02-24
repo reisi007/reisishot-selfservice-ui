@@ -4,7 +4,7 @@ import {ApiService} from '../api/api.service';
 import {ContractData} from '../api/contractData';
 import * as dayjs from 'dayjs';
 import {SignStatus} from '../api/signStatus';
-import {Observable} from 'rxjs';
+import {Observable, timer} from 'rxjs';
 import {LogEntry, LogType} from '../api/logEntry';
 
 @Component({
@@ -13,6 +13,8 @@ import {LogEntry, LogType} from '../api/logEntry';
   styleUrls: ['./display-contract.component.scss'],
 })
 export class DisplayContractComponent implements OnInit {
+
+  static readonly UPDATE_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
   email: string;
   accessKey: string;
@@ -23,7 +25,7 @@ export class DisplayContractComponent implements OnInit {
 
   logs: Observable<Array<LogEntry>>;
 
-  curUserSigned = false;
+  curUserSigned = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,9 +37,13 @@ export class DisplayContractComponent implements OnInit {
       this.fetchContract().subscribe(contractData => {
         this.contractData = contractData;
 
-        apiService.postLogEntry(this.email, this.accessKey, LogType.OPEN).subscribe(() => {
-          this.fetchSignStatus();
-          this.fetchLogs();
+        timer(500).subscribe(() => {
+          apiService.postLogEntry(this.email, this.accessKey, LogType.OPEN).subscribe(() => {
+            timer(0, DisplayContractComponent.UPDATE_INTERVAL).subscribe(() => {
+              this.fetchSignStatus();
+              this.fetchLogs();
+            });
+          });
         });
       });
     });

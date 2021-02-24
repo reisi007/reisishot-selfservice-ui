@@ -64,7 +64,7 @@ export class ApiService {
     return this.http
                .put(
                  ApiService.buildSecuredUrl(email, accessKey, 'api', 'log_put.php'),
-                 {action: logType.toString()},
+                 {action: logType.toString(), baseUrl: window.location.origin},
                );
   }
 }
