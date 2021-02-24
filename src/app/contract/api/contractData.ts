@@ -1,4 +1,4 @@
-export interface GetContractResponse {
+export interface ContractData {
   access_key: string;
   email: string;
   firstname: string;
