@@ -15,6 +15,7 @@ export class CreateContractComponent implements OnInit {
 
   emailForm: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
+  contractMd: string;
 
   formSentState = {error: '', completed: false, sent: false};
 
@@ -79,5 +80,10 @@ export class CreateContractComponent implements OnInit {
     ;
 
     this.formSentState.sent = true;
+  }
+
+  previewContract() {
+    this.apiService.getContractTemplate(this.emailForm.get('contractType').value)
+        .subscribe(param => this.contractMd = param);
   }
 }

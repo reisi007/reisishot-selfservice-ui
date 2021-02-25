@@ -74,7 +74,7 @@ export class DisplayContractComponent implements OnInit {
   }
 
   private fetchContract(): Observable<ContractData> {
-    return this.apiService.getContract(this.email, this.accessKey);
+    return this.apiService.getContractData(this.email, this.accessKey);
   }
 
   private fetchSignStatus() {

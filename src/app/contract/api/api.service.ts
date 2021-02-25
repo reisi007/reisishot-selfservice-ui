@@ -39,7 +39,7 @@ export class ApiService {
                );
   }
 
-  public getContract(email: string, accessKey: string): Observable<ContractData> {
+  public getContractData(email: string, accessKey: string): Observable<ContractData> {
     return this.http
                .get<ContractData>(
                  ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract_get.php'),
@@ -65,6 +65,14 @@ export class ApiService {
                .put(
                  ApiService.buildSecuredUrl(email, accessKey, 'api', 'log_put.php'),
                  {action: logType.toString(), baseUrl: window.location.origin},
+               );
+  }
+
+  public getContractTemplate(template: string): Observable<string> {
+    return this.http
+               .get(
+                 ApiService.buildUrl('api', 'contract-template_get.php?filename=' + template),
+                 {responseType: 'text'},
                );
   }
 }

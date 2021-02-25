@@ -29,6 +29,10 @@
     @apply border h-12 px-6 m-2 text-lg transition-colors duration-150 rounded-lg focus:ring disabled:opacity-75 disabled:bg-gray-600 disabled:text-gray-200;
   }
 
+  img {
+    @apply mx-auto;
+  }
+
   input, select, textarea {
     @apply border border-gray-200 p-2;
 
