@@ -20,19 +20,4 @@ export class PersonComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  /* Keep example of dayjs age calculation for now
-   private registerAgeCalculation(): void {
-   const birthday = this.person.get('birthday');
-   const age = this.person.get('age');
-   birthday
-   .valueChanges
-   .subscribe((val: string) => {
-   const newAge = dayjs()
-   .diff(dayjs(val), 'year', true)
-   .toFixed(2);
-   age.setValue(newAge);
-   });
-   }
-   */
-
 }

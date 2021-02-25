@@ -3,6 +3,7 @@ export interface CreateContract {
   user: string;
   pwd: string;
   contractType: string;
+  text: string;
   dueDate: string;
 
 }

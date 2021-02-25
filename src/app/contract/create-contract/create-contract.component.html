@@ -41,6 +41,10 @@
                placeholder="Vertrag ist gültig bis"/>
       </label>
     </div>
+    <div>
+      <textarea class=" w-full md:w-1/3" rows="4" formControlName="text"
+                placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"></textarea>
+    </div>
     <button (click)="sendForm()" [disabled]="!emailForm.valid || formSentState?.sent"
             class="w-full md:w-1/3 bg-reisishot">
       Neuen Vertrag erstellen

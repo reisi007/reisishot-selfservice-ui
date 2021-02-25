@@ -67,6 +67,12 @@ export class DisplayContractComponent implements OnInit {
     });
   }
 
+  calculateAge(val: string): string {
+    return dayjs()
+      .diff(dayjs(val), 'year', true)
+      .toFixed(2);
+  }
+
   private fetchContract(): Observable<ContractData> {
     return this.apiService.getContract(this.email, this.accessKey);
   }
@@ -79,7 +85,6 @@ export class DisplayContractComponent implements OnInit {
         .reduce((a, b) => a || b);
     });
   }
-
 
   private fetchLogs() {
     this.logs = this.apiService.getLogEntries(this.email, this.accessKey);
