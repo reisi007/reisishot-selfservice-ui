@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -25,13 +24,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const observable = next.handle(request)
-                           .pipe(catchError(HttpErrorInterceptor.handleErrorAction));
-    if (!environment.production) {
-      observable.subscribe((result: HttpResponse<any>) =>
-        console.log('[Request]', request.method, request.url, 'returned', result.body, result),
-      );
-    }
-    return observable;
+    return next.handle(request)
+               .pipe(catchError(HttpErrorInterceptor.handleErrorAction));
   }
 }

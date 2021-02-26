@@ -31,6 +31,9 @@ export class DisplayContractComponent implements OnInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
   ) {
+  }
+
+  ngOnInit(): void {
     this.route.params.subscribe(routeData => {
       this.email = routeData.mail;
       this.accessKey = routeData.access_key;
@@ -38,7 +41,7 @@ export class DisplayContractComponent implements OnInit {
         this.contractData = contractData;
 
         timer(500).subscribe(() => {
-          apiService.postLogEntry(this.email, this.accessKey, LogType.OPEN).subscribe(() => {
+          this.apiService.postLogEntry(this.email, this.accessKey, LogType.OPEN).subscribe(() => {
             timer(0, DisplayContractComponent.UPDATE_INTERVAL).subscribe(() => {
               this.fetchSignStatus();
               this.fetchLogs();
@@ -47,9 +50,6 @@ export class DisplayContractComponent implements OnInit {
         });
       });
     });
-  }
-
-  ngOnInit(): void {
   }
 
   formatDueDate(dateString: string): string {
