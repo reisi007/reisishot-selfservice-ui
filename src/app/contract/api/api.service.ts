@@ -75,4 +75,12 @@ export class ApiService {
                  {responseType: 'text'},
                );
   }
+
+  public sendAllContractLinks(email: string) {
+    return this.http
+               .post(
+                 ApiService.buildUrl('api', 'contracts-remind_post.php'),
+                 {email, baseUrl: window.location.origin},
+               );
+  }
 }

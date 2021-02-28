@@ -10,6 +10,7 @@ import {PrettyFilenamePipe} from './contract/create-contract/pretty-filename/pre
 import {DisplayContractComponent} from './contract/display-contract/display-contract.component';
 import {MarkdownPipe} from './commons/markdown/markdown.pipe';
 import {HttpErrorInterceptor} from './commons/HttpErrorInterceptor';
+import {ResendContractAccessKeyComponent} from './contract/resend-contract-access-key/resend-contract-access-key.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {HttpErrorInterceptor} from './commons/HttpErrorInterceptor';
     PrettyFilenamePipe,
     DisplayContractComponent,
     MarkdownPipe,
+    ResendContractAccessKeyComponent,
   ],
   imports: [
     BrowserModule,

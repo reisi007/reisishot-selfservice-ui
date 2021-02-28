@@ -68,7 +68,7 @@ export class DisplayContractComponent implements OnInit {
   }
 
   calculateAge(val: string): string {
-    return dayjs()
+    return dayjs(this.contractData.due_date)
       .diff(dayjs(val), 'year', true)
       .toFixed(2);
   }

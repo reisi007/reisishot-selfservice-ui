@@ -54,11 +54,11 @@ export class CreateContractComponent implements OnInit {
     });
   }
 
-  addEmail() {
+  addPerson() {
     this.emailArray.push(CreateContractComponent.createItem());
   }
 
-  removeEmail() {
+  removePerson() {
     if (this.emailArray.length > 1) {
       this.emailArray.removeAt(this.emailArray.length - 1);
     }
