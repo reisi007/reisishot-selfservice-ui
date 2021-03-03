@@ -11,6 +11,7 @@ import {DisplayContractComponent} from './contract/display-contract/display-cont
 import {MarkdownPipe} from './commons/markdown/markdown.pipe';
 import {HttpErrorInterceptor} from './commons/HttpErrorInterceptor';
 import {ResendContractAccessKeyComponent} from './contract/resend-contract-access-key/resend-contract-access-key.component';
+import {PreviewContractComponent} from './contract/preview-contract/preview-contract.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {ResendContractAccessKeyComponent} from './contract/resend-contract-acces
     DisplayContractComponent,
     MarkdownPipe,
     ResendContractAccessKeyComponent,
+    PreviewContractComponent,
   ],
   imports: [
     BrowserModule,

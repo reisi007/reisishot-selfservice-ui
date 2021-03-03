@@ -60,7 +60,6 @@
   <div class="mt-12">
     <app-resend-contract-access-key></app-resend-contract-access-key>
   </div>
-  <div *ngIf="contractMd" class="border border-black p-1" [innerHTML]="contractMd |markdown"></div>
   <div *ngIf="formSentState?.error?.length > 0" class="bg-red-500 p-8">{{formSentState.error}}</div>
 </ng-template>
 

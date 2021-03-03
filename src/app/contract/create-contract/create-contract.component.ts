@@ -5,6 +5,7 @@ import {trackByIndex} from '../../trackByUtils';
 import {afterNow, beforeNow} from '../../commons/datetime.validator';
 import {ApiService} from '../api/api.service';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-contract',
@@ -15,13 +16,13 @@ export class CreateContractComponent implements OnInit {
 
   emailForm: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
-  contractMd: string;
 
   formSentState = {error: '', completed: false, sent: false};
 
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
+    private router: Router,
   ) {
   }
 
@@ -83,7 +84,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   previewContract() {
-    this.apiService.getContractTemplate(this.emailForm.get('contractType').value)
-        .subscribe(param => this.contractMd = param);
+    // noinspection JSIgnoredPromiseFromCall
+    this.router.navigate(['contracts', this.emailForm.get('contractType').value]);
   }
 }
