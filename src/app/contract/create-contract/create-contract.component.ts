@@ -34,6 +34,14 @@ export class CreateContractComponent implements OnInit {
     return this.emailArray.value as EmailForm;
   }
 
+  get additionalText(): string {
+    return this.emailForm.get('text').value as string;
+  }
+
+  get contractType(): string {
+    return this.emailForm.get('contractType').value;
+  }
+
   private static createItem() {
     return new FormGroup({
       firstName: new FormControl('', [Validators.required]),

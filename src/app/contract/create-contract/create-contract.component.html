@@ -3,17 +3,18 @@
 </div>
 
 <ng-template #form>
+  <div class="mb-12">
+    <app-resend-contract-access-key></app-resend-contract-access-key>
+  </div>
   <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
   <p>Personen, für die der erstellte Vertrag gelten soll:</p>
   <form [formGroup]="emailForm">
-    <ul>
-      <li class="py-2"
-          formArrayName="persons"
-          *ngFor="let item of emailArray.controls; let i = index; trackBy: trackByIndex"
-      >
-        <app-person [cnt]="i" [person]="item"></app-person>
-      </li>
-    </ul>
+    <div *ngFor="let item of emailArray.controls; let i = index; trackBy: trackByIndex"
+         class="py-2"
+         formArrayName="persons"
+    >
+      <app-person [cnt]="i" [person]="item"></app-person>
+    </div>
     <div class="w-full md:w-1/3 m-auto">
       <button class="bg-reisishot text-center" (click)="addPerson()">+</button>
       <button class="bg-red-500 text-center" (click)="removePerson()">-</button>
@@ -42,8 +43,14 @@
       </label>
     </div>
     <div>
-      <textarea class=" w-full md:w-1/3" rows="4" formControlName="text"
+      <textarea class="w-full md:w-1/3" formControlName="text" rows="4"
                 placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"></textarea>
+    </div>
+    <div>
+      <div *ngIf="additionalText"
+           [innerHTML]="additionalText | markdown"
+           class="w-full md:w-1/3 text-center mx-auto border border-black p-1">
+      </div>
     </div>
     <div>
       <button (click)="sendForm()" [disabled]="!emailForm.valid || formSentState?.sent"
@@ -52,14 +59,11 @@
       </button>
     </div>
     <div>
-      <button (click)="previewContract()" [disabled]="!emailForm.get('contractType').value"
+      <button (click)="previewContract()" [disabled]="!contractType"
               class="w-full md:w-1/3 bg-reisishot"> Vertrag anzeigen
       </button>
     </div>
   </form>
-  <div class="mt-12">
-    <app-resend-contract-access-key></app-resend-contract-access-key>
-  </div>
   <div *ngIf="formSentState?.error?.length > 0" class="bg-red-500 p-8">{{formSentState.error}}</div>
 </ng-template>
 
