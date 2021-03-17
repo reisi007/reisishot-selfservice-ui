@@ -265,7 +265,7 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/cli@~~11":
+"@angular/cli@~11":
   version "11.2.4"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-11.2.4.tgz#41565eb5ab9662bd2e87c1295ac45fa05ace8296"
   integrity sha512-bbW93N3n/9GDk6OxQ5WzTWQcHXcj389Tg7gCov9MlRZg1ohqU/RtmQrMazzCCQjFUvJjEOT4a/lYbGYOYhMqag==
@@ -6170,6 +6170,13 @@ next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
+
+ngx-webstorage-service@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-webstorage-service/-/ngx-webstorage-service-4.1.0.tgz#c3511ea8ad1c256a672f703ec472e05a57e7c056"
+  integrity sha512-t0aO4X8rqesLqypU8ZK2W7xGVbpi/z7u/Xg7qhnLoKVauI29NFzdKxV2oaYZmpkxIpgdbLSsIfklkjgxIM0IFA==
+  dependencies:
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"

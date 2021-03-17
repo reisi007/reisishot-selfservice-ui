@@ -3,17 +3,25 @@
 </div>
 
 <ng-template #form>
-  <div class="mb-12">
-    <app-resend-contract-access-key></app-resend-contract-access-key>
-  </div>
   <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
   <p>Personen, für die der erstellte Vertrag gelten soll:</p>
   <form [formGroup]="emailForm">
-    <div *ngFor="let item of emailArray.controls; let i = index; trackBy: trackByIndex"
+    <div *ngFor="let item of personArray.controls; let i = index; trackBy: trackByIndex"
          class="py-2"
          formArrayName="persons"
     >
       <app-person [cnt]="i" [person]="item"></app-person>
+    </div>
+    <div *ngIf="locallyStoredPersonArray.length > 0"
+         class="mx-auto border border-gray-200 p-2 w-full md:w-1/3">
+      <h3>Letzte Personen...</h3>
+      <ol>
+        <li (click)="addLocallyStoredPerson(value)"
+            *ngFor="let value of locallyStoredPersonArray "
+            class="button p-1">
+          {{value.firstName}} {{value.lastName}} - {{value.email}} ({{value.birthday}})
+        </li>
+      </ol>
     </div>
     <div class="w-full md:w-1/3 m-auto">
       <button class="bg-reisishot text-center" (click)="addPerson()">+</button>
@@ -65,6 +73,9 @@
     </div>
   </form>
   <div *ngIf="formSentState?.error?.length > 0" class="bg-red-500 p-8">{{formSentState.error}}</div>
+  <div class="mt-12 ">
+    <app-resend-contract-access-key></app-resend-contract-access-key>
+  </div>
 </ng-template>
 
 <ng-template #sent>

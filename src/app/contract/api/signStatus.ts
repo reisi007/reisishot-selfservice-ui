@@ -3,5 +3,5 @@ export interface SignStatus {
   firstname: string;
   lastname: string;
   birthday: string;
-  signed: string;
+  signed: '0' | '1';
 }

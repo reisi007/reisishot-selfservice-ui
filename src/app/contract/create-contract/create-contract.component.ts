@@ -6,6 +6,8 @@ import {afterNow, beforeNow} from '../../commons/datetime.validator';
 import {ApiService} from '../api/api.service';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {CreateContract, Person} from '../api/createContract';
+import {LocallyStoredPersons} from './locallyStoredPersons';
 
 @Component({
   selector: 'app-create-contract',
@@ -14,10 +16,12 @@ import {Router} from '@angular/router';
 })
 export class CreateContractComponent implements OnInit {
 
+  private static LOCAL_PERSONS = 'LOCAL_PERSONS';
   emailForm: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
-
   formSentState = {error: '', completed: false, sent: false};
+
+  private storage: Storage = window.localStorage;
 
   constructor(
     private apiService: ApiService,
@@ -26,12 +30,20 @@ export class CreateContractComponent implements OnInit {
   ) {
   }
 
-  get emailArray(): FormArray {
+  get locallyStoredPersons(): LocallyStoredPersons {
+    return JSON.parse(this.storage.getItem(CreateContractComponent.LOCAL_PERSONS) || '{}');
+  }
+
+  set locallyStoredPersons(persons: LocallyStoredPersons) {
+    this.storage.setItem(CreateContractComponent.LOCAL_PERSONS, JSON.stringify(persons));
+  }
+
+  get personArray(): FormArray {
     return this.emailForm.get('persons') as FormArray;
   }
 
   get emails(): EmailForm {
-    return this.emailArray.value as EmailForm;
+    return this.personArray.value as EmailForm;
   }
 
   get additionalText(): string {
@@ -42,18 +54,26 @@ export class CreateContractComponent implements OnInit {
     return this.emailForm.get('contractType').value;
   }
 
-  private static createItem() {
+  get locallyStoredPersonArray(): Array<Person> {
+    return Object.values(this.locallyStoredPersons);
+  }
+
+  private static createPerson(p: Person = null) {
     return new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      birthday: new FormControl('', [Validators.required, beforeNow]),
+      firstName: new FormControl(p?.firstName || '', [Validators.required]),
+      lastName: new FormControl(p?.lastName || '', [Validators.required]),
+      email: new FormControl(p?.email || '', [Validators.required, Validators.email]),
+      birthday: new FormControl(p?.birthday || '', [Validators.required, beforeNow]),
     });
+  }
+
+  private static calculateKey(p: Person): string {
+    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
   }
 
   ngOnInit(): void {
     this.emailForm = this.formBuilder.group({
-      persons: this.formBuilder.array([CreateContractComponent.createItem()]),
+      persons: this.formBuilder.array([CreateContractComponent.createPerson()]),
       user: new FormControl('', [Validators.required]),
       pwd: new FormControl('', [Validators.required]),
       contractType: new FormControl('', [Validators.required]),
@@ -64,13 +84,18 @@ export class CreateContractComponent implements OnInit {
   }
 
   addPerson() {
-    this.emailArray.push(CreateContractComponent.createItem());
+    this.personArray.push(CreateContractComponent.createPerson());
   }
 
   removePerson() {
-    if (this.emailArray.length > 1) {
-      this.emailArray.removeAt(this.emailArray.length - 1);
+    if (this.personArray.length > 1) {
+      this.personArray.removeAt(this.personArray.length - 1);
     }
+  }
+
+  addLocallyStoredPerson(p: Person) {
+    console.log('Adding', p);
+    this.personArray.push(CreateContractComponent.createPerson(p));
   }
 
   trackByIndex(index: number, o: object) {
@@ -78,7 +103,13 @@ export class CreateContractComponent implements OnInit {
   }
 
   sendForm() {
-    this.apiService.createContract(this.emailForm.value)
+    const data: CreateContract = this.emailForm.value;
+    data.persons.forEach(p => {
+      const lsp = this.locallyStoredPersons;
+      lsp[CreateContractComponent.calculateKey(p)] = p;
+      this.locallyStoredPersons = lsp;
+    });
+    this.apiService.createContract(data)
         .subscribe(
           () => this.formSentState.completed = true,
           () => {
