@@ -23,6 +23,8 @@ export class DisplayContractComponent implements OnInit {
 
   signStatus: Observable<Array<SignStatus>>;
 
+  contractIsValid: boolean | null = null;
+
   logs: Observable<Array<LogEntry>>;
 
   curUserSigned = true;
@@ -45,6 +47,7 @@ export class DisplayContractComponent implements OnInit {
             timer(0, DisplayContractComponent.UPDATE_INTERVAL).subscribe(() => {
               this.fetchSignStatus();
               this.fetchLogs();
+              this.fetchContractStatus();
             });
           });
         });
@@ -90,4 +93,10 @@ export class DisplayContractComponent implements OnInit {
     this.logs = this.apiService.getLogEntries(this.email, this.accessKey);
   }
 
+  private fetchContractStatus() {
+    this.apiService.checkContractValidity(this.email, this.accessKey).subscribe(data => {
+        this.contractIsValid = data.result.toLowerCase() === '1';
+      },
+    );
+  }
 }

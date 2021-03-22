@@ -6,6 +6,7 @@ import {CreateContract} from './createContract';
 import {ContractData} from './contractData';
 import {SignStatus} from './signStatus';
 import {LogEntry, LogType} from './logEntry';
+import {IsValidResponse} from './IsValidResponse';
 
 
 @Injectable({
@@ -81,6 +82,13 @@ export class ApiService {
                .post(
                  ApiService.buildUrl('api', 'contracts-remind_post.php'),
                  {email, baseUrl: window.location.origin},
+               );
+  }
+
+  public checkContractValidity(email: string, accessKey: string): Observable<IsValidResponse> {
+    return this.http
+               .get<IsValidResponse>(
+                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-valid_get.php'),
                );
   }
 }
