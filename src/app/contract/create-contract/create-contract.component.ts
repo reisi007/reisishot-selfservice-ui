@@ -95,7 +95,7 @@ export class CreateContractComponent implements OnInit {
 
   addLocallyStoredPerson(p: Person) {
     console.log('Adding', p);
-    this.personArray.push(CreateContractComponent.createPerson(p));
+    this.personArray.insert(0, CreateContractComponent.createPerson(p));
   }
 
   trackByIndex(index: number, o: object) {
