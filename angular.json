@@ -16,6 +16,9 @@
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
+          "allowedCommonJsDependencies": [
+            "markdown-it"
+          ],
           "options": {
             "outputPath": "dist/reisishot-selfservice-ui",
             "index": "src/index.html",
