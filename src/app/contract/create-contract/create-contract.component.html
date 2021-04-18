@@ -17,7 +17,7 @@
       <h3>Letzte Personen...</h3>
       <ol>
         <li (click)="addLocallyStoredPerson(value)"
-            *ngFor="let value of locallyStoredPersonArray "
+            *ngFor="let value of locallyStoredPersonArray"
             class="button p-1">
           {{value.firstName}} {{value.lastName}} - {{value.email}} ({{value.birthday}})
         </li>

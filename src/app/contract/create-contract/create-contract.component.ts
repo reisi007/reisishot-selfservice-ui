@@ -7,7 +7,7 @@ import {ApiService} from '../api/api.service';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {CreateContract, Person} from '../api/createContract';
-import {LocallyStoredPersons} from './locallyStoredPersons';
+import {LocallyStoredPersons, StoredPerson} from './locallyStoredPersons';
 
 @Component({
   selector: 'app-create-contract',
@@ -31,7 +31,14 @@ export class CreateContractComponent implements OnInit {
   }
 
   get locallyStoredPersons(): LocallyStoredPersons {
-    return JSON.parse(this.storage.getItem(CreateContractComponent.LOCAL_PERSONS) || '{}');
+    const parsed = JSON.parse(this.storage.getItem(CreateContractComponent.LOCAL_PERSONS) || '{}') as LocallyStoredPersons;
+    // TODO: Nach dem nächsten Vertrag erzeugen entfernen
+    for (const parsedKey in parsed) {
+      if (parsed[parsedKey].lastUsed == null) {
+        parsed[parsedKey].lastUsed = new Date(0);
+      }
+    }
+    return parsed;
   }
 
   set locallyStoredPersons(persons: LocallyStoredPersons) {
@@ -67,8 +74,8 @@ export class CreateContractComponent implements OnInit {
     });
   }
 
-  private static calculateKey(p: Person): string {
-    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
+  private static calculateKey(p: StoredPerson): string {
+    return p.lastUsed.toISOString() + p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
   }
 
   ngOnInit(): void {
@@ -104,9 +111,12 @@ export class CreateContractComponent implements OnInit {
 
   sendForm() {
     const data: CreateContract = this.emailForm.value;
+    const now = new Date();
     data.persons.forEach(p => {
       const lsp = this.locallyStoredPersons;
-      lsp[CreateContractComponent.calculateKey(p)] = p;
+      const sp = p as StoredPerson;
+      sp.lastUsed = now;
+      lsp[CreateContractComponent.calculateKey(sp)] = sp;
       this.locallyStoredPersons = lsp;
     });
     this.apiService.createContract(data)
