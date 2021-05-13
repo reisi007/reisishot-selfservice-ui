@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --hmr",
+    "start": "cross-env TAILWIND_MODE=watch ng serve --hmr",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prod": "cross-env NODE_ENV=production ng build --prod"
+    "prod": "cross-env NODE_ENV=production ng build --prod",
+    "postinstall": "node ./scripts/ng-tailwindcss-jit.js"
   },
   "private": true,
   "dependencies": {
@@ -20,8 +21,10 @@
     "@angular/platform-browser": "~11",
     "@angular/platform-browser-dynamic": "~11",
     "@angular/router": "~11",
+    "@tailwindcss/jit": "^0.1.18",
     "dayjs": "~1",
     "markdown-it": "~12",
+    "ng-tailwindcss-jit": "^0.0.3",
     "rxjs": "~6.6",
     "tslib": "~2.0",
     "zone.js": "~0.10"

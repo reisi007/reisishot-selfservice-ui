@@ -30,19 +30,22 @@ export class CreateContractComponent implements OnInit {
   ) {
   }
 
-  get locallyStoredPersons(): LocallyStoredPersons {
-    const parsed = JSON.parse(this.storage.getItem(CreateContractComponent.LOCAL_PERSONS) || '{}') as LocallyStoredPersons;
-    // TODO: Nach dem nächsten Vertrag erzeugen entfernen
-    for (const parsedKey in parsed) {
-      if (parsed[parsedKey].lastUsed == null) {
-        parsed[parsedKey].lastUsed = new Date(0);
-      }
-    }
-    return parsed;
+  get locallyStoredPersons(): Array<StoredPerson> {
+    const stored = JSON.parse(this.storage.getItem(CreateContractComponent.LOCAL_PERSONS) || '{}') as LocallyStoredPersons;
+    return Object.values(stored).reverse();
+
   }
 
-  set locallyStoredPersons(persons: LocallyStoredPersons) {
-    this.storage.setItem(CreateContractComponent.LOCAL_PERSONS, JSON.stringify(persons));
+  set locallyStoredPersons(persons: Array<StoredPerson>) {
+    const toSave: LocallyStoredPersons = {};
+    persons.forEach(sp => {
+      const key = CreateContractComponent.calculateKey(sp);
+      const value = toSave[key];
+      if (value.lastUsed < sp.lastUsed) {
+        toSave[key] = sp;
+      }
+    });
+    this.storage.setItem(CreateContractComponent.LOCAL_PERSONS, JSON.stringify(toSave));
   }
 
   get personArray(): FormArray {
@@ -75,7 +78,7 @@ export class CreateContractComponent implements OnInit {
   }
 
   private static calculateKey(p: StoredPerson): string {
-    return p.lastUsed.toISOString() + p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
+    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
   }
 
   ngOnInit(): void {
