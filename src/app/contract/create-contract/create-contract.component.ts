@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EmailForm} from '../../data/EmailFormValue';
 import {trackByIndex} from '../../trackByUtils';
 import {afterNow, beforeNow} from '../../commons/datetime.validator';
@@ -39,9 +39,9 @@ export class CreateContractComponent implements OnInit {
   set locallyStoredPersons(persons: Array<StoredPerson>) {
     const toSave: LocallyStoredPersons = {};
     persons.forEach(sp => {
-      const key = CreateContractComponent.calculateKey(sp);
+      const key = this.calculateKey(sp);
       const value = toSave[key];
-      if (value.lastUsed < sp.lastUsed) {
+      if (value == null || value.lastUsed < sp.lastUsed) {
         toSave[key] = sp;
       }
     });
@@ -68,33 +68,20 @@ export class CreateContractComponent implements OnInit {
     return Object.values(this.locallyStoredPersons);
   }
 
-  private static createPerson(p: Person = null) {
-    return new FormGroup({
-      firstName: new FormControl(p?.firstName || '', [Validators.required]),
-      lastName: new FormControl(p?.lastName || '', [Validators.required]),
-      email: new FormControl(p?.email || '', [Validators.required, Validators.email]),
-      birthday: new FormControl(p?.birthday || '', [Validators.required, beforeNow]),
-    });
-  }
-
-  private static calculateKey(p: StoredPerson): string {
-    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
-  }
-
   ngOnInit(): void {
     this.emailForm = this.formBuilder.group({
-      persons: this.formBuilder.array([CreateContractComponent.createPerson()]),
-      user: new FormControl('', [Validators.required]),
-      pwd: new FormControl('', [Validators.required]),
-      contractType: new FormControl('', [Validators.required]),
-      text: new FormControl('', [Validators.required]),
-      dueDate: new FormControl('', [Validators.required, afterNow]),
-      baseUrl: new FormControl(window.location.origin, [Validators.required]),
+      persons: this.formBuilder.array([this.createPerson()]),
+      user: this.formBuilder.control('', [Validators.required]),
+      pwd: this.formBuilder.control('', [Validators.required]),
+      contractType: this.formBuilder.control('', [Validators.required]),
+      text: this.formBuilder.control('', [Validators.required]),
+      dueDate: this.formBuilder.control('', [Validators.required, afterNow]),
+      baseUrl: this.formBuilder.control(window.location.origin, [Validators.required]),
     });
   }
 
   addPerson() {
-    this.personArray.push(CreateContractComponent.createPerson());
+    this.personArray.push(this.createPerson());
   }
 
   removePerson() {
@@ -105,7 +92,7 @@ export class CreateContractComponent implements OnInit {
 
   addLocallyStoredPerson(p: Person) {
     console.log('Adding', p);
-    this.personArray.insert(0, CreateContractComponent.createPerson(p));
+    this.personArray.insert(0, this.createPerson(p));
   }
 
   trackByIndex(index: number, o: object) {
@@ -119,7 +106,7 @@ export class CreateContractComponent implements OnInit {
       const lsp = this.locallyStoredPersons;
       const sp = p as StoredPerson;
       sp.lastUsed = now;
-      lsp[CreateContractComponent.calculateKey(sp)] = sp;
+      lsp[this.calculateKey(sp)] = sp;
       this.locallyStoredPersons = lsp;
     });
     this.apiService.createContract(data)
@@ -138,5 +125,18 @@ export class CreateContractComponent implements OnInit {
   previewContract() {
     // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(['contracts', this.emailForm.get('contractType').value]);
+  }
+
+  private createPerson(p: Person = null) {
+    return this.formBuilder.group({
+      firstName: this.formBuilder.control(p?.firstName || '', [Validators.required]),
+      lastName: this.formBuilder.control(p?.lastName || '', [Validators.required]),
+      email: this.formBuilder.control(p?.email || '', [Validators.required, Validators.email]),
+      birthday: this.formBuilder.control(p?.birthday || '', [Validators.required, beforeNow]),
+    });
+  }
+
+  private calculateKey(p: Person): string {
+    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
   }
 }
