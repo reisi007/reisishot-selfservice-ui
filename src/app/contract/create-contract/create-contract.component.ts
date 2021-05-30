@@ -91,7 +91,6 @@ export class CreateContractComponent implements OnInit {
   }
 
   addLocallyStoredPerson(p: Person) {
-    console.log('Adding', p);
     this.personArray.insert(0, this.createPerson(p));
   }
 
@@ -106,7 +105,7 @@ export class CreateContractComponent implements OnInit {
       const lsp = this.locallyStoredPersons;
       const sp = p as StoredPerson;
       sp.lastUsed = now;
-      lsp[this.calculateKey(sp)] = sp;
+      lsp.unshift(sp);
       this.locallyStoredPersons = lsp;
     });
     this.apiService.createContract(data)
