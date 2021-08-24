@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ApiService} from '../api/api.service';
+import {ContractApiService} from '../api/contract-api.service';
 import {ContractData} from '../api/contractData';
 import * as dayjs from 'dayjs';
 import {SignStatus} from '../api/signStatus';
 import {Observable, timer} from 'rxjs';
 import {LogEntry, LogType} from '../api/logEntry';
+import {formatDate, formatDateTime} from '../../commons/datetime.formatter';
 
 @Component({
   selector: 'app-display-contract',
@@ -31,7 +32,7 @@ export class DisplayContractComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService,
+    private apiService: ContractApiService,
   ) {
   }
 
@@ -55,13 +56,6 @@ export class DisplayContractComponent implements OnInit {
     });
   }
 
-  formatDueDate(dateString: string): string {
-    return dayjs(dateString).format('DD.MM.YYYY HH:mm');
-  }
-
-  formatBirthday(dateString: string): string {
-    return dayjs(dateString).format('DD.MM.YYYY');
-  }
 
   sign(): void {
     this.apiService.postLogEntry(this.email, this.accessKey, LogType.SIGN).subscribe(() => {
@@ -74,6 +68,14 @@ export class DisplayContractComponent implements OnInit {
     return dayjs(this.contractData.due_date)
       .diff(dayjs(val), 'year', true)
       .toFixed(2);
+  }
+
+  formatDateTime(dateTimeString: string): string {
+    return formatDateTime(dateTimeString);
+  }
+
+  formatDate(dateString: string): string {
+    return formatDate(dateString);
   }
 
   private fetchContract(): Observable<ContractData> {

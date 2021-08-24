@@ -4,8 +4,8 @@
 
 <ng-template #content>
   <div class="bg-reisishot text-white text-xl p-4">
-    Von {{contractData.firstname}} {{contractData.lastname}} ({{email}} / {{formatBirthday(contractData.birthday)}})
-    bis {{formatDueDate(contractData.due_date)}} zu
+    Von {{contractData.firstname}} {{contractData.lastname}} ({{email}} / {{formatDate(contractData.birthday)}})
+    bis {{formatDateTime(contractData.due_date)}} zu
     unterschreiben
   </div>
   <div class="m-2 p-2 border border-solid border-black" [innerHTML]="contractData.markdown | markdown "></div>
@@ -29,7 +29,7 @@
       <tr *ngFor="let item of signStatus | async">
         <td class="border border-black p-2">{{item.email}}</td>
         <td
-          class="border border-black p-2">{{item.firstname}} {{item.lastname}} {{formatBirthday(item.birthday)}}
+          class="border border-black p-2">{{item.firstname}} {{item.lastname}} {{formatDate(item.birthday)}}
           - {{calculateAge(item.birthday)}} Jahre
         </td>
         <td class="border border-black p-2 font-bold bg-reisishot" *ngIf="item.signed !== '0'; else notSigned">

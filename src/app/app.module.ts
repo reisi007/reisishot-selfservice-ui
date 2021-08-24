@@ -12,6 +12,9 @@ import {MarkdownPipe} from './commons/markdown/markdown.pipe';
 import {HttpErrorInterceptor} from './commons/HttpErrorInterceptor';
 import {ResendContractAccessKeyComponent} from './contract/resend-contract-access-key/resend-contract-access-key.component';
 import {PreviewContractComponent} from './contract/preview-contract/preview-contract.component';
+import {WaitlistComponent} from './waitlist/waitlist/waitlist.component';
+import {WaitlistPersonComponent} from './waitlist/waitlist-person/waitlist-person.component';
+import {WaitlistItemComponent} from './waitlist/waitlist-item/waitlist-item.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import {PreviewContractComponent} from './contract/preview-contract/preview-cont
     MarkdownPipe,
     ResendContractAccessKeyComponent,
     PreviewContractComponent,
+    WaitlistComponent,
+    WaitlistPersonComponent,
+    WaitlistItemComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EmailForm} from '../../data/EmailFormValue';
 import {trackByIndex} from '../../trackByUtils';
 import {afterNow, beforeNow} from '../../commons/datetime.validator';
-import {ApiService} from '../api/api.service';
+import {ContractApiService} from '../api/contract-api.service';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {CreateContract, Person} from '../api/createContract';
@@ -20,11 +20,10 @@ export class CreateContractComponent implements OnInit {
   emailForm: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
   formSentState = {error: '', completed: false, sent: false};
-
   private storage: Storage = window.localStorage;
 
   constructor(
-    private apiService: ApiService,
+    private apiService: ContractApiService,
     private formBuilder: FormBuilder,
     private router: Router,
   ) {
@@ -39,7 +38,7 @@ export class CreateContractComponent implements OnInit {
   set locallyStoredPersons(persons: Array<StoredPerson>) {
     const toSave: LocallyStoredPersons = {};
     persons.forEach(sp => {
-      const key = this.calculateKey(sp);
+      const key = CreateContractComponent.calculateKey(sp);
       const value = toSave[key];
       if (value == null || value.lastUsed < sp.lastUsed) {
         toSave[key] = sp;
@@ -66,6 +65,10 @@ export class CreateContractComponent implements OnInit {
 
   get locallyStoredPersonArray(): Array<Person> {
     return Object.values(this.locallyStoredPersons);
+  }
+
+  private static calculateKey(p: Person): string {
+    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
   }
 
   ngOnInit(): void {
@@ -133,9 +136,5 @@ export class CreateContractComponent implements OnInit {
       email: this.formBuilder.control(p?.email || '', [Validators.required, Validators.email]),
       birthday: this.formBuilder.control(p?.birthday || '', [Validators.required, beforeNow]),
     });
-  }
-
-  private calculateKey(p: Person): string {
-    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
   }
 }

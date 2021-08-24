@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ApiService} from '../api/api.service';
+import {ContractApiService} from '../api/contract-api.service';
 import {EMailFormValue} from './EMailFormValue';
 
 @Component({
@@ -14,7 +14,7 @@ export class ResendContractAccessKeyComponent implements OnInit {
   sent = false;
 
   constructor(
-    private apiService: ApiService,
+    private apiService: ContractApiService,
     private formBuilder: FormBuilder,
   ) {
   }

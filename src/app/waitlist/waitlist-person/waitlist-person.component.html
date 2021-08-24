@@ -1,0 +1,64 @@
+<h3 class="mb-1">Deine Daten</h3>
+
+<div [formGroup]="person">
+  <input class="w-1/2 md:w-1/6"
+         formControlName="firstName"
+         placeholder="Vorname"
+         required type="text"
+  >
+  <input class="w-1/2 md:w-1/6"
+         formControlName="lastName"
+         placeholder="Nachname"
+         required type="text"
+  >
+
+  <div>
+    <input class="w-full md:w-1/3"
+           formControlName="email"
+           placeholder="Deine E-Mail Adresse"
+           required type="email"
+    >
+  </div>
+  <div>
+    <input class="w-full md:w-1/3"
+           formControlName="birthday"
+           placeholder="Dein Geburtstag"
+           required type="date"
+    >
+  </div>
+  <div>
+    <input class="w-full md:w-1/3"
+           formControlName="secret"
+           placeholder="Etwas geheimes, dass du dir merken musst"
+           required type="password"
+    >
+  </div>
+  <div>
+    <input class="w-full md:w-1/3"
+           formControlName="phone_number"
+           placeholder="Deine Telefonnummer"
+           required type="tel"
+    >
+  </div>
+  <div>
+    <input class="w-full md:w-1/3"
+           formControlName="website"
+           placeholder="Link zu deinem Instagram etc."
+           required type="tel"
+    >
+  </div>
+  <div>
+    <textarea class="w-full md:w-1/3"
+              formControlName="availability"
+              placeholder="Wann hast du Zeit für ein Shooting"
+              required rows="4"
+    ></textarea>
+  </div>
+  <!-- <div>
+     <textarea formControlName="text"
+               placeholder="Mehr Details (optional)"
+               class="w-full md:w-1/3"
+               rows="4"
+     ></textarea>
+   </div>-->
+</div>

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CreateContract} from './createContract';
@@ -7,23 +6,18 @@ import {ContractData} from './contractData';
 import {SignStatus} from './signStatus';
 import {LogEntry, LogType} from './logEntry';
 import {IsValidResponse} from './IsValidResponse';
+import {ApiService} from '../../commons/ApiService';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class ContractApiService extends ApiService {
 
   constructor(private http: HttpClient) {
+    super();
   }
 
-  private static buildUrl(...paths: string[]): string {
-    return environment.baseUrl + '/' + paths.join('/');
-  }
-
-  private static buildSecuredUrl(email: string, accessKey: string, ...paths: string[]): string {
-    return ApiService.buildUrl(...paths) + '?email=' + email + '&access_key=' + accessKey;
-  }
 
   public getContracts(): Observable<Array<string>> {
     return this.http
@@ -50,21 +44,21 @@ export class ApiService {
   public getSignStatus(email: string, accessKey: string): Observable<Array<SignStatus>> {
     return this.http
                .get<Array<SignStatus>>(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'signed_status_get.php'),
+                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-signed_status_get.php'),
                );
   }
 
   public getLogEntries(email: string, accessKey: string): Observable<Array<LogEntry>> {
     return this.http
                .get<Array<LogEntry>>(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'log_get.php'),
+                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-log_get.php'),
                );
   }
 
   public postLogEntry(email: string, accessKey: string, logType: LogType) {
     return this.http
                .put(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'log_put.php'),
+                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-log_put.php'),
                  {action: logType.toString(), baseUrl: window.location.origin},
                );
   }
@@ -88,7 +82,7 @@ export class ApiService {
   public checkContractValidity(email: string, accessKey: string): Observable<IsValidResponse> {
     return this.http
                .get<IsValidResponse>(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-valid_get.php'),
+                 ContractApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-valid_get.php'),
                );
   }
 }

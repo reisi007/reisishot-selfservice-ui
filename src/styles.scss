@@ -27,6 +27,7 @@
 
   button, .button {
     @apply border p-6 m-2 text-lg transition-colors duration-150 rounded-lg focus:ring disabled:opacity-75 disabled:bg-gray-600 disabled:text-gray-200;
+    cursor: pointer
   }
 
   img {

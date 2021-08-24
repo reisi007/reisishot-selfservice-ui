@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ApiService} from '../api/api.service';
+import {ContractApiService} from '../api/contract-api.service';
 
 @Component({
   selector: 'app-preview-contract',
@@ -14,7 +14,7 @@ export class PreviewContractComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService,
+    private apiService: ContractApiService,
   ) {
   }
 

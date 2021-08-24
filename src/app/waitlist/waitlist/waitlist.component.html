@@ -1,0 +1,39 @@
+<div class="text-center p-6">
+  <h1 class="mb-2">Shooting Warteliste</h1>
+  <form *ngIf="!isPersonValid() || showForm; else personFromLocalStorageInfo" [formGroup]="person">
+    <app-waitlist-person [person]="person"></app-waitlist-person>
+    <button (click)="showForm = false" *ngIf="isPersonValid()" class="py-1.5 px-2.5 my-1 text-base">
+      Formular ausblenden
+    </button>
+  </form>
+  <div class="font-medium">
+    <p *ngIf="isPersonValid(); else invalid">Du kannst dich jetzt in Wartelisten eintragen!</p>
+    <ng-template #invalid>
+      <p>Bitte fülle das Formular oben aus, um dich zu einem Shooting anmelden zu können!</p>
+    </ng-template>
+  </div>
+  <ng-template #personFromLocalStorageInfo>
+    <h3 class="mb-1">Hallo {{getWaitlistPerson().firstName}} {{getWaitlistPerson().lastName}}! </h3>
+    <button (click)="showForm = true" class="py-1.5 px-2.5 my-1 text-base">Meine Daten bearbeiten</button>
+  </ng-template>
+  <div class="flex flex-wrap">
+    <ng-container *ngIf="!isPersonValid(); else items_person">
+    <span *ngFor="let item of publicItems | async" class="w-full xl:w-1/2 p-3 self-stretch">
+      <app-waitlist-item [item]="item"></app-waitlist-item>
+    </span>
+    </ng-container>
+  </div>
+  <ng-template #items_person>
+    <div class="flex flex-wrap">
+    <span *ngFor="let item of privateItems | async" class="w-full xl:w-1/2 p-3 self-stretch">
+      <app-waitlist-item
+        [item]="item"
+        [person]="getWaitlistPerson()"
+      ></app-waitlist-item>
+    </span>
+    </div>
+  </ng-template>
+</div>
+
+
+
