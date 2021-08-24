@@ -29,8 +29,9 @@
   <div>
     <input class="w-full md:w-1/3"
            formControlName="secret"
-           placeholder="Etwas geheimes, dass du dir merken musst"
+           minlength="5"
            required type="password"
+           placeholder="5+ Zeichen damit deine Anmeldungen privat sind"
     >
   </div>
   <div>
@@ -54,11 +55,4 @@
               required rows="4"
     ></textarea>
   </div>
-  <!-- <div>
-     <textarea formControlName="text"
-               placeholder="Mehr Details (optional)"
-               class="w-full md:w-1/3"
-               rows="4"
-     ></textarea>
-   </div>-->
 </div>

@@ -39,7 +39,7 @@ export class WaitlistApiService extends ApiService {
     return this.http
                .post(
                  ApiService.buildSecuredUrl(email, secret, 'api', 'waitlist-entry-remove_post.php'),
-                 {itemId},
+                 {item_id: itemId},
                );
   }
 }

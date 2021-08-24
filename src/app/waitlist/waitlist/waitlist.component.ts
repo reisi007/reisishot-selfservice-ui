@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {WaitlistItem, WaitlistPerson} from './WaitlistData';
 import {beforeNow} from '../../commons/datetime.validator';
-import {Observable} from 'rxjs';
+import {Observable, timer} from 'rxjs';
 import {WaitlistApiService} from '../api/waitlist-api.service';
+import {debounce} from 'rxjs/operators';
 
 @Component({
   selector: 'app-waitlist',
@@ -60,21 +61,25 @@ export class WaitlistComponent implements OnInit {
       lastName: this.formBuilder.control(p?.lastName || '', [Validators.required]),
       email: this.formBuilder.control(p?.email || '', [Validators.required, Validators.email]),
       birthday: this.formBuilder.control(p?.birthday || '', [Validators.required, beforeNow]),
-      secret: this.formBuilder.control(p?.secret || '', [Validators.required]),
+      secret: this.formBuilder.control(p?.secret || '', [Validators.required, Validators.minLength(5)]),
       availability: this.formBuilder.control(p?.availability || '', [Validators.required]),
       phone_number: this.formBuilder.control(p?.phone_number || '', [Validators.required, Validators.pattern('\\+?\\d{5,}')]),
       website: this.formBuilder.control(p?.website || ''),
     });
 
-    this.person.valueChanges.subscribe(x => {
-      if (this.isPersonValid()) {
-        const waitlistPerson = this.getWaitlistPerson();
-        this.locallyStoredWaitlist = waitlistPerson;
-        this.privateItems = this.apiService.getPrivateItems(waitlistPerson.email, waitlistPerson.secret);
-      }
-      else {
-        this.publicItems = this.apiService.getPublicItems();
-      }
-    });
+    this.person.valueChanges
+        .pipe(
+          debounce(() => timer(1500)),
+        )
+        .subscribe(x => {
+          if (this.isPersonValid()) {
+            const waitlistPerson = this.getWaitlistPerson();
+            this.locallyStoredWaitlist = waitlistPerson;
+            this.privateItems = this.apiService.getPrivateItems(waitlistPerson.email, waitlistPerson.secret);
+          }
+          else {
+            this.publicItems = this.apiService.getPublicItems();
+          }
+        });
   }
 }

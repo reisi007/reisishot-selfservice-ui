@@ -30,7 +30,7 @@ export class WaitlistItemComponent implements OnInit {
   }
 
   get canRegister() {
-    return this.person.secret != null && this.person.email != null;
+    return this.person?.secret != null && this.person?.email != null;
   }
 
   get text(): string {
