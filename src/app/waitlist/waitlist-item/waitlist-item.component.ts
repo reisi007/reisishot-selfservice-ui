@@ -1,19 +1,24 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {formatDate} from 'src/app/commons/datetime.formatter';
-import {WaitlistItem, WaitlistPerson} from '../waitlist/waitlistData';
+import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../waitlist/waitlistData';
+import {WaitlistApiService} from '../api/waitlist-api.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-waitlist-item',
   templateUrl: './waitlist-item.component.html',
   styleUrls: ['./waitlist-item.component.scss'],
 })
-export class WaitlistItemComponent {
+export class WaitlistItemComponent implements OnInit {
   @Input()
   item: WaitlistItem;
+  registration: FormGroup;
+  private personInternal: WaitlistPerson | null;
 
-  personInternal: WaitlistPerson | null;
-
-  constructor() {
+  constructor(
+    private apiService: WaitlistApiService,
+    private formBuilder: FormBuilder,
+  ) {
   }
 
   get person(): WaitlistPerson | null {
@@ -28,15 +33,33 @@ export class WaitlistItemComponent {
     return this.person.secret != null && this.person.email != null;
   }
 
+  get text(): string {
+    return this.registration.get('text').value;
+  }
+
   formatDate(dateString: string): string {
     return formatDate(dateString);
   }
 
   unregister(): void {
-    // TODO implement
+    if (this.personInternal) {
+      this.apiService.deleteRegistration(this.personInternal.email, this.personInternal.secret, this.item.id).subscribe(() => {
+        this.item.registered = '0';
+      });
+    }
   }
 
   register(): void {
-    // TODO implement
+    if (this.personInternal) {
+      this.apiService.registerForWaitlist(convertPerson2Record(this.personInternal, this.item.id, this.text)).subscribe(() => {
+        this.item.registered = '1';
+      });
+    }
+  }
+
+  ngOnInit(): void {
+    this.registration = this.formBuilder.group({
+      text: this.formBuilder.control(''),
+    });
   }
 }

@@ -64,7 +64,6 @@ export class WaitlistComponent implements OnInit {
       availability: this.formBuilder.control(p?.availability || '', [Validators.required]),
       phone_number: this.formBuilder.control(p?.phone_number || '', [Validators.required, Validators.pattern('\\+?\\d{5,}')]),
       website: this.formBuilder.control(p?.website || ''),
-      // text: this.formBuilder.control(p?.text || ''),
     });
 
     this.person.valueChanges.subscribe(x => {

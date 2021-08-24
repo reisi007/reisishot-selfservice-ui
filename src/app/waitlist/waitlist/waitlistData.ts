@@ -8,7 +8,7 @@ export interface WaitlistPerson extends Person {
 }
 
 export interface WaitlistRecord extends WaitlistPerson {
-  itemId: string;
+  itemId: number;
   text: string | null;
   done_customer: '0' | '1';
   done_internal: '0' | '1';
@@ -23,4 +23,19 @@ export interface WaitlistItem {
   available_to: string;
   max_waiting: number;
   registered: '0' | '1';
+}
+
+export function convertPerson2Record(
+  waitlistPerson: WaitlistPerson,
+  itemId: number,
+  text: string,
+  doneCustomer: '0' | '1' = '0',
+  doneInternal: '0' | '1' = '0',
+): WaitlistRecord {
+  const record = waitlistPerson as WaitlistRecord;
+  record.itemId = itemId;
+  record.text = text;
+  record.done_customer = doneCustomer;
+  record.done_internal = doneInternal;
+  return record;
 }
