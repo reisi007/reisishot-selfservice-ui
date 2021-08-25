@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {formatDate} from 'src/app/commons/datetime.formatter';
-import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../waitlist/waitlistData';
 import {WaitlistApiService} from '../api/waitlist-api.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../waitlist/waitlist-api';
 
 @Component({
   selector: 'app-waitlist-item',
@@ -29,8 +29,22 @@ export class WaitlistItemComponent implements OnInit {
     this.personInternal = value;
   }
 
-  get canRegister() {
+  get isValidPerson() {
     return this.person?.secret != null && this.person?.email != null;
+  }
+
+  get canRegister() {
+    return this.item.max_waiting == null || this.max_waiting > 0;
+  }
+
+  get max_waiting() {
+    const val = this.item?.max_waiting;
+    if (val == null) {
+      return null;
+    }
+    else {
+      return parseInt(val, 10);
+    }
   }
 
   get text(): string {
@@ -50,7 +64,7 @@ export class WaitlistItemComponent implements OnInit {
   }
 
   register(): void {
-    if (this.personInternal) {
+    if (this.personInternal && this.max_waiting > 0) {
       this.apiService.registerForWaitlist(convertPerson2Record(this.personInternal, this.item.id, this.text)).subscribe(() => {
         this.item.registered = '1';
       });

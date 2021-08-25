@@ -18,7 +18,8 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "markdown-it"
+              "markdown-it",
+              "ngx-matomo"
             ],
             "outputPath": "dist/reisishot-selfservice-ui",
             "index": "src/index.html",

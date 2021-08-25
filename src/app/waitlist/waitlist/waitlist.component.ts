@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {WaitlistItem, WaitlistPerson} from './WaitlistData';
 import {beforeNow} from '../../commons/datetime.validator';
 import {Observable, timer} from 'rxjs';
 import {WaitlistApiService} from '../api/waitlist-api.service';
 import {debounce} from 'rxjs/operators';
+import {WaitlistItem, WaitlistPerson} from './waitlist-api';
 
 @Component({
   selector: 'app-waitlist',
@@ -16,7 +16,7 @@ export class WaitlistComponent implements OnInit {
   private static LOCAL_PERSON = 'WAITLIST_PERSON';
 
   person: FormGroup;
-  showForm = false;
+  showForm: boolean;
   publicItems: Observable<Array<WaitlistItem>>;
   privateItems: Observable<Array<WaitlistItem>>;
   private storage: Storage = window.localStorage;
@@ -41,9 +41,11 @@ export class WaitlistComponent implements OnInit {
     this.buildForm(p);
     if (p.email && p.secret) {
       this.privateItems = this.apiService.getPrivateItems(p.email, p.secret);
+      this.showForm = false;
     }
     else {
       this.publicItems = this.apiService.getPublicItems();
+      this.showForm = true;
     }
   }
 

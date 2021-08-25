@@ -37,29 +37,33 @@ export class ContractApiService extends ApiService {
   public getContractData(email: string, accessKey: string): Observable<ContractData> {
     return this.http
                .get<ContractData>(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract_get.php'),
+                 ApiService.buildUrl('api', 'contract_get.php'),
+                 {headers: ApiService.buildHeaders(email, accessKey)},
                );
   }
 
   public getSignStatus(email: string, accessKey: string): Observable<Array<SignStatus>> {
     return this.http
                .get<Array<SignStatus>>(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-signed_status_get.php'),
+                 ApiService.buildUrl('api', 'contract-signed_status_get.php'),
+                 {headers: ApiService.buildHeaders(email, accessKey)},
                );
   }
 
   public getLogEntries(email: string, accessKey: string): Observable<Array<LogEntry>> {
     return this.http
                .get<Array<LogEntry>>(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-log_get.php'),
+                 ApiService.buildUrl('api', 'contract-log_get.php'),
+                 {headers: ApiService.buildHeaders(email, accessKey)},
                );
   }
 
   public postLogEntry(email: string, accessKey: string, logType: LogType) {
     return this.http
                .put(
-                 ApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-log_put.php'),
+                 ApiService.buildUrl('api', 'contract-log_put.php'),
                  {action: logType.toString(), baseUrl: window.location.origin},
+                 {headers: ApiService.buildHeaders(email, accessKey)},
                );
   }
 
@@ -82,7 +86,8 @@ export class ContractApiService extends ApiService {
   public checkContractValidity(email: string, accessKey: string): Observable<IsValidResponse> {
     return this.http
                .get<IsValidResponse>(
-                 ContractApiService.buildSecuredUrl(email, accessKey, 'api', 'contract-valid_get.php'),
+                 ApiService.buildUrl('api', 'contract-valid_get.php'),
+                 {headers: ApiService.buildHeaders(email, accessKey)},
                );
   }
 }

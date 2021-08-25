@@ -2,11 +2,16 @@ import {environment} from '../../environments/environment';
 
 export class ApiService {
 
+  string;
+
   protected static buildUrl(...paths: string[]): string {
     return environment.baseUrl + '/' + paths.join('/');
   }
 
-  protected static buildSecuredUrl(email: string, accessKey: string, ...paths: string[]): string {
-    return ApiService.buildUrl(...paths) + '?email=' + email + '&access_key=' + accessKey;
+  protected static buildHeaders(email: string, accessKey: string): { [header: string]: string } {
+    return {
+      email,
+      accessKey,
+    };
   }
 }

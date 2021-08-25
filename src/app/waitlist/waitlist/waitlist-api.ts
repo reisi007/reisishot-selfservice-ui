@@ -21,7 +21,7 @@ export interface WaitlistItem {
   description: string;
   available_from: string;
   available_to: string;
-  max_waiting: number;
+  max_waiting: string | null; // Is a number
   registered: '0' | '1';
 }
 

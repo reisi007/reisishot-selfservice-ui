@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CreateContractComponent} from './contract/create-contract/create-contract.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -15,6 +14,9 @@ import {PreviewContractComponent} from './contract/preview-contract/preview-cont
 import {WaitlistComponent} from './waitlist/waitlist/waitlist.component';
 import {WaitlistPersonComponent} from './waitlist/waitlist-person/waitlist-person.component';
 import {WaitlistItemComponent} from './waitlist/waitlist-item/waitlist-item.component';
+import {MatomoModule} from 'ngx-matomo';
+import {AppRoutingModule} from './app-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +37,18 @@ import {WaitlistItemComponent} from './waitlist/waitlist-item/waitlist-item.comp
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    MatomoModule.forRoot({
+      scriptUrl: '//analytics.reisishot.pictures/matomo.js',
+      trackers: [
+        {
+          trackerUrl: '//analytics.reisishot.pictures/matomo.php',
+          siteId: 8,
+        },
+      ],
+      routeTracking: {
+        enable: true,
+      },
+    }),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
