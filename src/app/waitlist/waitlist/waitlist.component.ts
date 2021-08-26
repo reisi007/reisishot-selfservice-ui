@@ -63,7 +63,7 @@ export class WaitlistComponent implements OnInit {
       lastName: this.formBuilder.control(p?.lastName || '', [Validators.required]),
       email: this.formBuilder.control(p?.email || '', [Validators.required, Validators.email]),
       birthday: this.formBuilder.control(p?.birthday || '', [Validators.required, beforeNow]),
-      secret: this.formBuilder.control(p?.secret || '', [Validators.required, Validators.minLength(5)]),
+      secret: this.formBuilder.control(p?.secret || '', [Validators.required, Validators.minLength(5), Validators.maxLength(36)]),
       availability: this.formBuilder.control(p?.availability || '', [Validators.required]),
       phone_number: this.formBuilder.control(p?.phone_number || '', [Validators.required, Validators.pattern('\\+?\\d{5,}')]),
       website: this.formBuilder.control(p?.website || ''),
