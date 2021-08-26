@@ -10,8 +10,8 @@ export class ApiService {
 
   protected static buildHeaders(email: string, accessKey: string): { [header: string]: string } {
     return {
-      email,
-      accessKey,
+      Email: email,
+      Accesskey: accessKey,
     };
   }
 }
