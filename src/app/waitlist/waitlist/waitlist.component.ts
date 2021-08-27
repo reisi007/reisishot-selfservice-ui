@@ -4,7 +4,7 @@ import {beforeNow} from '../../commons/datetime.validator';
 import {Observable, timer} from 'rxjs';
 import {WaitlistApiService} from '../api/waitlist-api.service';
 import {debounce} from 'rxjs/operators';
-import {WaitlistItem, WaitlistPerson} from './waitlist-api';
+import {WaitlistItem, WaitlistPerson} from '../api/waitlist-api';
 
 @Component({
   selector: 'app-waitlist',
@@ -73,7 +73,7 @@ export class WaitlistComponent implements OnInit {
         .pipe(
           debounce(() => timer(1500)),
         )
-        .subscribe(x => {
+        .subscribe(() => {
           if (this.isPersonValid()) {
             const waitlistPerson = this.getWaitlistPerson();
             this.locallyStoredWaitlist = waitlistPerson;

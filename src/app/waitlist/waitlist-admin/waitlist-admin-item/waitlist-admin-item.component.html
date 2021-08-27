@@ -1,0 +1,38 @@
+<div class="border-solid border-black border-2 rounded-lg h-full p-2">
+  <h2 class="mt-3 mb-3">{{item.title}}</h2>
+  <table *ngIf="item.registrations?.length > 0" class="mx-auto">
+    <thead>
+    <tr>
+      <th class="border border-black px-2 py-1">Name</th>
+      <th class="border border-black px-2 py-1">Verfügbarkeit</th>
+      <th class="border border-black px-2 py-1">Freitext</th>
+      <th class="border border-black px-2 py-1">Vertrag erstellen</th>
+      <th class="border border-black px-2 py-1">Ignorieren</th>
+      <th class="border border-black px-2 py-1">Als abgeschlossen markieren</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let registration of item.registrations; let i = index">
+      <td class="border border-black px-2 py-1">{{registration.firstName}} {{registration.lastName}}</td>
+      <td class="border border-black px-2 py-1">{{registration.availability}}</td>
+      <td class="border border-black px-2 py-1">{{registration.text }}</td>
+      <td class="border border-black px-2 py-1">
+        <button (click)="createContract(i,registration)"
+                class="p-2.5 text-white bg-reisishot font-bold">
+          Vertrag erstellen
+        </button>
+      </td>
+      <td class="border border-black px-2 py-1">
+        <button (click)="ignore(i,registration)"
+                class="p-2.5 bg-gray-800 text-white">Ignorieren
+        </button>
+      </td>
+      <td class="border border-black px-2 py-1">
+        <button (click)="done(i,registration)"
+                class="p-2.5 text-white bg-reisishot font-bold">Als abgeschlossen markieren
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

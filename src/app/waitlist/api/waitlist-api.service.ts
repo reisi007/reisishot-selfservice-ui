@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
-import {WaitlistItem, WaitlistRecord} from '../waitlist/waitlist-api';
+import {WaitlistItem, WaitlistRecord} from './waitlist-api';
 
 
 @Injectable({

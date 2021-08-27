@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {formatDate} from 'src/app/commons/datetime.formatter';
 import {WaitlistApiService} from '../api/waitlist-api.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../waitlist/waitlist-api';
+import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../api/waitlist-api';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-waitlist-item',
@@ -16,9 +17,14 @@ export class WaitlistItemComponent implements OnInit {
   private personInternal: WaitlistPerson | null;
 
   constructor(
+    private router: Router,
     private apiService: WaitlistApiService,
     private formBuilder: FormBuilder,
   ) {
+  }
+
+  get url(): string {
+    return this.router.url.split('#', 2)[0];
   }
 
   get person(): WaitlistPerson | null {

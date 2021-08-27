@@ -16,6 +16,7 @@ export interface WaitlistRecord extends WaitlistPerson {
 
 export interface WaitlistItem {
   id: number;
+  short: string;
   image_id: string;
   title: string;
   description: string;

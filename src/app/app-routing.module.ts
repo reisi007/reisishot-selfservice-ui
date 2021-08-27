@@ -4,6 +4,7 @@ import {CreateContractComponent} from './contract/create-contract/create-contrac
 import {DisplayContractComponent} from './contract/display-contract/display-contract.component';
 import {PreviewContractComponent} from './contract/preview-contract/preview-contract.component';
 import {WaitlistComponent} from './waitlist/waitlist/waitlist.component';
+import {WaitlistAdminComponent} from './waitlist/waitlist-admin/waitlist-admin.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'contracts/:mail/:access_key', component: DisplayContractComponent, data: {title: 'Vertrag anzeigen & unterschreiben'}},
   {path: 'contracts/:filename', component: PreviewContractComponent, data: {title: 'Vorschau des Vertrages'}},
   {path: 'waitlist', component: WaitlistComponent, data: {title: 'Warteliste für Shootings'}},
+  {path: 'waitlist/dashboard', component: WaitlistAdminComponent, data: {title: 'Dashboard für die Warteliste'}},
 ];
 
 @NgModule({
