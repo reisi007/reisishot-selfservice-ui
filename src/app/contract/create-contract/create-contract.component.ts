@@ -85,6 +85,7 @@ export class CreateContractComponent implements OnInit {
     const person = history.state.person as Person | null;
 
     if (person) {
+      this.personArray.removeAt(0);
       this.personArray.insert(0, this.createPerson(person));
     }
   }

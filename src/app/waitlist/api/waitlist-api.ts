@@ -8,7 +8,7 @@ export interface WaitlistPerson extends Person {
 }
 
 export interface WaitlistRecord extends WaitlistPerson {
-  itemId: number;
+  item_id: number;
   text: string | null;
 }
 
@@ -30,7 +30,7 @@ export function convertPerson2Record(
   text: string,
 ): WaitlistRecord {
   const record = waitlistPerson as WaitlistRecord;
-  record.itemId = itemId;
+  record.item_id = itemId;
   record.text = text;
   return record;
 }

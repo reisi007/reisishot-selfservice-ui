@@ -19,7 +19,7 @@ export class WaitlistAdminComponent implements OnInit {
   ) {
   }
 
-  get pwdForm(): { user: string, pwd: string } {
+  get credentials(): { user: string, pwd: string } {
     return this.passwordForm.getRawValue();
   }
 
@@ -28,13 +28,10 @@ export class WaitlistAdminComponent implements OnInit {
       user: this.formBuilder.control('', [Validators.required]),
       pwd: this.formBuilder.control('', [Validators.required]),
     });
-
-    this.fetchAllData();
   }
 
-
   fetchAllData(): void {
-    const curData = this.pwdForm;
+    const curData = this.credentials;
     this.items = this.waitlistAdminApi.getWaitlistItems(curData.user, curData.pwd);
   }
 

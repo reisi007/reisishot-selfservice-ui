@@ -18,19 +18,24 @@
       <td class="border border-black px-2 py-1">{{registration.availability}}</td>
       <td class="border border-black px-2 py-1">{{registration.text }}</td>
       <td class="border border-black px-2 py-1">
-        <button (click)="createContract(i,registration)"
+        <button (click)="createContract(i,registration)" [disabled]="registration.done_internal=='1'"
                 class="p-2.5 text-white bg-reisishot font-bold">
           Vertrag erstellen
         </button>
       </td>
       <td class="border border-black px-2 py-1">
-        <button (click)="ignore(i,registration)"
-                class="p-2.5 bg-gray-800 text-white">Ignorieren
+        <button (click)="ignore(i,registration)" *ngIf="registration.done_internal=='0'; else ignored"
+                class="p-2.5 bg-gray-800 text-white">
+          Ignorieren
+        </button>
+        <button #ignored class="p-2.5 bg-gray-800 text-white" disabled>
+          Bereits ignoriert
         </button>
       </td>
       <td class="border border-black px-2 py-1">
         <button (click)="done(i,registration)"
-                class="p-2.5 text-white bg-reisishot font-bold">Als abgeschlossen markieren
+                class="p-2.5 text-white bg-reisishot font-bold">
+          Abschließen
         </button>
       </td>
     </tr>

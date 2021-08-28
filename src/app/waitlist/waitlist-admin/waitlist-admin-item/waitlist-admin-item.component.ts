@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {WaitlistItemWithRegistrations} from '../../admin-api/waitlist-admin-api';
+import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../../admin-api/waitlist-admin-api';
 import {WaitlistAdminApiService} from '../../admin-api/waitlist-admin-api.service';
 import {WaitlistRecord} from '../../api/waitlist-api';
 import {Router} from '@angular/router';
@@ -12,10 +12,20 @@ import {Router} from '@angular/router';
 export class WaitlistAdminItemComponent {
   private data: WaitlistItemWithRegistrations | null;
 
+  private internalUserPwd: { user: string, pwd: string };
+
   constructor(
     private waitlistAdminApi: WaitlistAdminApiService,
     private router: Router,
   ) {
+  }
+
+  get credentials(): { user: string, pwd: string } {
+    return this.internalUserPwd;
+  }
+
+  @Input() set credentials(value: { user: string, pwd: string }) {
+    this.internalUserPwd = value;
   }
 
   get item(): WaitlistItemWithRegistrations | null {
@@ -30,16 +40,18 @@ export class WaitlistAdminItemComponent {
     this.router.navigate(['contracts'], {state: {person: waitlistRecord}});
   }
 
-  public ignore(idx: number, waitlistRecord: WaitlistRecord) {
-    // TODO implementation
-
-    this.removeRegistration(idx);
+  public ignore(idx: number, waitlistRecord: AdminWaitlistRecord) {
+    const data = this.credentials;
+    this.waitlistAdminApi
+        .ignoreWaitlistItem(data.user, data.pwd, waitlistRecord.item_id)
+        .subscribe(() => waitlistRecord.done_internal = '1');
   }
 
   public done(idx: number, waitlistRecord: WaitlistRecord) {
-    // TODO implementation
-
-    this.removeRegistration(idx);
+    const data = this.credentials;
+    this.waitlistAdminApi
+        .removeWaitlistItem(data.user, data.pwd, waitlistRecord.item_id)
+        .subscribe(() => this.removeRegistration(idx));
   }
 
   private removeRegistration(idx: number): void {

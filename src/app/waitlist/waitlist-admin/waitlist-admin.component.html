@@ -19,7 +19,8 @@
   </form>
   <ng-container *ngIf="items">
     <div class="flex flex-wrap">
-      <app-waitlist-admin-item *ngFor="let item of items | async" [item]="item"
+      <app-waitlist-admin-item *ngFor="let item of items | async"
+                               [credentials]="credentials" [item]="item"
                                class="w-full xl:w-1/2 p-3 self-stretch"></app-waitlist-admin-item>
     </div>
   </ng-container>

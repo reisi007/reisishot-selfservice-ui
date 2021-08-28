@@ -1,5 +1,6 @@
 <div class="text-center p-6">
   <h1 class="mb-2">Shooting Warteliste</h1>
+  <button [routerLink]="['dashboard']" class="text-sm py-1 px-2">Admin Dashboard</button>
   <form *ngIf="!isPersonValid() || showForm; else personFromLocalStorageInfo" [formGroup]="person">
     <app-waitlist-person [person]="person"></app-waitlist-person>
     <button (click)="showForm = false" *ngIf="isPersonValid()" class="py-1.5 px-2.5 my-1 text-base">

@@ -20,4 +20,22 @@ export class WaitlistAdminApiService extends ApiService {
                  {headers: ApiService.buildHeaders(user, pwd)},
                );
   }
+
+  public ignoreWaitlistItem(user: string, pwd: string, id: number): Observable<any> {
+    return this.http
+               .post(
+                 ApiService.buildUrl('api', 'waitlist-admin-ignore_post.php?id=' + id),
+                 null,
+                 {headers: ApiService.buildHeaders(user, pwd)},
+               );
+  }
+
+  public removeWaitlistItem(user: string, pwd: string, id: number): Observable<any> {
+    return this.http
+               .post(
+                 ApiService.buildUrl('api', 'waitlist-admin-delete_post.php?id=' + id),
+                 null,
+                 {headers: ApiService.buildHeaders(user, pwd)},
+               );
+  }
 }
