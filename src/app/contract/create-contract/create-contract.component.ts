@@ -81,6 +81,12 @@ export class CreateContractComponent implements OnInit {
       dueDate: this.formBuilder.control('', [Validators.required, afterNow]),
       baseUrl: this.formBuilder.control(window.location.origin, [Validators.required]),
     });
+
+    const person = history.state.person as Person | null;
+
+    if (person) {
+      this.personArray.insert(0, this.createPerson(person));
+    }
   }
 
   addPerson() {

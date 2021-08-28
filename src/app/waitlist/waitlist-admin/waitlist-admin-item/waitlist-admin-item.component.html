@@ -12,7 +12,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let registration of item.registrations; let i = index">
+    <tr *ngFor="let registration of item.registrations; let i = index"
+        [ngClass]="{'bg-gray-100': registration.done_internal === '1'}">
       <td class="border border-black px-2 py-1">{{registration.firstName}} {{registration.lastName}}</td>
       <td class="border border-black px-2 py-1">{{registration.availability}}</td>
       <td class="border border-black px-2 py-1">{{registration.text }}</td>

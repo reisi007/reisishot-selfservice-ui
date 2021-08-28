@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {WaitlistItemWithRegistrations} from '../../admin-api/waitlist-admin-api';
 import {WaitlistAdminApiService} from '../../admin-api/waitlist-admin-api.service';
 import {WaitlistRecord} from '../../api/waitlist-api';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-waitlist-admin-item',
@@ -13,6 +14,7 @@ export class WaitlistAdminItemComponent {
 
   constructor(
     private waitlistAdminApi: WaitlistAdminApiService,
+    private router: Router,
   ) {
   }
 
@@ -25,15 +27,17 @@ export class WaitlistAdminItemComponent {
   }
 
   public createContract(idx: number, waitlistRecord: WaitlistRecord) {
-
+    this.router.navigate(['contracts'], {state: {person: waitlistRecord}});
   }
 
   public ignore(idx: number, waitlistRecord: WaitlistRecord) {
+    // TODO implementation
 
     this.removeRegistration(idx);
   }
 
   public done(idx: number, waitlistRecord: WaitlistRecord) {
+    // TODO implementation
 
     this.removeRegistration(idx);
   }
