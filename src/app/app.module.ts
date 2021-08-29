@@ -18,6 +18,7 @@ import {MatomoModule} from 'ngx-matomo';
 import {AppRoutingModule} from './app-routing.module';
 import {WaitlistAdminComponent} from './waitlist/waitlist-admin/waitlist-admin.component';
 import {WaitlistAdminItemComponent} from './waitlist/waitlist-admin/waitlist-admin-item/waitlist-admin-item.component';
+import {ChangePwdComponent} from './change-pwd/change-pwd.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {WaitlistAdminItemComponent} from './waitlist/waitlist-admin/waitlist-adm
     WaitlistItemComponent,
     WaitlistAdminComponent,
     WaitlistAdminItemComponent,
+    ChangePwdComponent,
   ],
   imports: [
     BrowserModule,

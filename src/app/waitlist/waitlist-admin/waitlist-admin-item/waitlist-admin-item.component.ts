@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../../admin-api/waitlist-admin-api';
 import {WaitlistAdminApiService} from '../../admin-api/waitlist-admin-api.service';
-import {WaitlistRecord} from '../../api/waitlist-api';
 import {Router} from '@angular/router';
 
 @Component({
@@ -36,7 +35,8 @@ export class WaitlistAdminItemComponent {
     this.data = value;
   }
 
-  public createContract(idx: number, waitlistRecord: WaitlistRecord) {
+  public createContract(idx: number, waitlistRecord: AdminWaitlistRecord) {
+    this.ignore(idx, waitlistRecord);
     this.router.navigate(['contracts'], {state: {person: waitlistRecord}});
   }
 
@@ -47,7 +47,7 @@ export class WaitlistAdminItemComponent {
         .subscribe(() => waitlistRecord.done_internal = '1');
   }
 
-  public done(idx: number, waitlistRecord: WaitlistRecord) {
+  public done(idx: number, waitlistRecord: AdminWaitlistRecord) {
     const data = this.credentials;
     this.waitlistAdminApi
         .removeWaitlistItem(data.user, data.pwd, waitlistRecord.item_id)
