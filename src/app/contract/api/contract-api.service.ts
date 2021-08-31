@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CreateContract} from './createContract';
+import {CreateContract, Person} from './createContract';
 import {ContractData} from './contractData';
 import {SignStatus} from './signStatus';
 import {LogEntry, LogType} from './logEntry';
@@ -88,6 +88,14 @@ export class ContractApiService extends ApiService {
                .get<IsValidResponse>(
                  ApiService.buildUrl('api', 'contract-valid_get.php'),
                  {headers: ApiService.buildHeaders(email, accessKey)},
+               );
+  }
+
+  public loadPersons(user: string, pwd: string): Observable<Array<Person>> {
+    return this.http
+               .get<Array<Person>>(
+                 ApiService.buildUrl('api', 'contract-people_get.php'),
+                 {headers: ApiService.buildHeaders(user, pwd)},
                );
   }
 }
