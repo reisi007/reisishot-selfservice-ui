@@ -1,0 +1,8 @@
+<div class="text-center p-6 h-full">
+  <h1>Reisishot - Florian Reisinger Photography Service</h1>
+  <div class="flex flex-wrap content-center h-full">
+    <div *ngFor="let item of items" class="w-full md:w-1/2">
+      <button [routerLink]="item.url" class="mx-auto w-11/12"> {{item.name}}</button>
+    </div>
+  </div>
+</div>
