@@ -1,4 +1,23 @@
 <div class="text-center p-6 h-full">
-  <h1>Review erstellen oder bearbeiten</h1>
-  <app-rating [editable]="true" [max]="100" [min]="0"></app-rating>
+  <form [formGroup]="reviewData">
+    <h1>Review erstellen oder bearbeiten</h1>
+    <app-rating (newValue)="setValue($event)" [editable]="true" [max]="100" [min]="0"></app-rating>
+    <div>
+      <input class="w-full md:w-1/3" formControlName="name" placeholder="Name"
+             type="text"/>
+    </div>
+    <div>
+      <textarea [pattern]="minWordRegexp" class="w-full md:w-1/3" formControlName="review" placeholder="Bewertung"
+                rows="4"></textarea>
+      <div *ngIf="reviewData.get('review')?.errors?.pattern" class="text-red-500">
+        Bitte schreibe zumindest 20 Wörter.
+      </div>
+    </div>
+    <div>
+      <button (click)="saveReview()" [disabled]="!reviewData.valid"
+              class="w-full md:w-1/3 bg-reisishot text-white">Speichern
+      </button>
+    </div>
+  </form>
+  <pre class="mt-10">{{reviewData.getRawValue()|json}}</pre>
 </div>

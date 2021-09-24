@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'contracts/:filename', component: PreviewContractComponent, data: {title: 'Vorschau des Vertrages'}},
   {path: 'waitlist', component: WaitlistComponent, data: {title: 'Warteliste für Shootings'}},
   {path: 'waitlist/dashboard', component: WaitlistAdminComponent, data: {title: 'Dashboard für die Warteliste'}},
-  {path: 'review/:mail/:access_key', component: ReviewComponent, data: {title: 'Bewertung Abgeben oder bearbeiten'}},
+  {path: 'review/:mail/:access_key', component: ReviewComponent, data: {title: 'Bewertung abgeben oder bearbeiten'}},
   {path: '**', redirectTo: '/', pathMatch: 'full'},
 ];
 
