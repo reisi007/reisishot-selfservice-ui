@@ -20,6 +20,8 @@ import {WaitlistAdminComponent} from './waitlist/waitlist-admin/waitlist-admin.c
 import {WaitlistAdminItemComponent} from './waitlist/waitlist-admin/waitlist-admin-item/waitlist-admin-item.component';
 import {ChangePwdComponent} from './change-pwd/change-pwd.component';
 import {OverviewComponent} from './overview/overview.component';
+import {RatingComponent} from './review/rating/rating.component';
+import {ReviewComponent} from './review/review.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import {OverviewComponent} from './overview/overview.component';
     WaitlistAdminItemComponent,
     ChangePwdComponent,
     OverviewComponent,
+    RatingComponent,
+    ReviewComponent,
   ],
   imports: [
     BrowserModule,

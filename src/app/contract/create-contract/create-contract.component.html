@@ -5,7 +5,7 @@
 <ng-template #form>
   <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
   <p>Personen, für die der erstellte Vertrag gelten soll:</p>
-  <form [formGroup]="emailForm">
+  <form [formGroup]="emailForm" onsubmit="return false;">
     <div *ngFor="let item of personArray.controls; let i = index; trackBy: trackByIndex"
          class="py-2"
          formArrayName="persons"

@@ -1,0 +1,14 @@
+<div class="p-3">
+  <ng-container *ngIf="editable">
+    <form [formGroup]="inputForm" onsubmit="return false;">
+      Wert zwischen {{min}} und {{max}}:&nbsp;&nbsp;
+      <input [max]="max" [min]="min" formControlName="rating" step="1" type="number">
+    </form>
+
+  </ng-container>
+  <div class="py-4 text-reisishot">
+    <i *ngFor="let i of [].constructor(stars)" class="icon rs-star-full rs-4x"></i>
+    <i *ngIf="halfStarNeeded" class="icon rs-star-half rs-4x"></i>
+    <i *ngFor="let i of [].constructor(emptyStars)" class="icon rs-star-empty rs-4x"></i>
+  </div>
+</div>

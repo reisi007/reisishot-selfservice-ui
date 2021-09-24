@@ -19,7 +19,6 @@ export class CreateContractComponent implements OnInit {
   availableContracts: Observable<string[]> = this.apiService.getContracts();
   formSentState = {error: '', completed: false, sent: false};
   dbPersons: Observable<Array<Person>>;
-  private storage: Storage = window.localStorage;
 
   constructor(
     private apiService: ContractApiService,

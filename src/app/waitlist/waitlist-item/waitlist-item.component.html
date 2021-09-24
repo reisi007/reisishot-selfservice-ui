@@ -6,7 +6,7 @@
   <div class="d-block">
     <span *ngIf="item.available_to">Anmedleschluss: {{formatDate(item.available_to)}}</span>
   </div>
-  <form *ngIf="item.registered == '0'; else abmelden" [formGroup]="registration">
+  <form *ngIf="item.registered == '0'; else abmelden" [formGroup]="registration" onsubmit="return false;">
     <textarea class="w-11/12 mx-auto"
               formControlName="text"
               placeholder="Zusätzliche Informationen"
