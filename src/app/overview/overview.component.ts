@@ -12,7 +12,7 @@ export class OverviewComponent {
       name: 'In Warteliste eintragen',
       url: 'waitlist',
     }, {
-      name: 'Bewerung abgeben',
+      name: 'Bewertung abgeben',
       url: 'review',
     }, {
       name: 'Neuen Vertrag erstellen',
