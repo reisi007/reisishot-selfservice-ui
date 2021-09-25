@@ -13,7 +13,7 @@ export class ReviewComponent implements OnInit {
 
   reviewData: FormGroup;
   public minWordRegexp = /\s*?(\S+?\s+?){20,}\S*?/;
-  emailDisabled = false;
+  emailDisabled = null;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
