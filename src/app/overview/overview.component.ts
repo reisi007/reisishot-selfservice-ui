@@ -7,14 +7,16 @@ import {Component} from '@angular/core';
 })
 export class OverviewComponent {
 
-  items = [
+  items: Array<{ name: string, url: string }> = [
     {
       name: 'In Warteliste eintragen',
       url: 'waitlist',
+    }, {
+      name: 'Bewerung abgeben',
+      url: 'review',
     }, {
       name: 'Neuen Vertrag erstellen',
       url: 'contracts',
     },
   ];
-
 }

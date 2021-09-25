@@ -22,6 +22,7 @@ import {ChangePwdComponent} from './change-pwd/change-pwd.component';
 import {OverviewComponent} from './overview/overview.component';
 import {RatingComponent} from './review/rating/rating.component';
 import {ReviewComponent} from './review/review.component';
+import {LoadingReviewComponent} from './review/loading-review/loading-review.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {ReviewComponent} from './review/review.component';
     OverviewComponent,
     RatingComponent,
     ReviewComponent,
+    LoadingReviewComponent,
   ],
   imports: [
     BrowserModule,

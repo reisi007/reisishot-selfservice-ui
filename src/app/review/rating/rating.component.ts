@@ -18,11 +18,20 @@ export class RatingComponent implements OnInit {
   halfStarNeeded = false;
   emptyStars = 5;
   private intEditable: boolean;
-  @Input()
-  private intValue: number | null = null;
   private step: number;
 
   constructor(private formBuilder: FormBuilder) {
+    this.inputForm = this.formBuilder.group({
+      rating: this.formBuilder.control(this.value ?? 0,
+        [Validators.required, Validators.min(this.min), Validators.max(this.max)]),
+    });
+  }
+
+  @Input()
+  set value(value: number | null) {
+    if (value != null) {
+      this.rating = value;
+    }
   }
 
   public get editable(): boolean {
@@ -57,19 +66,10 @@ export class RatingComponent implements OnInit {
   ngOnInit(): void {
     this.step = (this.max - this.min) / 5;
 
-    this.inputForm = this.formBuilder.group({
-      rating: this.formBuilder.control(this.intValue ?? 0,
-        [Validators.required, Validators.min(this.min), Validators.max(this.max)]),
-    });
-
     this.inputForm.get('rating')
-        .valueChanges.subscribe(_ => {
-      const rating = this.rating;
-      this.stars = Math.floor(rating / this.step);
-      this.halfStarNeeded = this.step * this.stars + this.step / 2 <= rating;
-      this.emptyStars = 5 - this.stars - (this.halfStarNeeded ? 1 : 0);
-      this.newValue.emit(rating);
-    });
+        .valueChanges.subscribe(() => this.recalculateRating());
+
+    this.recalculateRating();
   }
 
   starClicked(e: MouseEvent) {
@@ -88,5 +88,13 @@ export class RatingComponent implements OnInit {
     this.rating = Math.ceil(clickedStar * this.step);
     console.log('Value:', this.rating);
 
+  }
+
+  private recalculateRating() {
+    const rating = this.rating;
+    this.stars = Math.floor(rating / this.step);
+    this.halfStarNeeded = this.step * this.stars + this.step / 2 <= rating;
+    this.emptyStars = 5 - this.stars - (this.halfStarNeeded ? 1 : 0);
+    this.newValue.emit(rating);
   }
 }
