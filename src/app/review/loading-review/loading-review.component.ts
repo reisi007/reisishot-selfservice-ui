@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoadedReview} from '../api/review.model';
 import {ReviewApiService} from '../api/review-api.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-loading-review',
@@ -14,6 +14,7 @@ export class LoadingReviewComponent implements OnInit {
 
   constructor(
     private apiService: ReviewApiService,
+    private router: Router,
     private route: ActivatedRoute,
   ) {
   }
@@ -25,11 +26,12 @@ export class LoadingReviewComponent implements OnInit {
 
       this.apiService.loadReview(email, accessKey)
           .subscribe(review => {
-            if (typeof review.rating === 'string') {
-              review.rating = parseInt(review.rating, 10);
-            }
-            return this.data = review;
-          });
+              if (typeof review.rating === 'string') {
+                review.rating = parseInt(review.rating, 10);
+              }
+              return this.data = review;
+            },
+            _ => this.router.navigate(['review', email]));
     });
   }
 }

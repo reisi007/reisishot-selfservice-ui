@@ -1,3 +1,5 @@
+const extensions = ['hover', 'focus', 'disabled', 'visited']
+
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'aot' : 'jit',
   purge: {
@@ -10,7 +12,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      fontWeight: ['hover', 'focus'],
+      fontWeight: extensions,
       fontFamily: {
         sans: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
       },
@@ -27,9 +29,9 @@ module.exports = {
   },
   variants: {
     extend: {
-      opacity: ['disabled'],
-      textColor: ['disabled'],
-      backgroundColor: ['disabled']
+      opacity: extensions,
+      textColor: extensions,
+      backgroundColor: extensions
     },
   },
   plugins: [],

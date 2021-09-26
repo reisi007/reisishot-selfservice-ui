@@ -58,10 +58,9 @@
                placeholder="Vertrag ist gültig bis"/>
       </label>
     </div>
-    <div>
-      <textarea class="w-full md:w-1/3" formControlName="text" rows="4"
-                placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"></textarea>
-    </div>
+    <textarea class="w-full md:w-1/3 block mx-auto" formControlName="text"
+              placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"
+              rows="4"></textarea>
     <div>
       <div *ngIf="additionalText"
            [innerHTML]="additionalText | markdown"

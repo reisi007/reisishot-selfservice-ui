@@ -10,7 +10,6 @@ import {DisplayContractComponent} from './contract/display-contract/display-cont
 import {MarkdownPipe} from './commons/markdown/markdown.pipe';
 import {HttpErrorInterceptor} from './commons/HttpErrorInterceptor';
 import {ResendContractAccessKeyComponent} from './contract/resend-contract-access-key/resend-contract-access-key.component';
-import {PreviewContractComponent} from './contract/preview-contract/preview-contract.component';
 import {WaitlistComponent} from './waitlist/waitlist/waitlist.component';
 import {WaitlistPersonComponent} from './waitlist/waitlist-person/waitlist-person.component';
 import {WaitlistItemComponent} from './waitlist/waitlist-item/waitlist-item.component';
@@ -23,6 +22,8 @@ import {OverviewComponent} from './overview/overview.component';
 import {RatingComponent} from './review/rating/rating.component';
 import {ReviewComponent} from './review/review.component';
 import {LoadingReviewComponent} from './review/loading-review/loading-review.component';
+import {PreviewContractChooserComponent} from './waitlist/preview-contract-chooser/preview-contract-chooser.component';
+import {PreviewContractComponent} from './contract/preview-contract/preview-contract.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {LoadingReviewComponent} from './review/loading-review/loading-review.com
     RatingComponent,
     ReviewComponent,
     LoadingReviewComponent,
+    PreviewContractChooserComponent,
   ],
   imports: [
     BrowserModule,

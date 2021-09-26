@@ -12,7 +12,8 @@ import {LoadedReview, UpdatableReview} from './api/review.model';
 export class ReviewComponent implements OnInit {
 
   reviewData: FormGroup;
-  public minWordRegexp = /\s*?(\S+?\s+?){20,}\S*?/;
+  minWordsCnt = 15;
+  public minWordRegexp = new RegExp('\\s*?(\\S+?\\s+?){' + (this.minWordsCnt - 1) + ',}\\S+?');
   emailDisabled = null;
 
   constructor(private formBuilder: FormBuilder,
@@ -23,7 +24,8 @@ export class ReviewComponent implements OnInit {
       name: this.formBuilder.control('', [Validators.required]),
       access_key: this.formBuilder.control(''),
       email: this.formBuilder.control('', [Validators.email, Validators.required]),
-      review: this.formBuilder.control('', [Validators.required, Validators.pattern(this.minWordRegexp)]),
+      review_private: this.formBuilder.control('', []),
+      review_public: this.formBuilder.control('', [Validators.required, Validators.pattern(this.minWordRegexp)]),
     });
   }
 

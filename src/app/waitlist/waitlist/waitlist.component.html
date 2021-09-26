@@ -14,6 +14,7 @@
       <p>Bitte fülle das Formular oben aus, um dich zu einem Shooting anmelden zu können!</p>
     </ng-template>
   </div>
+  <app-preview-contract-chooser></app-preview-contract-chooser>
   <ng-template #personFromLocalStorageInfo>
     <h3 class="mb-1">Hallo {{getWaitlistPerson().firstName}} {{getWaitlistPerson().lastName}}! </h3>
     <button (click)="showForm = true" class="py-1.5 px-2.5 my-1 text-base">Meine Daten bearbeiten</button>

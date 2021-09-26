@@ -1,5 +1,5 @@
 <div class="text-center p-6 h-full">
-  <form [formGroup]="reviewData">
+  <form [formGroup]="reviewData" class="space-y-0">
     <h1>Review erstellen oder bearbeiten</h1>
     <app-rating (newValue)="setValue($event)" [editable]="true" [max]="100" [min]="0"
                 [value]="reviewData.get('rating').value"></app-rating>
@@ -12,14 +12,19 @@
              placeholder="E-Mail" type="email"/>
     </div>
     <div>
-      <textarea [pattern]="minWordRegexp" class="w-full md:w-1/3" formControlName="review" placeholder="Bewertung"
+      <textarea class="w-full md:w-1/3 block mx-auto" formControlName="review_private"
+                placeholder="Feedback, das nicht veröffentlicht wird"
                 rows="10"></textarea>
-      <div *ngIf="reviewData.get('review')?.errors?.pattern" class="text-red-500">
-        Bitte schreibe zumindest 20 Wörter.
+
+      <textarea [pattern]="minWordRegexp" class="w-full md:w-1/3 block mx-auto"
+                formControlName="review_public" placeholder="Öffentliche Bewertung"
+                rows="10"></textarea>
+      <div *ngIf="reviewData.get('review_public')?.errors?.pattern" class="text-red-500">
+        Bitte schreibe zumindest {{minWordsCnt}} Wörter.
       </div>
     </div>
     <div>
-      <button (click)="saveReview()" [disabled]="!reviewData.valid"
+      <button (click)="saveReview()" [attr.disabled]="reviewData.valid?null:''"
               class="w-full md:w-1/3 bg-reisishot text-white">Speichern
       </button>
     </div>

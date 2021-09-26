@@ -16,7 +16,7 @@ export class ReviewApiService extends ApiService {
   public loadReview(email: string, accessKey: string): Observable<LoadedReview> {
     return this.http
                .get<LoadedReview>(
-                 ApiService.buildUrl('api', 'review_get.php'),
+                 ApiService.buildUrl('api', 'reviews_get.php'),
                  {headers: ApiService.buildHeaders(email, accessKey)},
                );
   }
@@ -24,7 +24,7 @@ export class ReviewApiService extends ApiService {
   public saveReview(review: UpdatableReview): Observable<{ access_key: string }> {
     return this.http
                .post<{ access_key: string }>(
-                 ApiService.buildUrl('api', 'review_post.php'),
+                 ApiService.buildUrl('api', 'reviews_post.php'),
                  review,
                  {headers: ApiService.buildHeaders(review.email, review.access_key)},
                );

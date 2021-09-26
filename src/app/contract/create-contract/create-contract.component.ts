@@ -96,8 +96,7 @@ export class CreateContractComponent implements OnInit {
             this.formSentState.sent = false;
             this.formSentState.error = 'Fehler beim Senden des Formulars!';
           },
-        )
-    ;
+        );
 
     this.formSentState.sent = true;
   }

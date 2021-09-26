@@ -86,8 +86,6 @@ export class RatingComponent implements OnInit {
     }
 
     this.rating = Math.ceil(clickedStar * this.step);
-    console.log('Value:', this.rating);
-
   }
 
   private recalculateRating() {
