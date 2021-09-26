@@ -1,9 +1,10 @@
 const extensions = ['hover', 'focus', 'disabled', 'visited']
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  mode: process.env.NODE_ENV === 'production' ? 'aot' : 'jit',
+  mode: isProd ? 'aot' : 'jit',
   purge: {
-    enabled: process.env.NODE_ENV === 'production',
+    enabled: isProd,
     content: [
       './src/**/*.html',
       './src/**/*.scss'
