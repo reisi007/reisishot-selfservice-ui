@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {WaitlistAdminApiService} from '../admin-api/waitlist-admin-api.service';
+import {WaitlistAdminApiService} from '../waitlist/admin-api/waitlist-admin-api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {WaitlistItemWithRegistrations} from '../admin-api/waitlist-admin-api';
+import {WaitlistItemWithRegistrations} from '../waitlist/admin-api/waitlist-admin-api';
 
 @Component({
-  selector: 'app-waitlist-admin',
-  templateUrl: './waitlist-admin.component.html',
-  styleUrls: ['./waitlist-admin.component.scss'],
+  selector: 'app-waitlist-dashboard',
+  templateUrl: './waitlist-dashboard.component.html',
+  styleUrls: ['./waitlist-dashboard.component.scss'],
 })
-export class WaitlistAdminComponent implements OnInit {
+export class WaitlistDashboardComponent implements OnInit {
   passwordForm: FormGroup;
   items: Observable<Array<WaitlistItemWithRegistrations>>;
 

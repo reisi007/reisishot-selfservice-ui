@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WaitlistAdminComponent} from './waitlist-admin.component';
+import {WaitlistDashboardComponent} from './waitlist-dashboard.component';
 
 describe('WaitlistAdminComponent', () => {
-  let component: WaitlistAdminComponent;
-  let fixture: ComponentFixture<WaitlistAdminComponent>;
+  let component: WaitlistDashboardComponent;
+  let fixture: ComponentFixture<WaitlistDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [WaitlistAdminComponent],
+                   declarations: [WaitlistDashboardComponent],
                  })
                  .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WaitlistAdminComponent);
+    fixture = TestBed.createComponent(WaitlistDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,14 +1,14 @@
 import {Component, Input} from '@angular/core';
-import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../../admin-api/waitlist-admin-api';
-import {WaitlistAdminApiService} from '../../admin-api/waitlist-admin-api.service';
+import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../../waitlist/admin-api/waitlist-admin-api';
+import {WaitlistAdminApiService} from '../../waitlist/admin-api/waitlist-admin-api.service';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-waitlist-admin-item',
-  templateUrl: './waitlist-admin-item.component.html',
-  styleUrls: ['./waitlist-admin-item.component.scss'],
+  selector: 'app-waitlist-dashboard-item',
+  templateUrl: './waitlist-dashboard-item.component.html',
+  styleUrls: ['./waitlist-dashboard-item.component.scss'],
 })
-export class WaitlistAdminItemComponent {
+export class WaitlistDashboardItemComponent {
   private data: WaitlistItemWithRegistrations | null;
 
   private internalUserPwd: { user: string, pwd: string };

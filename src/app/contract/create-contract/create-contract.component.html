@@ -32,30 +32,30 @@
       </button>
     </div>
     <div class="w-full md:w-1/3 m-auto">
-      <button class="bg-reisishot text-center" (click)="addPerson()">+</button>
-      <button class="bg-red-500 text-center" (click)="removePerson()">-</button>
+      <button (click)="addPerson()" class="bg-reisishot text-center">+</button>
+      <button (click)="removePerson()" class="bg-red-500 text-center">-</button>
     </div>
     <div>
-      <input class="w-full md:w-1/3" type="text" formControlName="user"
-             placeholder="Benutzer für die Erstellung des Vertrages"/>
+      <input class="w-full md:w-1/3" formControlName="user" placeholder="Benutzer für die Erstellung des Vertrages"
+             type="text"/>
     </div>
     <div>
-      <input class="w-full md:w-1/3" type="password" formControlName="pwd"
-             placeholder="Passwort">
+      <input class="w-full md:w-1/3" formControlName="pwd" placeholder="Passwort"
+             type="password">
     </div>
     <div>
-      <select formControlName="contractType"
-              class="w-full md:w-1/3"
+      <select class="w-full md:w-1/3"
+              formControlName="contractType"
       >
-        <option value selected disabled>Vertrag auswählen</option>
+        <option disabled selected value>Vertrag auswählen</option>
         <option *ngFor="let item of availableContracts | async" [value]="item">{{item | prettyFilename}}</option>
       </select>
     </div>
     <div>
       <label class="flex flex-row mx-auto items-baseline w-full md:w-1/3">
         <span>Unterschreibbar bis:&nbsp;</span>
-        <input class="flex-grow" type="datetime-local" formControlName="dueDate"
-               placeholder="Vertrag ist gültig bis"/>
+        <input class="flex-grow" formControlName="dueDate" placeholder="Vertrag ist gültig bis"
+               type="datetime-local"/>
       </label>
     </div>
     <textarea class="w-full md:w-1/3 block mx-auto" formControlName="text"

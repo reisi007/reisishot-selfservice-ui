@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {formatDate} from 'src/app/commons/datetime.formatter';
-import {WaitlistApiService} from '../api/waitlist-api.service';
+import {WaitlistApiService} from '../../api/waitlist-api.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../api/waitlist-api';
+import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../../api/waitlist-api';
 import {Router} from '@angular/router';
 
 @Component({

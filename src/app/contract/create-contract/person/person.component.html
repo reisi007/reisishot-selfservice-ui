@@ -2,29 +2,29 @@
 
   <h3 class="mb-1">{{cnt + 1}}. Person</h3>
   <div>
-    <input formControlName="firstName"
+    <input class="w-1/2 md:w-1/6"
+           formControlName="firstName"
            placeholder="Vorname"
-           class="w-1/2 md:w-1/6"
-           type="text" required
+           required type="text"
     >
-    <input formControlName="lastName"
+    <input class="w-1/2 md:w-1/6"
+           formControlName="lastName"
            placeholder="Nachname"
-           class="w-1/2 md:w-1/6"
-           type="text" required
+           required type="text"
     >
   </div>
   <div>
-    <input formControlName="email"
+    <input class="w-full md:w-1/3"
+           formControlName="email"
            placeholder="Deine E-Mail Adresse"
-           class="w-full md:w-1/3"
-           type="email" required
+           required type="email"
     >
   </div>
   <div>
-    <input formControlName="birthday"
+    <input class="w-full md:w-1/3"
+           formControlName="birthday"
            placeholder="Dein Geburtstag"
-           class="w-full md:w-1/3"
-           type="date" required
+           required type="date"
     >
   </div>
 </div>

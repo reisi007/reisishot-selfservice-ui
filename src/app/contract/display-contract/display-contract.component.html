@@ -1,4 +1,4 @@
-<div class="text-center p-6" *ngIf="contractData!== undefined">
+<div *ngIf="contractData!== undefined" class="text-center p-6">
   <div *ngIf="contractData; then content else nullMsg"></div>
 </div>
 
@@ -8,10 +8,10 @@
     bis {{formatDateTime(contractData.due_date)}} zu
     unterschreiben
   </div>
-  <div class="m-2 p-2 border border-solid border-black" [innerHTML]="contractData.markdown | markdown "></div>
+  <div [innerHTML]="contractData.markdown | markdown " class="m-2 p-2 border border-solid border-black"></div>
   <small>Hash: {{contractData.hash_value}} ({{contractData.hash_algo}})</small>
   <div>
-    <button class="bg-reisishot" [disabled]="curUserSigned || contractData === undefined" (click)="sign()">
+    <button (click)="sign()" [disabled]="curUserSigned || contractData === undefined" class="bg-reisishot">
       Unterschreiben
     </button>
   </div>
@@ -32,7 +32,7 @@
           class="border border-black p-2">{{item.firstname}} {{item.lastname}} {{formatDate(item.birthday)}}
           - {{calculateAge(item.birthday)}} Jahre
         </td>
-        <td class="border border-black p-2 font-bold bg-reisishot" *ngIf="item.signed !== '0'; else notSigned">
+        <td *ngIf="item.signed !== '0'; else notSigned" class="border border-black p-2 font-bold bg-reisishot">
           ✓ Bereits unterschrieben
         </td>
         <ng-template #notSigned>
