@@ -26,9 +26,15 @@
       </div>
     </div>
     <div>
-      <button (click)="saveReview()" [attr.disabled]="reviewData.valid?null:''"
+      <button (click)="saveReview()" [attr.disabled]="reviewData.valid &&!showSaved?null:''"
               class="w-full md:w-1/3 bg-reisishot text-white">Speichern
       </button>
+    </div>
+    <div>
+      <p *ngIf="showSaved" @triggerSaved
+         class="p-5 rounded-lg mx-auto block w-full md:w-1/3 bg-reisishot text-white font-light text-3xl">Deine
+        Bewertung wurde
+        gespeichert.</p>
     </div>
   </form>
 </div>

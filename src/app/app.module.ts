@@ -6,6 +6,7 @@ import {HttpErrorInterceptor} from './HttpErrorInterceptor';
 import {MatomoModule} from 'ngx-matomo';
 import {AppRoutingModule} from './app-routing.module';
 import {OverviewComponent} from './overview/overview.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {OverviewComponent} from './overview/overview.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     MatomoModule.forRoot({
