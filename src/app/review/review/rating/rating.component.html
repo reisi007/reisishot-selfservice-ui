@@ -2,7 +2,8 @@
   <ng-container *ngIf="editable">
     <form [formGroup]="inputForm" onsubmit="return false;">
       Wert zwischen {{min}} und {{max}}:&nbsp;&nbsp;
-      <input [max]="max" [min]="min" formControlName="rating" step="1" type="number">
+      <input [max]="max" [min]="min" [ngClass]="{'loaded':  rating != 0}" formControlName="rating" step="1"
+             type="number">
     </form>
 
   </ng-container>

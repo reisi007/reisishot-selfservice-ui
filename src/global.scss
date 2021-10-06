@@ -1,0 +1,7 @@
+input, select, textarea {
+  &.loaded {
+    &:not([disabled]) {
+      color: black !important;
+    }
+  }
+}

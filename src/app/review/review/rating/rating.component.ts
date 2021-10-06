@@ -43,7 +43,7 @@ export class RatingComponent implements OnInit {
     this.intEditable = value;
   }
 
-  private get rating(): number {
+  get rating(): number {
     const rating = this.inputForm.get('rating').value;
 
     if (rating > this.max) {
@@ -59,7 +59,7 @@ export class RatingComponent implements OnInit {
     return rating;
   }
 
-  private set rating(num: number) {
+  set rating(num: number) {
     this.inputForm.get('rating').setValue(num);
   }
 

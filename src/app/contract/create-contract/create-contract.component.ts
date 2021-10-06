@@ -14,12 +14,6 @@ import {CreateContract, Person} from '../api/createContract';
 })
 export class CreateContractComponent implements OnInit {
 
-  private static LOCAL_PERSONS = 'LOCAL_PERSONS';
-  emailForm: FormGroup;
-  availableContracts: Observable<string[]> = this.apiService.getContracts();
-  formSentState = {error: '', completed: false, sent: false};
-  dbPersons: Observable<Array<Person>>;
-
   constructor(
     private apiService: ContractApiService,
     private formBuilder: FormBuilder,
@@ -42,6 +36,12 @@ export class CreateContractComponent implements OnInit {
   get contractType(): string {
     return this.emailForm.get('contractType').value;
   }
+
+  private static LOCAL_PERSONS = 'LOCAL_PERSONS';
+  emailForm: FormGroup;
+  availableContracts: Observable<string[]> = this.apiService.getContracts();
+  formSentState = {error: '', completed: false, sent: false};
+  dbPersons: Observable<Array<Person>>;
 
   private static calculateKey(p: Person): string {
     return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;

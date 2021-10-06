@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {ReviewApiService} from './api/review-api.service';
-import {LoadedReview, UpdatableReview} from './api/review.model';
+import {ReviewApiService} from '../api/review-api.service';
+import {LoadedReview, UpdatableReview} from '../api/review.model';
 
 @Component({
   selector: 'app-review',
@@ -14,7 +14,7 @@ export class ReviewComponent implements OnInit {
   reviewData: FormGroup;
   minWordsCnt = 15;
   public minWordRegexp = new RegExp('\\s*?(\\S+?\\s+?){' + (this.minWordsCnt - 1) + ',}\\S+?');
-  emailDisabled = null;
+  emailDisabled: null | true = null;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -27,6 +27,10 @@ export class ReviewComponent implements OnInit {
       review_private: this.formBuilder.control('', []),
       review_public: this.formBuilder.control('', [Validators.required, Validators.pattern(this.minWordRegexp)]),
     });
+  }
+
+  get rawData() {
+    return this.reviewData.value;
   }
 
   @Input() set rawData(data: LoadedReview) {

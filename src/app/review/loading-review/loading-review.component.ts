@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LoadedReview} from '../api/review.model';
 import {ReviewApiService} from '../api/review-api.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,6 +12,9 @@ export class LoadingReviewComponent implements OnInit {
 
   public data: LoadedReview | null;
 
+  @Output() loaded = new EventEmitter<LoadedReview>();
+
+
   constructor(
     private apiService: ReviewApiService,
     private router: Router,
@@ -24,14 +27,19 @@ export class LoadingReviewComponent implements OnInit {
       const email = routeData.mail;
       const accessKey = routeData.access_key;
 
+      this.data = history.state.review as LoadedReview | null;
+      if (this.data) {
+        return;
+      }
       this.apiService.loadReview(email, accessKey)
           .subscribe(review => {
               if (typeof review.rating === 'string') {
                 review.rating = parseInt(review.rating, 10);
               }
+              this.loaded.emit(review);
               return this.data = review;
             },
-            _ => this.router.navigate(['review', email]));
+            _ => this.router.navigate(['review', email], {state: {review: this.data}}));
     });
   }
 }
