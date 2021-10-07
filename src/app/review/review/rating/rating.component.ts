@@ -96,7 +96,7 @@ export class RatingComponent implements OnInit {
   private recalculateRating() {
     const rating = this.rating;
     this.stars = Math.floor(rating / this.step);
-    this.halfStarNeeded = Math.round((rating - this.stars * this.step) / 10) === 1;
+    this.halfStarNeeded = (rating - this.stars * this.step) / (this.step / 2) >= 0.5;
     this.emptyStars = 5 - this.stars - (this.halfStarNeeded ? 1 : 0);
     this.newValue.emit(rating);
   }
