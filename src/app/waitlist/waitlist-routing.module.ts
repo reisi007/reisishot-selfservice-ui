@@ -4,7 +4,6 @@ import {WaitlistComponent} from './waitlist/waitlist.component';
 
 const routes: Routes = [
   {path: '', component: WaitlistComponent, data: {title: 'Warteliste für Shootings'}},
-  {path: 'dashboard', loadChildren: () => import('../waitlist-dashboard/waitlist-dashboard.module').then(m => m.WaitlistDashboardModule)},
 ];
 
 @NgModule({

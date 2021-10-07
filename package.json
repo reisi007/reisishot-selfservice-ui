@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~11",
     "@angular/router": "~11",
     "@tailwindcss/jit": "^0.1.18",
+    "angular-gauge-chart": "^0.7.2",
     "dayjs": "~1",
     "markdown-it": "~12",
     "ng-tailwindcss-jit": "^0.0.3",

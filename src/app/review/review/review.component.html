@@ -1,7 +1,7 @@
 <div class="text-center p-6">
   <form [formGroup]="reviewData" class="space-y-0">
     <h1>Review erstellen oder bearbeiten</h1>
-    <app-rating (newValue)="setValue($event)" [editable]="true" [max]="100" [min]="0"
+    <app-rating (newValue)="setValue($event)" [editable]="true" [max]="100" [min]="0" [style]="'4x'"
                 [value]="reviewData.get('rating').value"></app-rating>
     <div>
       <input class="w-full md:w-1/3" formControlName="name" placeholder="Name"

@@ -33,9 +33,6 @@ export class LoadingReviewComponent implements OnInit {
       }
       this.apiService.loadReview(email, accessKey)
           .subscribe(review => {
-              if (typeof review.rating === 'string') {
-                review.rating = parseInt(review.rating, 10);
-              }
               this.loaded.emit(review);
               return this.data = review;
             },

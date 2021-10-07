@@ -21,9 +21,6 @@ module.exports = {
         reisishot: {
           DEFAULT: '#27ae60',
           light: '#2ecc71'
-        },
-        reisishot_boudoir: {
-          DEFAULT: '#d3973b'
         }
       }
     },

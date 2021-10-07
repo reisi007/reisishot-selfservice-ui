@@ -8,6 +8,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class RatingComponent implements OnInit {
 
+  @Input() public style: string;
+
   @Input() public min: number;
   @Input() public max: number;
   @Output()
@@ -73,6 +75,9 @@ export class RatingComponent implements OnInit {
   }
 
   starClicked(e: MouseEvent) {
+    if (!this.editable) {
+      return;
+    }
     const targetHtmlElement: HTMLElement = e.target as HTMLElement;
     const children = Array.from(targetHtmlElement.parentElement.children);
     let clickedStar = children.indexOf(targetHtmlElement) + 1;
@@ -91,7 +96,7 @@ export class RatingComponent implements OnInit {
   private recalculateRating() {
     const rating = this.rating;
     this.stars = Math.floor(rating / this.step);
-    this.halfStarNeeded = this.step * this.stars + this.step / 2 <= rating;
+    this.halfStarNeeded = Math.round((rating - this.stars * this.step) / 10) === 1;
     this.emptyStars = 5 - this.stars - (this.halfStarNeeded ? 1 : 0);
     this.newValue.emit(rating);
   }

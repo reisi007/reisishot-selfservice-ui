@@ -74,3 +74,8 @@
     @apply list-decimal list-inside
   }
 }
+
+// Fix for chart library
+.gauge-chart {
+  @apply mx-auto
+}

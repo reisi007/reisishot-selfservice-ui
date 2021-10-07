@@ -8,9 +8,10 @@
 
   </ng-container>
   <div class="py-4 text-reisishot">
-    <i (click)="starClicked($event)" *ngFor="let i of [].constructor(stars)" class="icon rs-star-full px-2 rs-4x"></i>
-    <i (click)="starClicked($event)" *ngIf="halfStarNeeded" class="icon rs-star-half px-2 rs-4x"></i>
+    <i (click)="starClicked($event)" *ngFor="let i of [].constructor(stars)"
+       class="icon rs-star-full px-2 rs-{{style}}"></i>
+    <i (click)="starClicked($event)" *ngIf="halfStarNeeded" class="icon rs-star-half px-2 rs-{{style}}"></i>
     <i (click)="starClicked($event)" *ngFor="let i of [].constructor(emptyStars)"
-       class="icon rs-star-empty px-2 rs-4x"></i>
+       class="icon rs-star-empty px-2 rs-{{style}}"></i>
   </div>
 </div>

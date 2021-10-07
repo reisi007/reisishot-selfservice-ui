@@ -19,7 +19,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "markdown-it",
-              "ngx-matomo"
+              "ngx-matomo",
+              "highcharts/themes/dark-green"
             ],
             "outputPath": "dist/reisishot-selfservice-ui",
             "index": "src/index.html",

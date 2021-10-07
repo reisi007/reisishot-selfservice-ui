@@ -25,6 +25,9 @@ import {ReviewLandingComponent} from './landing/review-landing/review-landing.co
     ReactiveFormsModule,
     ReviewRoutingModule,
   ],
+  exports: [
+    RatingComponent,
+  ],
 })
 export class ReviewModule {
 }
