@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {LoadedReview} from '../../review/api/review.model';
 import {GaugeChartOptions} from './external-api';
 import {RatingInformation} from './chart-api';
@@ -13,6 +13,7 @@ export class ReviewChartsComponent implements OnInit {
 
   ratingOptions: GaugeChartOptions;
   ratingValues: RatingInformation;
+  ratingSize;
 
   constructor() {
   }
@@ -32,6 +33,10 @@ export class ReviewChartsComponent implements OnInit {
     this.ratingValues = new RatingInformation(ratings.length, ratings.reduce((a, b) => a + b) / ratings.length);
   }
 
+  tbf(index: number, value: number) {
+    return value;
+  }
+
   ngOnInit(): void {
     this.ratingOptions = {
       hasNeedle: true,
@@ -41,6 +46,21 @@ export class ReviewChartsComponent implements OnInit {
       needleStartValue: 0,
       needleUpdateSpeed: 750,
     } as GaugeChartOptions;
+
+    this.windowSizeChange();
+  }
+
+  @HostListener('window:resize')
+  windowSizeChange() {
+    this.calcRatingSize(window.outerWidth * 0.9);
+  }
+
+  calcRatingSize(width: number): void {
+    const MAX_WIDTH = 600;
+    if (width > MAX_WIDTH) {
+      width = MAX_WIDTH;
+    }
+    this.ratingSize = width;
   }
 
 }

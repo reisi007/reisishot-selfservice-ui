@@ -17,6 +17,12 @@ export class OverviewComponent {
     }, {
       name: 'Neuen Vertrag erstellen',
       url: 'contracts',
+    }, {
+      name: 'Admin - Warteliste',
+      url: 'waitlist/dashboard',
+    }, {
+      name: 'Admin - Bewertungen',
+      url: 'review/dashboard',
     },
   ];
 }
