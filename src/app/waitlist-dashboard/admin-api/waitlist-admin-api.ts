@@ -1,4 +1,4 @@
-import {WaitlistItem, WaitlistRecord} from '../api/waitlist-api';
+import {WaitlistItem, WaitlistRecord} from '../../waitlist/api/waitlist-api';
 
 export interface WaitlistItemWithRegistrations extends WaitlistItem {
   registrations: Array<AdminWaitlistRecord>;

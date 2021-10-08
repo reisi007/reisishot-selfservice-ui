@@ -1,18 +1,24 @@
 import {Component, OnInit} from '@angular/core';
+import {ContractApiService} from '../contract/api/contract-api.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {trackByIndex} from '../../trackByUtils';
-import {afterNow, beforeNow} from '../../commons/datetime.validator';
-import {ContractApiService} from '../api/contract-api.service';
-import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import {CreateContract, Person} from '../api/createContract';
+import {CreateContract, Person} from '../contract/api/createContract';
+import {Observable} from 'rxjs';
+import {afterNow, beforeNow} from '../commons/datetime.validator';
+import {trackByIndex} from '../trackByUtils';
 
 @Component({
-  selector: 'app-create-contract',
-  templateUrl: './create-contract.component.html',
-  styleUrls: ['./create-contract.component.scss'],
+  selector: 'app-contract-dashboard',
+  templateUrl: './contract-dashboard.component.html',
+  styleUrls: ['./contract-dashboard.component.scss'],
 })
-export class CreateContractComponent implements OnInit {
+export class ContractDashboardComponent implements OnInit {
+
+  private static LOCAL_PERSONS = 'LOCAL_PERSONS';
+  emailForm: FormGroup;
+  availableContracts: Observable<string[]> = this.apiService.getContracts();
+  formSentState = {error: '', completed: false, sent: false};
+  dbPersons: Observable<Array<Person>>;
 
   constructor(
     private apiService: ContractApiService,
@@ -36,12 +42,6 @@ export class CreateContractComponent implements OnInit {
   get contractType(): string {
     return this.emailForm.get('contractType').value;
   }
-
-  private static LOCAL_PERSONS = 'LOCAL_PERSONS';
-  emailForm: FormGroup;
-  availableContracts: Observable<string[]> = this.apiService.getContracts();
-  formSentState = {error: '', completed: false, sent: false};
-  dbPersons: Observable<Array<Person>>;
 
   private static calculateKey(p: Person): string {
     return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;

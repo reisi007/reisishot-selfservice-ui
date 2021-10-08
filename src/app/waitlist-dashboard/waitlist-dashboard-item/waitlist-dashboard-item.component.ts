@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../../waitlist/admin-api/waitlist-admin-api';
-import {WaitlistAdminApiService} from '../../waitlist/admin-api/waitlist-admin-api.service';
 import {Router} from '@angular/router';
+import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../admin-api/waitlist-admin-api';
+import {WaitlistAdminApiService} from '../admin-api/waitlist-admin-api.service';
 
 @Component({
   selector: 'app-waitlist-dashboard-item',

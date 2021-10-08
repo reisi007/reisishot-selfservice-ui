@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {WaitlistAdminApiService} from '../waitlist/admin-api/waitlist-admin-api.service';
+import {WaitlistAdminApiService} from './admin-api/waitlist-admin-api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {WaitlistItemWithRegistrations} from '../waitlist/admin-api/waitlist-admin-api';
+import {WaitlistItemWithRegistrations} from './admin-api/waitlist-admin-api';
 
 @Component({
   selector: 'app-waitlist-dashboard',

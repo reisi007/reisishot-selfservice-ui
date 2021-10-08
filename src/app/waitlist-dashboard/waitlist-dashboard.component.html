@@ -3,7 +3,7 @@
 
   <app-change-pwd></app-change-pwd>
 
-  <form [formGroup]="passwordForm">
+  <form [formGroup]="passwordForm" onsubmit="return false;">
     <div>
       <input class="w-full md:w-1/3" formControlName="user" placeholder="Admin Benutzer"
              type="text"/>
