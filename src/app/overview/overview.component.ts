@@ -7,22 +7,19 @@ import {Component} from '@angular/core';
 })
 export class OverviewComponent {
 
-  items: Array<{ name: string, url: string }> = [
+  items: Array<{ name: string, url: string, adminUrl: string }> = [
     {
       name: 'In Warteliste eintragen',
       url: 'waitlist',
+      adminUrl: 'waitlist/dashboard',
     }, {
       name: 'Bewertung abgeben',
       url: 'review',
+      adminUrl: 'review/dashboard',
     }, {
       name: 'Neuen Vertrag erstellen',
       url: 'contracts',
-    }, {
-      name: 'Admin - Warteliste',
-      url: 'waitlist/dashboard',
-    }, {
-      name: 'Admin - Bewertungen',
-      url: 'review/dashboard',
+      adminUrl: 'contracts/dashboard',
     },
   ];
 }
