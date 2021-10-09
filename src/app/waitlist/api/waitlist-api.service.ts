@@ -14,6 +14,23 @@ export class WaitlistApiService extends ApiService {
     super();
   }
 
+  public loadPerson(user: Userdata): Observable<WaitlistPerson> {
+    return this.http
+               .get<WaitlistPerson>(
+                 ApiService.buildUrl('api', 'waitlist-person_get.php'),
+                 {headers: ApiService.buildHeaders(user.email, user.access_key)},
+               );
+  }
+
+  public storePerson(user: Userdata, person: WaitlistPerson): Observable<any> {
+    return this.http
+               .post<any>(
+                 ApiService.buildUrl('api', 'waitlist-person_post.php'),
+                 person,
+                 {headers: ApiService.buildHeaders(user.email, user.access_key)},
+               );
+  }
+
   public getPublicItems(): Observable<Array<WaitlistItem>> {
     return this.http
                .get<Array<WaitlistItem>>(
@@ -68,5 +85,6 @@ export class WaitlistApiService extends ApiService {
                  },
                );
   }
+
 
 }
