@@ -59,13 +59,15 @@ export class WaitlistItemComponent implements OnInit {
 
   register() {
     if (this.user) {
-      this.apiService.registerForWaitlist(this.user, this.registrationInfo);
+      this.apiService.registerForShooting(this.user, this.registrationInfo)
+          .subscribe(() => this.item.registered = '1');
     }
   }
 
   unregister() {
     if (this.user) {
-      this.apiService.deleteRegistration(this.user, this.item.id);
+      this.apiService.deleteRegistration(this.user, this.item.id)
+          .subscribe(() => this.item.registered = '0');
     }
   }
 

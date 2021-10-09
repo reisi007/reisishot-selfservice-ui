@@ -47,7 +47,7 @@ export class WaitlistApiService extends ApiService {
                );
   }
 
-  public registerForWaitlist(user: Userdata, registrationData: WaitlistRecord): Observable<any> {
+  public registerForShooting(user: Userdata, registrationData: WaitlistRecord) {
     return this.http
                .put(
                  ApiService.buildUrl('api', 'waitlist-entry_put.php'),
