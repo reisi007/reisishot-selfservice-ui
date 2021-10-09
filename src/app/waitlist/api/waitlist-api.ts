@@ -1,13 +1,12 @@
 import {Person} from '../../contract/api/createContract';
 
 export interface WaitlistPerson extends Person {
-  secret: string;
   availability: string;
   phone_number: string;
   website: string | null;
 }
 
-export interface WaitlistRecord extends WaitlistPerson {
+export interface WaitlistRecord {
   item_id: number;
   text: string | null;
 }
@@ -24,13 +23,7 @@ export interface WaitlistItem {
   registered: '0' | '1';
 }
 
-export function convertPerson2Record(
-  waitlistPerson: WaitlistPerson,
-  itemId: number,
-  text: string,
-): WaitlistRecord {
-  const record = waitlistPerson as WaitlistRecord;
-  record.item_id = itemId;
-  record.text = text;
-  return record;
+export interface Userdata {
+  email: string;
+  access_key: string;
 }

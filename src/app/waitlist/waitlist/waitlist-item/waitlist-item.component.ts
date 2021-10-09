@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {formatDate} from 'src/app/commons/datetime.formatter';
 import {WaitlistApiService} from '../../api/waitlist-api.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {convertPerson2Record, WaitlistItem, WaitlistPerson} from '../../api/waitlist-api';
+import {Userdata, WaitlistItem, WaitlistRecord} from '../../api/waitlist-api';
 import {Router} from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class WaitlistItemComponent implements OnInit {
   @Input()
   item: WaitlistItem;
   registration: FormGroup;
-  private personInternal: WaitlistPerson | null;
+  user: Userdata | null;
 
   constructor(
     private router: Router,
@@ -27,16 +27,12 @@ export class WaitlistItemComponent implements OnInit {
     return this.router.url.split('#', 2)[0];
   }
 
-  get person(): WaitlistPerson | null {
-    return this.personInternal;
+  get person(): Userdata | null {
+    return this.user;
   }
 
-  @Input() set person(value: WaitlistPerson | null) {
-    this.personInternal = value;
-  }
-
-  get isValidPerson() {
-    return this.person?.secret != null && this.person?.email != null;
+  @Input() set person(value: Userdata | null) {
+    this.user = value;
   }
 
   get canRegister() {
@@ -53,32 +49,29 @@ export class WaitlistItemComponent implements OnInit {
     }
   }
 
-  get text(): string {
-    return this.registration.get('text').value;
+  get registrationInfo(): WaitlistRecord {
+    return this.registration.getRawValue() as WaitlistRecord;
   }
 
   formatDate(dateString: string): string {
     return formatDate(dateString);
   }
 
-  unregister(): void {
-    if (this.personInternal) {
-      this.apiService.deleteRegistration(this.personInternal.email, this.personInternal.secret, this.item.id).subscribe(() => {
-        this.item.registered = '0';
-      });
+  register() {
+    if (this.user) {
+      this.apiService.registerForWaitlist(this.user, this.registrationInfo);
     }
   }
 
-  register(): void {
-    if (this.personInternal && this.max_waiting > 0) {
-      this.apiService.registerForWaitlist(convertPerson2Record(this.personInternal, this.item.id, this.text)).subscribe(() => {
-        this.item.registered = '1';
-      });
+  unregister() {
+    if (this.user) {
+      this.apiService.deleteRegistration(this.user, this.item.id);
     }
   }
 
   ngOnInit(): void {
     this.registration = this.formBuilder.group({
+      item_id: this.formBuilder.control(this.item.id),
       text: this.formBuilder.control(''),
     });
   }

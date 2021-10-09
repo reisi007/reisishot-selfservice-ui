@@ -1,10 +1,14 @@
-<div class="xl:flex flex-wrap w-full">
+<div *ngIf="!formSubmitted; else success"
+     class="xl:flex flex-wrap w-full">
 
   <ng-container *ngTemplateOutlet="login"></ng-container>
   <ng-container *ngTemplateOutlet="register"></ng-container>
 
 </div>
-
+<ng-template #success>
+  <h2 class="text-3xl my-5 font-light text-reisishot">Bitte schau in deinen E-Mail Posteingang und klicke auf den
+    Link</h2>
+</ng-template>
 
 <ng-template #login>
 
@@ -22,10 +26,15 @@
         >
       </div>
       <div>
-        <button class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4">Anmelden</button>
+        <button (click)="doLogin()"
+                [attr.disabled]="person.get('email').valid?null:''"
+                class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4">Anmelden
+        </button>
       </div>
     </div>
-
+    <h2 *ngIf="!formSubmitted && errorLogin" class="text-xl my-5 font-light text-red-500">
+      Bitte kontrolliere deine E-Mail Adresse
+    </h2>
   </form>
 
 </ng-template>
@@ -81,7 +90,10 @@
                     required rows="4"
           ></textarea>
       </div>
-      <button class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4">Registrieren</button>
+      <button (click)="doRegister()"
+              [attr.disabled]="person.valid?null:''"
+              class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4">Registrieren
+      </button>
     </div>
   </form>
 </ng-template>

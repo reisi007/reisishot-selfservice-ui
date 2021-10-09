@@ -19,7 +19,7 @@
         Alle Wartelistenplätze belegt
       </ng-container>
       <ng-template #allowRegistration>
-        <span *ngIf="isValidPerson; else unknown">Jetzt anmelden</span>
+        <span *ngIf="user; else unknown">Jetzt anmelden</span>
         <ng-template #unknown>
           Du musst registriert sein, um dich anmelden zu können
         </ng-template>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {WaitlistApiService} from '../../api/waitlist-api.service';
 import {beforeNow} from '../../../commons/datetime.validator';
+import {WaitlistPerson} from '../../api/waitlist-api';
 
 @Component({
   selector: 'app-waitlist-person',
@@ -13,6 +14,10 @@ export class WaitlistPersonComponent implements OnInit {
   person: FormGroup;
 
   dateFieldType: { [key: string]: string | null } = {};
+
+  formSubmitted = false;
+  errorLogin = false;
+  errorRegister = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,6 +40,20 @@ export class WaitlistPersonComponent implements OnInit {
     }
   }
 
+  doRegister() {
+    const person = this.person.getRawValue() as WaitlistPerson;
+    this.apiService.register(person)
+        .subscribe(() => this.formSubmitted = true);
+  }
+
+  doLogin() {
+    this.apiService.login(this.person.get('email').value)
+        .subscribe(
+          () => this.formSubmitted = true,
+          () => this.errorLogin = true,
+        );
+  }
+
   private buildForm() {
     this.person = this.formBuilder.group({
       firstName: this.formBuilder.control('', [Validators.required]),
@@ -46,4 +65,6 @@ export class WaitlistPersonComponent implements OnInit {
       website: this.formBuilder.control(''),
     });
   }
+
+
 }

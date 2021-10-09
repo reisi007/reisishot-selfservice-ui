@@ -8,6 +8,7 @@ import {WaitlistPersonComponent} from './waitlist/waitlist-person/waitlist-perso
 import {WaitlistItemComponent} from './waitlist/waitlist-item/waitlist-item.component';
 import {MarkdownModule} from '../markdown/markdown.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import {SecureWaitlistAreaComponent} from './secure-waitlist-area/secure-waitlist-area.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     WaitlistComponent,
     WaitlistPersonComponent,
     WaitlistItemComponent,
+    SecureWaitlistAreaComponent,
   ],
   imports: [
     CommonModule,
