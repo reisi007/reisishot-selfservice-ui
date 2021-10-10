@@ -90,7 +90,6 @@ export class RatingComponent implements OnInit {
     if (halfStar) {
       clickedStar -= 0.5;
     }
-
     this.rating = Math.ceil(clickedStar * this.step);
   }
 
@@ -99,6 +98,6 @@ export class RatingComponent implements OnInit {
     this.stars = Math.floor(roundedRating / 2);
     this.halfStarNeeded = 2 * this.stars < roundedRating;
     this.emptyStars = 5 - this.stars - (this.halfStarNeeded ? 1 : 0);
-    this.newValue.emit(roundedRating);
+    this.newValue.emit(this.rating);
   }
 }

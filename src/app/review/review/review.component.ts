@@ -56,7 +56,9 @@ export class ReviewComponent implements OnInit {
   }
 
   setValue(rating: number | null) {
-    this.reviewData.get('rating')?.setValue(rating);
+    if (rating) {
+      this.reviewData.get('rating')?.setValue(rating);
+    }
   }
 
   saveReview() {

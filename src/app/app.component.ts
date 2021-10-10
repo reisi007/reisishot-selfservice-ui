@@ -24,14 +24,14 @@ export class AppComponent implements OnInit {
         });
   }
 
-  getTitle(state: RouterState, parent: ActivatedRoute | null | undefined): Array<string> {
-    const data: Array<string> = [];
+  getTitle(state: RouterState, parent: ActivatedRoute | null): string[] {
+    const data: string[] = [];
     if (parent && parent.snapshot.data && parent.snapshot.data.title) {
       data.push(parent.snapshot.data.title);
     }
 
     if (state && parent) {
-      data.push(...this.getTitle(state, parent.firstChild?.parent));
+      data.push(...this.getTitle(state, parent.firstChild));
     }
     return data;
   }
