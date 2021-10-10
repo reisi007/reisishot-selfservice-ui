@@ -28,9 +28,11 @@
                 class="p-2.5 bg-gray-800 text-white">
           Ignorieren
         </button>
-        <button #ignored class="p-2.5 bg-gray-800 text-white" disabled>
-          Bereits ignoriert
-        </button>
+        <ng-template #ignored>
+          <button class="p-2.5 bg-gray-800 text-white" disabled>
+            Bereits ignoriert
+          </button>
+        </ng-template>
       </td>
       <td class="border border-black px-2 py-1">
         <button (click)="done(i,registration)"

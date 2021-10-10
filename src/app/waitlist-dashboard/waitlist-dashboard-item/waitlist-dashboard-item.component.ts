@@ -36,8 +36,7 @@ export class WaitlistDashboardItemComponent {
   }
 
   public createContract(idx: number, waitlistRecord: AdminWaitlistRecord) {
-    this.ignore(idx, waitlistRecord);
-    this.router.navigate(['contracts'], {state: {person: waitlistRecord}});
+    this.router.navigate(['contracts', 'dashboard'], {state: {person: waitlistRecord}});
   }
 
   public ignore(idx: number, waitlistRecord: AdminWaitlistRecord) {
