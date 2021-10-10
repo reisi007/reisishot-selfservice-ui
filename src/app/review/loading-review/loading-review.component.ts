@@ -9,17 +9,11 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./loading-review.component.scss'],
 })
 export class LoadingReviewComponent implements OnInit {
-
-  public data: LoadedReview | null;
+  public data!: LoadedReview | null;
 
   @Output() loaded = new EventEmitter<LoadedReview>();
 
-
-  constructor(
-    private apiService: ReviewApiService,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {
+  constructor(private apiService: ReviewApiService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -31,12 +25,13 @@ export class LoadingReviewComponent implements OnInit {
       if (this.data) {
         return;
       }
-      this.apiService.loadReview(email, accessKey)
-          .subscribe(review => {
-              this.loaded.emit(review);
-              return this.data = review;
-            },
-            _ => this.router.navigate(['review', email], {state: {review: this.data}}));
+      this.apiService.loadReview(email, accessKey).subscribe(
+        review => {
+          this.loaded.emit(review);
+          return (this.data = review);
+        },
+        _ => this.router.navigate(['review', email], {state: {review: this.data}}),
+      );
     });
   }
 }

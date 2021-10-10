@@ -8,9 +8,8 @@ describe('DisplayContractComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [DisplayContractComponent],
-                 })
-                 .compileComponents();
+      declarations: [DisplayContractComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

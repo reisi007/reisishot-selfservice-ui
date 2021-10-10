@@ -10,16 +10,13 @@ import {WaitlistItemWithRegistrations} from './admin-api/waitlist-admin-api';
   styleUrls: ['./waitlist-dashboard.component.scss'],
 })
 export class WaitlistDashboardComponent implements OnInit {
-  passwordForm: FormGroup;
-  items: Observable<Array<WaitlistItemWithRegistrations>>;
+  passwordForm!: FormGroup;
+  items!: Observable<Array<WaitlistItemWithRegistrations>>;
 
-  constructor(
-    private waitlistAdminApi: WaitlistAdminApiService,
-    private formBuilder: FormBuilder,
-  ) {
+  constructor(private waitlistAdminApi: WaitlistAdminApiService, private formBuilder: FormBuilder) {
   }
 
-  get credentials(): { user: string, pwd: string } {
+  get credentials(): { user: string; pwd: string } {
     return this.passwordForm.getRawValue();
   }
 
@@ -34,5 +31,4 @@ export class WaitlistDashboardComponent implements OnInit {
     const curData = this.credentials;
     this.items = this.waitlistAdminApi.getWaitlistItems(curData.user, curData.pwd);
   }
-
 }

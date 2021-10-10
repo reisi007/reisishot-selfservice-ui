@@ -11,16 +11,10 @@ import {Userdata, WaitlistPerson} from '../api/waitlist-api';
   styleUrls: ['./update-person.component.scss'],
 })
 export class UpdatePersonComponent extends DatefieldSupport implements OnInit {
-
-  user: Userdata;
+  user!: Userdata;
   dirty = false;
 
-  constructor(
-    formBuilder: FormBuilder,
-    private apiService: WaitlistApiService,
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {
+  constructor(formBuilder: FormBuilder, private apiService: WaitlistApiService, private route: ActivatedRoute, private router: Router) {
     super(formBuilder);
   }
 
@@ -32,19 +26,16 @@ export class UpdatePersonComponent extends DatefieldSupport implements OnInit {
         access_key: routeData.access_key,
       } as Userdata;
 
-
-      this.apiService.loadPerson(this.user)
-          .subscribe(
-            data => {
-              this.person.patchValue(data);
-              this.setupDateField('birthday');
-              this.person.valueChanges.subscribe(() => {
-                this.dirty = true;
-              });
-
-            },
-            () => this.router.navigate(['waitlist']),
-          );
+      this.apiService.loadPerson(this.user).subscribe(
+        data => {
+          this.person.patchValue(data);
+          this.setupDateField('birthday');
+          this.person.valueChanges.subscribe(() => {
+            this.dirty = true;
+          });
+        },
+        () => this.router.navigate(['waitlist']),
+      );
     });
   }
 
@@ -53,7 +44,7 @@ export class UpdatePersonComponent extends DatefieldSupport implements OnInit {
     this.dirty = false;
     this.apiService.storePerson(this.user, person).subscribe(
       () => this.goBack(),
-      () => this.dirty = true,
+      () => (this.dirty = true),
     );
   }
 

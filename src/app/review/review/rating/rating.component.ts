@@ -7,11 +7,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./rating.component.scss'],
 })
 export class RatingComponent implements OnInit {
+  @Input() public style!: string;
 
-  @Input() public style: string;
-
-  @Input() public min: number;
-  @Input() public max: number;
+  @Input() public min!: number;
+  @Input() public max!: number;
   @Output()
   public newValue = new EventEmitter<number | null>();
   @Input()
@@ -19,13 +18,12 @@ export class RatingComponent implements OnInit {
   stars = 0;
   halfStarNeeded = false;
   emptyStars = 5;
-  private intEditable: boolean;
-  private step: number;
+  private intEditable!: boolean;
+  private step!: number;
 
   constructor(private formBuilder: FormBuilder) {
     this.inputForm = this.formBuilder.group({
-      rating: this.formBuilder.control(this.value ?? 0,
-        [Validators.required, Validators.min(this.min), Validators.max(this.max)]),
+      rating: this.formBuilder.control(this.value ?? 0, [Validators.required, Validators.min(this.min), Validators.max(this.max)]),
     });
   }
 
@@ -46,7 +44,7 @@ export class RatingComponent implements OnInit {
   }
 
   get rating(): number {
-    const rating = this.inputForm.get('rating').value;
+    const rating = this.inputForm.get('rating')?.value;
 
     if (rating > this.max) {
       return this.max;
@@ -62,14 +60,13 @@ export class RatingComponent implements OnInit {
   }
 
   set rating(num: number) {
-    this.inputForm.get('rating').setValue(num);
+    this.inputForm.get('rating')?.setValue(num);
   }
 
   ngOnInit(): void {
     this.step = (this.max - this.min) / 5;
 
-    this.inputForm.get('rating')
-        .valueChanges.subscribe(() => this.recalculateRating());
+    this.inputForm.get('rating')?.valueChanges.subscribe(() => this.recalculateRating());
 
     this.recalculateRating();
   }
@@ -79,7 +76,11 @@ export class RatingComponent implements OnInit {
       return;
     }
     const targetHtmlElement: HTMLElement = e.target as HTMLElement;
-    const children = Array.from(targetHtmlElement.parentElement.children);
+    const htlmlElementChildren = targetHtmlElement?.parentElement?.children;
+    if (htlmlElementChildren == null) {
+      return;
+    }
+    const children = Array.from(htlmlElementChildren);
     let clickedStar = children.indexOf(targetHtmlElement) + 1;
 
     const clickX = e.clientX;

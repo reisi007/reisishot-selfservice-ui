@@ -9,16 +9,11 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./change-pwd.component.scss'],
 })
 export class ChangePwdComponent extends ApiService implements OnInit {
-
-  pwdChangeForm: FormGroup;
+  pwdChangeForm!: FormGroup;
 
   showForm = false;
 
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpClient,
-  ) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
     super();
   }
 
@@ -34,12 +29,13 @@ export class ChangePwdComponent extends ApiService implements OnInit {
   changePassword() {
     const data = this.pwdChangeForm.getRawValue() as PwdChangeValue;
 
-    this.http.post(
-      ApiService.buildUrl('api', 'change-pwd_post.php'),
-      {user: data.newUser, pwd: data.newPwd},
-      {headers: ApiService.buildHeaders(data.oldUser, data.oldPwd)},
-    ).subscribe(() => this.showForm = false);
-
+    this.http
+        .post(
+          ApiService.buildUrl('api', 'change-pwd_post.php'),
+          {user: data.newUser, pwd: data.newPwd},
+          {headers: ApiService.buildHeaders(data.oldUser, data.oldPwd)},
+        )
+        .subscribe(() => (this.showForm = false));
   }
 }
 

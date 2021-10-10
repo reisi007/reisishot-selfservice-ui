@@ -10,18 +10,13 @@ import {DatefieldSupport} from '../../../commons/datefield-support';
   styleUrls: ['./waitlist-person.component.scss'],
 })
 export class WaitlistPersonComponent extends DatefieldSupport implements OnInit {
-
-  person: FormGroup;
-  email: FormGroup;
+  email!: FormGroup;
 
   formSubmitted = false;
   errorLogin = false;
   errorRegister = false;
 
-  constructor(
-    formBuilder: FormBuilder,
-    private apiService: WaitlistApiService,
-  ) {
+  constructor(formBuilder: FormBuilder, private apiService: WaitlistApiService) {
     super(formBuilder);
   }
 
@@ -33,17 +28,15 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
     this.setupDateField('birthday');
   }
 
-  doRegister() {
-    const person = this.person.getRawValue() as WaitlistPerson;
-    this.apiService.register(person)
-        .subscribe(() => this.formSubmitted = true);
+  doRegister(): void {
+    const person = this.person?.getRawValue() as WaitlistPerson;
+    this.apiService.register(person).subscribe(() => (this.formSubmitted = true));
   }
 
-  doLogin() {
-    this.apiService.login(this.person.get('email').value)
-        .subscribe(
-          () => this.formSubmitted = true,
-          () => this.errorLogin = true,
-        );
+  doLogin(): void {
+    this.apiService.login(this.person?.get('email')?.value).subscribe(
+      () => (this.formSubmitted = true),
+      () => (this.errorLogin = true),
+    );
   }
 }

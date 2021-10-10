@@ -1,105 +1,82 @@
-<div *ngIf="!formSubmitted; else success"
-     class="xl:flex flex-wrap w-full">
-
-  <ng-container *ngTemplateOutlet="login"></ng-container>
-  <ng-container *ngTemplateOutlet="register"></ng-container>
-
+<div *ngIf="!formSubmitted; else success" class="xl:flex flex-wrap w-full">
+    <ng-container *ngTemplateOutlet="login"></ng-container>
+    <ng-container *ngTemplateOutlet="register"></ng-container>
 </div>
 <ng-template #success>
-  <h2 class="text-3xl my-5 font-light text-reisishot">Bitte schau in deinen E-Mail Posteingang und klicke auf den
-    Link</h2>
+    <h2 class="text-3xl my-5 font-light text-reisishot">Bitte schau in deinen E-Mail Posteingang und klicke auf den
+        Link</h2>
 </ng-template>
 
 <ng-template #login>
+    <form [formGroup]="email" class="flex-1 mb-8 self-center" onsubmit="return false;">
+        <h3 class="mb-1 font-light text-2xl">Wieder anmelden</h3>
 
-  <form [formGroup]="email" class="flex-1 mb-8 self-center"
-        onsubmit="return false;">
-
-    <h3 class="mb-1 font-light text-2xl">Wieder anmelden</h3>
-
-    <div>
-      <div>
-        <input class="w-full md:w-7/12"
-               formControlName="email"
-               placeholder="Deine E-Mail Adresse"
-               required type="email"
-        >
-      </div>
-      <div>
-        <button (click)="doLogin()"
-                [attr.disabled]="email.get('email').valid?null:''"
-                class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4">Anmelden
-        </button>
-      </div>
-    </div>
-    <h2 *ngIf="!formSubmitted && errorLogin" class="text-xl my-5 font-light text-red-500">
-      Bitte kontrolliere deine E-Mail Adresse
-    </h2>
-  </form>
-
+        <div>
+            <div>
+                <input class="w-full md:w-7/12" formControlName="email" placeholder="Deine E-Mail Adresse" required
+                       type="email"/>
+            </div>
+            <div>
+                <button
+                        (click)="doLogin()"
+                        [attr.disabled]="email.get('email')?.valid?null:''"
+                        class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4"
+                >
+                    Anmelden
+                </button>
+            </div>
+        </div>
+        <h2 *ngIf="!formSubmitted && errorLogin" class="text-xl my-5 font-light text-red-500">Bitte kontrolliere deine
+            E-Mail Adresse</h2>
+    </form>
 </ng-template>
 
-
 <ng-template #register>
-  <form [formGroup]="person" class="flex-1 mb-8"
-        onsubmit="return false;">
-    <h3 class="mb-1 font-light text-2xl">Neu registrieren</h3>
-    <div>
-      <div>
-        <input class="w-full md:w-7/12"
-               formControlName="firstName"
-               placeholder="Vorname"
-               required type="text"
-        >
-      </div>
-      <div>
-        <input class="w-full md:w-7/12"
-               formControlName="lastName"
-               placeholder="Nachname"
-               required type="text"
-        >
-      </div>
-      <div>
-        <input class="w-full md:w-7/12"
-               formControlName="email"
-               placeholder="Deine E-Mail Adresse"
-               required type="email"
-        >
-      </div>
-      <div>
-        <input (blur)="setupDateField('birthday')"
-               (focus)="dateFieldType['birthday']='date'"
-               [attr.type]="dateFieldType['birthday']"
-               class="w-full md:w-7/12" formControlName="birthday"
-               placeholder="Dein Geburtstag"
-               required
-        >
-      </div>
-      <div>
-        <input class="w-full md:w-7/12"
-               formControlName="phone_number"
-               placeholder="Deine Telefonnummer"
-               required type="tel"
-        >
-      </div>
-      <div>
-        <input class="w-full md:w-7/12"
-               formControlName="website"
-               placeholder="Link zu deinem Instagram etc."
-               required type="tel"
-        >
-      </div>
-      <div>
-          <textarea class="w-full md:w-7/12"
-                    formControlName="availability"
-                    placeholder="Wann hast du Zeit für ein Shooting"
-                    required rows="4"
-          ></textarea>
-      </div>
-      <button (click)="doRegister()"
-              [attr.disabled]="person.valid?null:''"
-              class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4">Registrieren
-      </button>
-    </div>
-  </form>
+    <form [formGroup]="person" class="flex-1 mb-8" onsubmit="return false;">
+        <h3 class="mb-1 font-light text-2xl">Neu registrieren</h3>
+        <div>
+            <div>
+                <input class="w-full md:w-7/12" formControlName="firstName" placeholder="Vorname" required type="text"/>
+            </div>
+            <div>
+                <input class="w-full md:w-7/12" formControlName="lastName" placeholder="Nachname" required type="text"/>
+            </div>
+            <div>
+                <input class="w-full md:w-7/12" formControlName="email" placeholder="Deine E-Mail Adresse" required
+                       type="email"/>
+            </div>
+            <div>
+                <input
+                        (blur)="setupDateField('birthday')"
+                        (focus)="dateFieldType['birthday']='date'"
+                        [attr.type]="dateFieldType['birthday']"
+                        class="w-full md:w-7/12"
+                        formControlName="birthday"
+                        placeholder="Dein Geburtstag"
+                        required
+                />
+            </div>
+            <div>
+                <input class="w-full md:w-7/12" formControlName="phone_number" placeholder="Deine Telefonnummer"
+                       required type="tel"/>
+            </div>
+            <div>
+                <input class="w-full md:w-7/12" formControlName="website" placeholder="Link zu deinem Instagram etc."
+                       required type="tel"/>
+            </div>
+            <div>
+        <textarea
+                class="w-full md:w-7/12"
+                formControlName="availability"
+                placeholder="Wann hast du Zeit für ein Shooting"
+                required
+                rows="4"
+        ></textarea>
+            </div>
+            <button (click)="doRegister()" [attr.disabled]="person.valid?null:''"
+                    class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4">
+                Registrieren
+            </button>
+        </div>
+    </form>
 </ng-template>

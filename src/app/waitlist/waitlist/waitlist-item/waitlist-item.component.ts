@@ -16,17 +16,12 @@ const EVENT_CATEGORY = 'waitlist';
 })
 export class WaitlistItemComponent implements OnInit {
   @Input()
-  item: WaitlistItem;
-  registration: FormGroup;
-  user: Userdata | null;
+  item!: WaitlistItem;
+  registration!: FormGroup;
+  user: Userdata | null | undefined;
   private tracker: ExtMatomoTracker;
 
-  constructor(
-    private router: Router,
-    private apiService: WaitlistApiService,
-    private formBuilder: FormBuilder,
-    tracker: MatomoTracker,
-  ) {
+  constructor(private router: Router, private apiService: WaitlistApiService, private formBuilder: FormBuilder, tracker: MatomoTracker) {
     this.tracker = new ExtMatomoTracker(tracker);
   }
 
@@ -34,19 +29,19 @@ export class WaitlistItemComponent implements OnInit {
     return this.router.url.split('#', 2)[0];
   }
 
-  get person(): Userdata | null {
+  get person(): Userdata | null | undefined {
     return this.user;
   }
 
-  @Input() set person(value: Userdata | null) {
+  @Input() set person(value: Userdata | null | undefined) {
     this.user = value;
   }
 
-  get canRegister() {
-    return this.item.max_waiting == null || this.max_waiting > 0;
+  get canRegister(): boolean {
+    return this.item != undefined && this.item.max_waiting == null || this.max_waiting != null && this.max_waiting > 0;
   }
 
-  get max_waiting() {
+  get max_waiting(): number | null {
     const val = this.item?.max_waiting;
     if (val == null) {
       return null;
@@ -57,27 +52,25 @@ export class WaitlistItemComponent implements OnInit {
   }
 
   get registrationInfo(): WaitlistRecord {
-    return this.registration.getRawValue() as WaitlistRecord;
+    return this.registration?.getRawValue() as WaitlistRecord;
   }
 
   formatDate(dateString: string): string {
     return formatDate(dateString);
   }
 
-  register() {
+  register(): void {
     if (this.user) {
-      this.apiService.registerForShooting(this.user, this.registrationInfo)
-          .subscribe(() => {
-            this.tracker.trackEvent(EVENT_CATEGORY, 'register', this.item.short);
-            this.item.registered = '1';
-          });
+      this.apiService.registerForShooting(this.user, this.registrationInfo).subscribe(() => {
+        this.tracker.trackEvent(EVENT_CATEGORY, 'register', this.item.short);
+        this.item.registered = '1';
+      });
     }
   }
 
-  unregister() {
+  unregister(): void {
     if (this.user) {
-      this.apiService.deleteRegistration(this.user, this.item.id)
-          .subscribe(() => this.item.registered = '0');
+      this.apiService.deleteRegistration(this.user, this.item.id).subscribe(() => (this.item.registered = '0'));
     }
   }
 

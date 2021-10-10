@@ -9,20 +9,19 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./preview-contract-chooser.component.scss'],
 })
 export class PreviewContractChooserComponent implements OnInit {
-
-  contracts: Observable<Array<{ name: string, value: string }>>;
+  contracts!: Observable<Array<{ name: string; value: string }>>;
 
   constructor(private apiService: ContractApiService) {
   }
 
   ngOnInit(): void {
-    this.contracts = this.apiService.getContracts()
-                         .pipe(
-                           map(data => data.map(e => {
-                             const filename = e.substring(0, e.indexOf('.'));
-                             return {name: filename.charAt(0).toUpperCase() + filename.slice(1), value: e};
-                           })),
-                         );
+    this.contracts = this.apiService.getContracts().pipe(
+      map(data =>
+        data.map(e => {
+          const filename = e.substring(0, e.indexOf('.'));
+          return {name: filename.charAt(0).toUpperCase() + filename.slice(1), value: e};
+        }),
+      ),
+    );
   }
-
 }

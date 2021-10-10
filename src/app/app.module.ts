@@ -8,11 +8,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
 import {NgxMatomoRouterModule} from '@ngx-matomo/router';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -24,9 +21,7 @@ import {NgxMatomoRouterModule} from '@ngx-matomo/router';
     }),
     NgxMatomoRouterModule,
   ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
-  ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}],
   bootstrap: [AppComponent],
   exports: [],
 })

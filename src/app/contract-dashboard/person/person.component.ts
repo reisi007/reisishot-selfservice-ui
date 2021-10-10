@@ -1,23 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
+import {Component, Input} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.scss'],
 })
-export class PersonComponent implements OnInit {
+export class PersonComponent {
+  @Input()
+  cnt!: number;
 
   @Input()
-  cnt: number;
-
-  @Input()
-  person: AbstractControl;
+  person!: FormGroup;
 
   constructor() {
   }
-
-  ngOnInit(): void {
-  }
-
 }

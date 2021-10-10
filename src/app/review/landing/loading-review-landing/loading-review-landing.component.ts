@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {LoadedReview} from '../../api/review.model';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -7,17 +7,10 @@ import {ActivatedRoute, Router} from '@angular/router';
   templateUrl: './loading-review-landing.component.html',
   styleUrls: ['./loading-review-landing.component.scss'],
 })
-export class LoadingReviewLandingComponent implements OnInit {
+export class LoadingReviewLandingComponent {
+  review: LoadedReview | null | undefined;
 
-  review: LoadedReview | null;
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {
-  }
-
-  ngOnInit(): void {
+  constructor(private router: Router, private route: ActivatedRoute) {
   }
 
   isLoaded($event: LoadedReview) {

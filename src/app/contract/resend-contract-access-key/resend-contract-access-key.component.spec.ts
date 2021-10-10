@@ -8,9 +8,8 @@ describe('ResendContractAccessKeyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [ResendContractAccessKeyComponent],
-                 })
-                 .compileComponents();
+      declarations: [ResendContractAccessKeyComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

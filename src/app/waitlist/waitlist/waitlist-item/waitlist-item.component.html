@@ -1,38 +1,28 @@
 <div class="border-solid border-black border-2 rounded-lg h-full p-2">
-  <a href="{{url}}#{{item.short}}"><h2 [id]="item.short" class="mt-3 mb-3 font-light text-3xl">{{item.title}}</h2></a>
-  <img [alt]="item.title" src="https://reisishot.pictures/images/{{item.image_id}}_thumb.jpg" style="max-height: 35vh"/>
-  <p class="p-2 w-full md:w-11/12 mx-auto">{{item.description}} </p>
+    <a href="{{url}}#{{item.short}}"><h2 [id]="item.short" class="mt-3 mb-3 font-light text-3xl">{{item.title}}</h2></a>
+    <img [alt]="item.title" src="https://reisishot.pictures/images/{{item.image_id}}_thumb.jpg"
+         style="max-height: 35vh"/>
+    <p class="p-2 w-full md:w-11/12 mx-auto">{{item.description}}</p>
 
-  <div class="d-block">
-    <span *ngIf="item.available_to">Anmedleschluss: {{formatDate(item.available_to)}}</span>
-  </div>
-  <form *ngIf="item.registered == '0'; else abmelden" [formGroup]="registration" onsubmit="return false;">
-    <textarea *ngIf="person"
-              class="w-11/12 mx-auto"
-              formControlName="text"
-              placeholder="Zusätzliche Informationen"
-              rows="4"
-    ></textarea>
-    <div (click)="register()"
-         class="button w-full bg-reisishot text-white font-medium mx-auto">
-      <ng-container *ngIf="!canRegister; else allowRegistration">
-        Alle Wartelistenplätze belegt
-      </ng-container>
-      <ng-template #allowRegistration>
-        <span *ngIf="user; else unknown">Jetzt anmelden</span>
-        <ng-template #unknown>
-          Du musst registriert sein, um dich anmelden zu können
-        </ng-template>
-      </ng-template>
-      <div *ngIf="max_waiting <= 5"
-           class="mt-3 text-sm px-2 font-bold font-normal bg-white text-reisishot rounded py-0.5">
-        Nur mehr {{item.max_waiting}} Plätze frei
-      </div>
+    <div class="d-block">
+        <span *ngIf="item.available_to">Anmedleschluss: {{formatDate(item.available_to)}}</span>
     </div>
-  </form>
-  <ng-template #abmelden>
-    <div (click)="unregister()" class="button w-full mx-auto font-medium bg-red-600 text-white">
-      Jetzt abmelden
-    </div>
-  </ng-template>
+    <form *ngIf="item.registered === '0'; else abmelden" [formGroup]="registration" onsubmit="return false;">
+        <textarea *ngIf="person" class="w-11/12 mx-auto" formControlName="text" placeholder="Zusätzliche Informationen"
+                  rows="4"></textarea>
+        <div (click)="register()" class="button w-full bg-reisishot text-white font-medium mx-auto">
+            <ng-container *ngIf="!canRegister; else allowRegistration"> Alle Wartelistenplätze belegt</ng-container>
+            <ng-template #allowRegistration>
+                <span *ngIf="user; else unknown">Jetzt anmelden</span>
+                <ng-template #unknown> Du musst registriert sein, um dich anmelden zu können</ng-template>
+            </ng-template>
+            <div *ngIf="max_waiting && max_waiting <= 5"
+                 class="mt-3 text-sm px-2 font-bold font-normal bg-white text-reisishot rounded py-0.5">
+                Nur mehr {{item.max_waiting}} Plätze frei
+            </div>
+        </div>
+    </form>
+    <ng-template #abmelden>
+        <div (click)="unregister()" class="button w-full mx-auto font-medium bg-red-600 text-white">Jetzt abmelden</div>
+    </ng-template>
 </div>

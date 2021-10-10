@@ -9,16 +9,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./review-dashboard.component.scss'],
 })
 export class ReviewDashboardComponent implements OnInit {
-  passwordForm: FormGroup;
-  reviews: Array<LoadedReview> | null;
+  passwordForm!: FormGroup;
+  reviews!: Array<LoadedReview> | null;
 
-  constructor(
-    private apiService: ReviewAdminApiService,
-    private formBuilder: FormBuilder,
-  ) {
+  constructor(private apiService: ReviewAdminApiService, private formBuilder: FormBuilder) {
   }
 
-  get credentials(): { user: string, pwd: string } {
+  get credentials(): { user: string; pwd: string } {
     return this.passwordForm.getRawValue();
   }
 
@@ -31,7 +28,6 @@ export class ReviewDashboardComponent implements OnInit {
 
   fetchAllData() {
     const curData = this.credentials;
-    this.apiService.getAllReviews(curData.user, curData.pwd)
-        .subscribe(data => this.reviews = data);
+    this.apiService.getAllReviews(curData.user, curData.pwd).subscribe(data => (this.reviews = data));
   }
 }

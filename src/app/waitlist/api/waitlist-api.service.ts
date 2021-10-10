@@ -4,87 +4,57 @@ import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
 import {Userdata, WaitlistItem, WaitlistPerson, WaitlistRecord} from './waitlist-api';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class WaitlistApiService extends ApiService {
-
   constructor(private http: HttpClient) {
     super();
   }
 
   public loadPerson(user: Userdata): Observable<WaitlistPerson> {
-    return this.http
-               .get<WaitlistPerson>(
-                 ApiService.buildUrl('api', 'waitlist-person_get.php'),
-                 {headers: ApiService.buildHeaders(user.email, user.access_key)},
-               );
+    return this.http.get<WaitlistPerson>(ApiService.buildUrl('api', 'waitlist-person_get.php'), {
+      headers: ApiService.buildHeaders(user.email, user.access_key),
+    });
   }
 
   public storePerson(user: Userdata, person: WaitlistPerson): Observable<any> {
-    return this.http
-               .post<any>(
-                 ApiService.buildUrl('api', 'waitlist-person_post.php'),
-                 person,
-                 {headers: ApiService.buildHeaders(user.email, user.access_key)},
-               );
+    return this.http.post<any>(ApiService.buildUrl('api', 'waitlist-person_post.php'), person, {
+      headers: ApiService.buildHeaders(user.email, user.access_key),
+    });
   }
 
   public getPublicItems(): Observable<Array<WaitlistItem>> {
-    return this.http
-               .get<Array<WaitlistItem>>(
-                 ApiService.buildUrl('api', 'waitlist-overview-public_get.php'),
-               );
+    return this.http.get<Array<WaitlistItem>>(ApiService.buildUrl('api', 'waitlist-overview-public_get.php'));
   }
 
   public getPrivateItems(user: Userdata): Observable<Array<WaitlistItem>> {
-    return this.http
-               .get<Array<WaitlistItem>>(
-                 ApiService.buildUrl('api', 'waitlist-overview_get.php'),
-                 {
-                   headers: ApiService.buildHeaders(user.email, user.access_key),
-                 },
-               );
+    return this.http.get<Array<WaitlistItem>>(ApiService.buildUrl('api', 'waitlist-overview_get.php'), {
+      headers: ApiService.buildHeaders(user.email, user.access_key),
+    });
   }
 
   public register(waitlistPerson: WaitlistPerson): Observable<any> {
-    return this.http
-               .post(
-                 ApiService.buildUrl('api', 'waitlist-register_post.php'),
-                 waitlistPerson,
-               );
+    return this.http.post(ApiService.buildUrl('api', 'waitlist-register_post.php'), waitlistPerson);
   }
 
   public login(email: string): Observable<any> {
-    return this.http
-               .post(
-                 ApiService.buildUrl('api', 'waitlist-login_post.php'),
-                 {email},
-               );
+    return this.http.post(ApiService.buildUrl('api', 'waitlist-login_post.php'), {email});
   }
 
   public registerForShooting(user: Userdata, registrationData: WaitlistRecord) {
-    return this.http
-               .put(
-                 ApiService.buildUrl('api', 'waitlist-entry_put.php'),
-                 registrationData,
-                 {
-                   headers: ApiService.buildHeaders(user.email, user.access_key),
-                 },
-               );
+    return this.http.put(ApiService.buildUrl('api', 'waitlist-entry_put.php'), registrationData, {
+      headers: ApiService.buildHeaders(user.email, user.access_key),
+    });
   }
 
   public deleteRegistration(user: Userdata, itemId: number) {
-    return this.http
-               .post(
-                 ApiService.buildUrl('api', 'waitlist-entry-remove_post.php'),
-                 {item_id: itemId},
-                 {
-                   headers: ApiService.buildHeaders(user.email, user.access_key),
-                 },
-               );
+    return this.http.post(
+      ApiService.buildUrl('api', 'waitlist-entry-remove_post.php'),
+      {item_id: itemId},
+      {
+        headers: ApiService.buildHeaders(user.email, user.access_key),
+      },
+    );
   }
-
-
 }

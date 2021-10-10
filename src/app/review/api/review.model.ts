@@ -11,6 +11,5 @@ export interface UpdatableReview extends Review {
 }
 
 export interface LoadedReview extends UpdatableReview {
-
   creation_date: string;
 }

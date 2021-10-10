@@ -8,19 +8,9 @@ import {PersonComponent} from './person/person.component';
 import {MarkdownModule} from '../markdown/markdown.module';
 import {ReactiveFormsModule} from '@angular/forms';
 
-
 @NgModule({
-  declarations: [
-    ContractDashboardComponent,
-    PrettyFilenamePipe,
-    PersonComponent,
-  ],
-  imports: [
-    CommonModule,
-    ContractDashboardRoutingModule,
-    ReactiveFormsModule,
-    MarkdownModule,
-  ],
+  declarations: [ContractDashboardComponent, PrettyFilenamePipe, PersonComponent],
+  imports: [CommonModule, ContractDashboardRoutingModule, ReactiveFormsModule, MarkdownModule],
 })
 export class ContractDashboardModule {
 }

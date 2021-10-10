@@ -15,16 +15,16 @@ export class ReviewAdminApiService extends ApiService {
 
   public getAllReviews(email: string, accessKey: string): Observable<Array<LoadedReview>> {
     return this.http
-               .get<Array<LoadedReview>>(
-                 ApiService.buildUrl('api', 'reviews-admin_get.php'),
-                 {headers: ApiService.buildHeaders(email, accessKey)},
-               ).pipe(map(data => {
-        return data.map(review => {
-          if (typeof review.rating === 'string') {
-            review.rating = parseInt(review.rating, 10);
-          }
-          return review;
-        });
-      }));
+               .get<Array<LoadedReview>>(ApiService.buildUrl('api', 'reviews-admin_get.php'), {headers: ApiService.buildHeaders(email, accessKey)})
+               .pipe(
+                 map(data => {
+                   return data.map(review => {
+                     if (typeof review.rating === 'string') {
+                       review.rating = parseInt(review.rating, 10);
+                     }
+                     return review;
+                   });
+                 }),
+               );
   }
 }

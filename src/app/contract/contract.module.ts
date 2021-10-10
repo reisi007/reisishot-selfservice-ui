@@ -9,20 +9,9 @@ import {PreviewContractComponent} from './preview-contract/preview-contract.comp
 import {MarkdownModule} from '../markdown/markdown.module';
 import {ReactiveFormsModule} from '@angular/forms';
 
-
 @NgModule({
-  declarations: [
-    ResendContractComponent,
-    DisplayContractComponent,
-    ResendContractAccessKeyComponent,
-    PreviewContractComponent,
-  ],
-  imports: [
-    CommonModule,
-    ContractRoutingModule,
-    MarkdownModule,
-    ReactiveFormsModule,
-  ],
+  declarations: [ResendContractComponent, DisplayContractComponent, ResendContractAccessKeyComponent, PreviewContractComponent],
+  imports: [CommonModule, ContractRoutingModule, MarkdownModule, ReactiveFormsModule],
 })
 export class ContractModule {
 }

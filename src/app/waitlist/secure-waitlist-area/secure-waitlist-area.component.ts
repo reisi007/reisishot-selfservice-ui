@@ -9,16 +9,11 @@ import {WaitlistApiService} from '../api/waitlist-api.service';
   styleUrls: ['./secure-waitlist-area.component.scss'],
 })
 export class SecureWaitlistAreaComponent implements OnInit {
+  user!: Userdata;
 
-  user: Userdata | null;
+  items: Array<WaitlistItem> | undefined;
 
-  items: Array<WaitlistItem>;
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private apiService: WaitlistApiService,
-  ) {
+  constructor(private router: Router, private route: ActivatedRoute, private apiService: WaitlistApiService) {
   }
 
   ngOnInit(): void {
@@ -29,7 +24,7 @@ export class SecureWaitlistAreaComponent implements OnInit {
       } as Userdata;
 
       this.apiService.getPrivateItems(this.user).subscribe(
-        data => this.items = data,
+        data => (this.items = data),
         () => this.router.navigate(['waitlist']),
       );
     });

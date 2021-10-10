@@ -7,19 +7,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ReviewChartsComponent} from './review-charts/review-charts.component';
 import {ReviewModule} from '../review/review.module';
 
-
 @NgModule({
-  declarations: [
-    ReviewDashboardComponent,
-    ReviewChartsComponent,
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ReviewDashboardRoutingModule,
-    GaugeChartModule,
-    ReviewModule,
-  ],
+  declarations: [ReviewDashboardComponent, ReviewChartsComponent],
+  imports: [CommonModule, ReactiveFormsModule, ReviewDashboardRoutingModule, GaugeChartModule, ReviewModule],
 })
 export class ReviewDashboardModule {
 }

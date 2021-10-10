@@ -8,9 +8,8 @@ describe('PreviewContractChooserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [PreviewContractChooserComponent],
-                 })
-                 .compileComponents();
+      declarations: [PreviewContractChooserComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

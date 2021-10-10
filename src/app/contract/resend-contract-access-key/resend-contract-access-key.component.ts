@@ -9,14 +9,10 @@ import {EMailFormValue} from './EMailFormValue';
   styleUrls: ['./resend-contract-access-key.component.scss'],
 })
 export class ResendContractAccessKeyComponent implements OnInit {
-
-  emailForm: FormGroup;
+  emailForm!: FormGroup;
   sent = false;
 
-  constructor(
-    private apiService: ContractApiService,
-    private formBuilder: FormBuilder,
-  ) {
+  constructor(private apiService: ContractApiService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -27,7 +23,10 @@ export class ResendContractAccessKeyComponent implements OnInit {
 
   sendForm() {
     const email = (this.emailForm.value as EMailFormValue).email;
-    this.apiService.sendAllContractLinks(email).subscribe(() => this.sent = true, () => this.sent = false);
+    this.apiService.sendAllContractLinks(email).subscribe(
+      () => (this.sent = true),
+      () => (this.sent = false),
+    );
     this.sent = true;
   }
 }

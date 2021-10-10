@@ -14,26 +14,22 @@ import {formatDate, formatDateTime} from '../../commons/datetime.formatter';
   styleUrls: ['./display-contract.component.scss'],
 })
 export class DisplayContractComponent implements OnInit {
-
   static readonly UPDATE_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
-  email: string;
-  accessKey: string;
+  email!: string;
+  accessKey!: string;
 
-  contractData: ContractData = undefined;
+  contractData!: ContractData;
 
-  signStatus: Observable<Array<SignStatus>>;
+  signStatus: Observable<Array<SignStatus>> | undefined;
 
-  contractIsValid: boolean | null = null;
+  contractIsValid: boolean | undefined;
 
-  logs: Observable<Array<LogEntry>>;
+  logs: Observable<Array<LogEntry>> | undefined;
 
   curUserSigned = true;
 
-  constructor(
-    private route: ActivatedRoute,
-    private apiService: ContractApiService,
-  ) {
+  constructor(private route: ActivatedRoute, private apiService: ContractApiService) {
   }
 
   ngOnInit(): void {
@@ -56,7 +52,6 @@ export class DisplayContractComponent implements OnInit {
     });
   }
 
-
   sign(): void {
     this.apiService.postLogEntry(this.email, this.accessKey, LogType.SIGN).subscribe(() => {
       this.fetchSignStatus();
@@ -65,9 +60,7 @@ export class DisplayContractComponent implements OnInit {
   }
 
   calculateAge(val: string): string {
-    return dayjs(this.contractData.due_date)
-      .diff(dayjs(val), 'year', true)
-      .toFixed(2);
+    return dayjs(this.contractData?.due_date).diff(dayjs(val), 'year', true).toFixed(2);
   }
 
   formatDateTime(dateTimeString: string): string {
@@ -85,9 +78,7 @@ export class DisplayContractComponent implements OnInit {
   private fetchSignStatus() {
     this.signStatus = this.apiService.getSignStatus(this.email, this.accessKey);
     this.signStatus.subscribe(data => {
-      this.curUserSigned = data
-        .map(e => e.email === this.contractData.email && e.signed === '1')
-        .reduce((a, b) => a || b);
+      this.curUserSigned = data.map(e => e.email === this.contractData?.email && e.signed === '1').reduce((a, b) => a || b);
     });
   }
 
@@ -97,8 +88,7 @@ export class DisplayContractComponent implements OnInit {
 
   private fetchContractStatus() {
     this.apiService.checkContractValidity(this.email, this.accessKey).subscribe(data => {
-        this.contractIsValid = data.result.toLowerCase() === '1';
-      },
-    );
+      this.contractIsValid = data.result.toLowerCase() === '1';
+    });
   }
 }

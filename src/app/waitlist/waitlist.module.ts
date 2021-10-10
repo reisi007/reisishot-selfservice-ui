@@ -11,7 +11,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {SecureWaitlistAreaComponent} from './secure-waitlist-area/secure-waitlist-area.component';
 import {UpdatePersonComponent} from './update-person/update-person.component';
 
-
 @NgModule({
   declarations: [
     PreviewContractChooserComponent,
@@ -21,12 +20,7 @@ import {UpdatePersonComponent} from './update-person/update-person.component';
     SecureWaitlistAreaComponent,
     UpdatePersonComponent,
   ],
-  imports: [
-    CommonModule,
-    WaitlistRoutingModule,
-    MarkdownModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
 })
 export class WaitlistModule {
 }

@@ -1,10 +1,9 @@
 <div class="text-center p-6 h-full">
-  <h1>Reisishot - Florian Reisinger Photography Service</h1>
-  <div class="flex flex-wrap content-center justify-between h-full">
-    <button *ngFor="let item of items" [routerLink]="item.url"
-            class="mx-auto w-full"> {{item.name}}</button>
+    <h1>Reisishot - Florian Reisinger Photography Service</h1>
+    <div class="flex flex-wrap content-center justify-between h-full">
+        <button *ngFor="let item of items" [routerLink]="item.url" class="mx-auto w-full">{{item.name}}</button>
 
-    <button *ngFor="let item of items" [routerLink]="item.adminUrl"
-            class="mx-auto w-full lg:w-1/4">Admin - {{item.name}}</button>
-  </div>
+        <button *ngFor="let item of items" [routerLink]="item.adminUrl" class="mx-auto w-full lg:w-1/4">Admin
+            - {{item.name}}</button>
+    </div>
 </div>

@@ -8,9 +8,8 @@ describe('WaitlistAdminItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [WaitlistDashboardItemComponent],
-                 })
-                 .compileComponents();
+      declarations: [WaitlistDashboardItemComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

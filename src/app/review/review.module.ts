@@ -10,7 +10,6 @@ import {AdminReviewComponent} from './landing/admin-review-landing/admin-review.
 import {LoadingReviewLandingComponent} from './landing/loading-review-landing/loading-review-landing.component';
 import {ReviewLandingComponent} from './landing/review-landing/review-landing.component';
 
-
 @NgModule({
   declarations: [
     RatingComponent,
@@ -20,14 +19,8 @@ import {ReviewLandingComponent} from './landing/review-landing/review-landing.co
     LoadingReviewLandingComponent,
     ReviewLandingComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ReviewRoutingModule,
-  ],
-  exports: [
-    RatingComponent,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ReviewRoutingModule],
+  exports: [RatingComponent],
 })
 export class ReviewModule {
 }

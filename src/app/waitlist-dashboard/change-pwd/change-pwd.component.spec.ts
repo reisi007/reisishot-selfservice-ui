@@ -8,9 +8,8 @@ describe('ChangePwdComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [ChangePwdComponent],
-                 })
-                 .compileComponents();
+      declarations: [ChangePwdComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

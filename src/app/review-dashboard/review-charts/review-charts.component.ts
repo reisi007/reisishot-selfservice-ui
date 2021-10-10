@@ -9,17 +9,14 @@ import {RatingInformation} from './chart-api';
   styleUrls: ['./review-charts.component.scss'],
 })
 export class ReviewChartsComponent implements OnInit {
-
-
-  ratingOptions: GaugeChartOptions;
-  ratingValues: RatingInformation;
-  ratingSize;
+  ratingOptions!: GaugeChartOptions;
+  ratingValues!: RatingInformation;
+  ratingSize!: number;
 
   constructor() {
   }
 
-  // tslint:disable-next-line:variable-name
-  _reviews: Array<LoadedReview>;
+  _reviews!: Array<LoadedReview>;
 
   get reviews(): Array<LoadedReview> {
     return this._reviews;
@@ -62,5 +59,4 @@ export class ReviewChartsComponent implements OnInit {
     }
     this.ratingSize = width;
   }
-
 }

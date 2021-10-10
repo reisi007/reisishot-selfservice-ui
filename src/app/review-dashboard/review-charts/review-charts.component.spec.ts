@@ -8,9 +8,8 @@ describe('ReviewChartsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [ReviewChartsComponent],
-                 })
-                 .compileComponents();
+      declarations: [ReviewChartsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

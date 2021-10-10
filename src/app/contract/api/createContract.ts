@@ -5,7 +5,6 @@ export interface CreateContract {
   contractType: string;
   text: string;
   dueDate: string;
-
 }
 
 export interface Person {

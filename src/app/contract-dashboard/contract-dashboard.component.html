@@ -1,87 +1,84 @@
 <div class="text-center p-6">
-  <div *ngIf="formSentState.completed; then sent else form"></div>
+    <div *ngIf="formSentState.completed; then sent else form"></div>
 </div>
 
 <ng-template #form>
-  <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
-  <p>Personen, für die der erstellte Vertrag gelten soll:</p>
-  <form [formGroup]="emailForm" onsubmit="return false;">
-    <div *ngFor="let item of personArray.controls; let i = index; trackBy: trackByIndex"
-         class="py-2"
-         formArrayName="persons"
-    >
-      <app-person [cnt]="i" [person]="item"></app-person>
-    </div>
-    <div
-      class="mx-auto border border-gray-200 p-2 w-11/12 md:w-1/2">
-      <h3>Gespeicherte Personen</h3>
+    <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
+    <p>Personen, für die der erstellte Vertrag gelten soll:</p>
+    <form [formGroup]="emailForm" onsubmit="return false;">
+        <div *ngFor="let item of personArray.controls; let i = index; trackBy: trackByIndex" class="py-2"
+             formArrayName="persons">
+            <app-person [cnt]="i" [person]="$any(item)"></app-person>
+        </div>
+        <div class="mx-auto border border-gray-200 p-2 w-11/12 md:w-1/2">
+            <h3>Gespeicherte Personen</h3>
 
-      <ol *ngIf="dbPersons" class="flex flex-wrap my-2">
-        <li (click)="addStoredPerson(value)"
-            *ngFor="let value of dbPersons | async"
-            class="button m-0 p-2 list-none w-full sm:w-1/2">
-          {{value.firstName}} {{value.lastName}} <br/>
-          <span class="text-sm">{{value.email}}</span><br/>
-          {{value.birthday}}
-        </li>
-      </ol>
+            <ol *ngIf="dbPersons" class="flex flex-wrap my-2">
+                <li (click)="addStoredPerson(value)" *ngFor="let value of dbPersons | async"
+                    class="button m-0 p-2 list-none w-full sm:w-1/2">
+                    {{value.firstName}} {{value.lastName}} <br/>
+                    <span class="text-sm">{{value.email}}</span><br/>
+                    {{value.birthday}}
+                </li>
+            </ol>
 
-      <button (click)="loadPersonsFromDb()"
-              [disabled]="!emails.user || !emails.pwd"
-              class="bg-reisishot py-2 px-4">Laden
-      </button>
-    </div>
-    <div class="w-full md:w-1/3 m-auto">
-      <button (click)="addPerson()" class="bg-reisishot text-center">+</button>
-      <button (click)="removePerson()" class="bg-red-500 text-center">-</button>
-    </div>
-    <div>
-      <input class="w-full md:w-1/3" formControlName="user" placeholder="Benutzer für die Erstellung des Vertrages"
-             type="text"/>
-    </div>
-    <div>
-      <input class="w-full md:w-1/3" formControlName="pwd" placeholder="Passwort"
-             type="password">
-    </div>
-    <div>
-      <select class="w-full md:w-1/3"
-              formControlName="contractType"
-      >
-        <option disabled selected value>Vertrag auswählen</option>
-        <option *ngFor="let item of availableContracts | async" [value]="item">{{item | prettyFilename}}</option>
-      </select>
-    </div>
-    <div>
-      <label class="flex flex-row mx-auto items-baseline w-full md:w-1/3">
-        <span>Unterschreibbar bis:&nbsp;</span>
-        <input class="flex-grow" formControlName="dueDate" placeholder="Vertrag ist gültig bis"
-               type="datetime-local"/>
-      </label>
-    </div>
-    <textarea class="w-full md:w-1/3 block mx-auto" formControlName="text"
-              placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"
-              rows="4"></textarea>
-    <div>
-      <div *ngIf="additionalText"
-           [innerHTML]="additionalText | markdown"
-           class="w-full md:w-1/3 text-center mx-auto border border-black p-1">
-      </div>
-    </div>
-    <div>
-      <button (click)="sendForm()" [disabled]="!emailForm.valid || formSentState?.sent"
-              class="w-full md:w-1/3 bg-reisishot">
-        Neuen Vertrag erstellen
-      </button>
-    </div>
-    <div>
-      <button (click)="previewContract()" [disabled]="!contractType"
-              class="w-full md:w-1/3 bg-reisishot"> Vertrag anzeigen
-      </button>
-    </div>
-  </form>
-  <div *ngIf="formSentState?.error?.length > 0" class="bg-red-500 p-8">{{formSentState.error}}</div>
+            <button (click)="loadPersonsFromDb()" [disabled]="!emails.user || !emails.pwd"
+                    class="bg-reisishot py-2 px-4">Laden
+            </button>
+        </div>
+        <div class="w-full md:w-1/3 m-auto">
+            <button (click)="addPerson()" class="bg-reisishot text-center">+</button>
+            <button (click)="removePerson()" class="bg-red-500 text-center">-</button>
+        </div>
+        <div>
+            <input class="w-full md:w-1/3" formControlName="user"
+                   placeholder="Benutzer für die Erstellung des Vertrages" type="text"/>
+        </div>
+        <div>
+            <input class="w-full md:w-1/3" formControlName="pwd" placeholder="Passwort" type="password"/>
+        </div>
+        <div>
+            <select class="w-full md:w-1/3" formControlName="contractType">
+                <option disabled selected value>Vertrag auswählen</option>
+                <option *ngFor="let item of availableContracts | async"
+                        [value]="item">{{item | prettyFilename}}</option>
+            </select>
+        </div>
+        <div>
+            <label class="flex flex-row mx-auto items-baseline w-full md:w-1/3">
+                <span>Unterschreibbar bis:&nbsp;</span>
+                <input class="flex-grow" formControlName="dueDate" placeholder="Vertrag ist gültig bis"
+                       type="datetime-local"/>
+            </label>
+        </div>
+        <textarea
+                class="w-full md:w-1/3 block mx-auto"
+                formControlName="text"
+                placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"
+                rows="4"
+        ></textarea>
+        <div>
+            <div
+                    *ngIf="additionalText"
+                    [innerHTML]="additionalText | markdown"
+                    class="w-full md:w-1/3 text-center mx-auto border border-black p-1"
+            ></div>
+        </div>
+        <div>
+            <button (click)="sendForm()" [disabled]="!emailForm.valid || formSentState?.sent"
+                    class="w-full md:w-1/3 bg-reisishot">
+                Neuen Vertrag erstellen
+            </button>
+        </div>
+        <div>
+            <button (click)="previewContract()" [disabled]="!contractType" class="w-full md:w-1/3 bg-reisishot">Vertrag
+                anzeigen
+            </button>
+        </div>
+    </form>
+    <div *ngIf="formSentState?.error?.length??0  > 0" class="bg-red-500 p-8">{{formSentState?.error}}</div>
 </ng-template>
 
 <ng-template #sent>
-  <h1>Bitte schau in deinen E-Mail Posteingang!</h1>
+    <h1>Bitte schau in deinen E-Mail Posteingang!</h1>
 </ng-template>

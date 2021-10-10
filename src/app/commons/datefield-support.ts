@@ -1,10 +1,8 @@
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {beforeNow} from './datetime.validator';
 
-
 export abstract class DatefieldSupport {
-
-  person: FormGroup;
+  person!: FormGroup;
   dateFieldType: { [key: string]: string | null } = {};
   protected formBuilder: FormBuilder;
 
@@ -13,7 +11,7 @@ export abstract class DatefieldSupport {
   }
 
   setupDateField(fieldName: string) {
-    const value = this.person.get(fieldName).value;
+    const value = this.person?.get(fieldName)?.value;
     if (value == null || (typeof value === 'string' && value.trim() === '')) {
       this.dateFieldType[fieldName] = 'text';
     }

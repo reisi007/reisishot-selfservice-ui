@@ -7,8 +7,7 @@ import {LoadedReview} from '../../api/review.model';
   styleUrls: ['./admin-review.component.scss'],
 })
 export class AdminReviewComponent implements OnInit {
-
-  review: LoadedReview | null;
+  review: LoadedReview | null | undefined;
 
   constructor() {
   }
@@ -20,5 +19,4 @@ export class AdminReviewComponent implements OnInit {
   loadedReview(review: LoadedReview) {
     this.review = review;
   }
-
 }

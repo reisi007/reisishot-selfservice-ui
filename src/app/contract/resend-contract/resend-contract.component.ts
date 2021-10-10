@@ -13,12 +13,12 @@ import {CreateContract, Person} from '../api/createContract';
   styleUrls: ['./resend-contract.component.scss'],
 })
 export class ResendContractComponent implements OnInit {
+  emailForm!: FormGroup;
+  availableContracts: Observable<string[]> = this.apiService.getContracts();
+  formSentState = {error: '', completed: false, sent: false};
+  dbPersons!: Observable<Array<Person>>;
 
-  constructor(
-    private apiService: ContractApiService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-  ) {
+  constructor(private apiService: ContractApiService, private formBuilder: FormBuilder, private router: Router) {
   }
 
   get personArray(): FormArray {
@@ -30,18 +30,12 @@ export class ResendContractComponent implements OnInit {
   }
 
   get additionalText(): string {
-    return this.emailForm.get('text').value as string;
+    return this.emailForm.get('text')?.value as string;
   }
 
   get contractType(): string {
-    return this.emailForm.get('contractType').value;
+    return this.emailForm.get('contractType')?.value;
   }
-
-  private static LOCAL_PERSONS = 'LOCAL_PERSONS';
-  emailForm: FormGroup;
-  availableContracts: Observable<string[]> = this.apiService.getContracts();
-  formSentState = {error: '', completed: false, sent: false};
-  dbPersons: Observable<Array<Person>>;
 
   private static calculateKey(p: Person): string {
     return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
@@ -89,24 +83,23 @@ export class ResendContractComponent implements OnInit {
   }
 
   sendForm() {
-    this.apiService.createContract(this.emailForm.value)
-        .subscribe(
-          () => this.formSentState.completed = true,
-          () => {
-            this.formSentState.sent = false;
-            this.formSentState.error = 'Fehler beim Senden des Formulars!';
-          },
-        );
+    this.apiService.createContract(this.emailForm.value).subscribe(
+      () => (this.formSentState.completed = true),
+      () => {
+        this.formSentState.sent = false;
+        this.formSentState.error = 'Fehler beim Senden des Formulars!';
+      },
+    );
 
     this.formSentState.sent = true;
   }
 
   previewContract() {
     // noinspection JSIgnoredPromiseFromCall
-    this.router.navigate(['contracts', this.emailForm.get('contractType').value]);
+    this.router.navigate(['contracts', this.emailForm.get('contractType')?.value]);
   }
 
-  private createPerson(p: Person = null) {
+  private createPerson(p?: Person) {
     return this.formBuilder.group({
       firstName: this.formBuilder.control(p?.firstName || '', [Validators.required]),
       lastName: this.formBuilder.control(p?.lastName || '', [Validators.required]),
@@ -114,6 +107,4 @@ export class ResendContractComponent implements OnInit {
       birthday: this.formBuilder.control(p?.birthday || '', [Validators.required, beforeNow]),
     });
   }
-
-
 }

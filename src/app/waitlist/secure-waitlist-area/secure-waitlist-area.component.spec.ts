@@ -8,9 +8,8 @@ describe('SecureWaitlistAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-                   declarations: [SecureWaitlistAreaComponent],
-                 })
-                 .compileComponents();
+      declarations: [SecureWaitlistAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

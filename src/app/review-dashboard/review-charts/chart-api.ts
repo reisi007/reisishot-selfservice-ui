@@ -1,5 +1,4 @@
 export class RatingInformation {
-
   count: number;
   avg: number;
 

@@ -9,17 +9,12 @@ import {WaitlistItem} from '../api/waitlist-api';
   styleUrls: ['./waitlist.component.scss'],
 })
 export class WaitlistComponent implements OnInit {
+  publicItems!: Observable<Array<WaitlistItem>>;
 
-  publicItems: Observable<Array<WaitlistItem>>;
-
-  constructor(
-    private apiService: WaitlistApiService,
-  ) {
+  constructor(private apiService: WaitlistApiService) {
   }
 
   ngOnInit(): void {
     this.publicItems = this.apiService.getPublicItems();
   }
-
-
 }

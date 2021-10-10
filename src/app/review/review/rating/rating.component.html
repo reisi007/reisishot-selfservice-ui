@@ -1,17 +1,16 @@
 <div class="p-3">
-  <ng-container *ngIf="editable">
-    <form [formGroup]="inputForm" onsubmit="return false;">
-      Wert zwischen {{min}} und {{max}}:&nbsp;&nbsp;
-      <input [max]="max" [min]="min" [ngClass]="{'loaded':  rating != 0}" formControlName="rating" step="1"
-             type="number">
-    </form>
-
-  </ng-container>
-  <div class="py-4 text-reisishot">
-    <i (click)="starClicked($event)" *ngFor="let i of [].constructor(stars)"
-       class="icon rs-star-full px-2 rs-{{style}}"></i>
-    <i (click)="starClicked($event)" *ngIf="halfStarNeeded" class="icon rs-star-half px-2 rs-{{style}}"></i>
-    <i (click)="starClicked($event)" *ngFor="let i of [].constructor(emptyStars)"
-       class="icon rs-star-empty px-2 rs-{{style}}"></i>
-  </div>
+    <ng-container *ngIf="editable">
+        <form [formGroup]="inputForm" onsubmit="return false;">
+            Wert zwischen {{min}} und {{max}}:&nbsp;&nbsp;
+            <input [max]="max" [min]="min" [ngClass]="{'loaded':  rating !== 0}" formControlName="rating" step="1"
+                   type="number"/>
+        </form>
+    </ng-container>
+    <div class="py-4 text-reisishot">
+        <i (click)="starClicked($event)" *ngFor="let i of [].constructor(stars)"
+           class="icon rs-star-full px-2 rs-{{style}}"></i>
+        <i (click)="starClicked($event)" *ngIf="halfStarNeeded" class="icon rs-star-half px-2 rs-{{style}}"></i>
+        <i (click)="starClicked($event)" *ngFor="let i of [].constructor(emptyStars)"
+           class="icon rs-star-empty px-2 rs-{{style}}"></i>
+    </div>
 </div>

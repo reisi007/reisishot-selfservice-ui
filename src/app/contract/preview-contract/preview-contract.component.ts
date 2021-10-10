@@ -8,14 +8,10 @@ import {ContractApiService} from '../api/contract-api.service';
   styleUrls: ['./preview-contract.component.scss'],
 })
 export class PreviewContractComponent implements OnInit {
-
-  contract: string;
+  contract: string | undefined;
   loaded = true;
 
-  constructor(
-    private route: ActivatedRoute,
-    private apiService: ContractApiService,
-  ) {
+  constructor(private route: ActivatedRoute, private apiService: ContractApiService) {
   }
 
   ngOnInit(): void {
@@ -27,9 +23,8 @@ export class PreviewContractComponent implements OnInit {
           this.loaded = true;
           this.contract = param;
         },
-        () => this.loaded = false,
+        () => (this.loaded = false),
       );
     });
   }
-
 }
