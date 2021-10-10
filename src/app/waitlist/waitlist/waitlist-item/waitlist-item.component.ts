@@ -4,6 +4,10 @@ import {WaitlistApiService} from '../../api/waitlist-api.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Userdata, WaitlistItem, WaitlistRecord} from '../../api/waitlist-api';
 import {Router} from '@angular/router';
+import {MatomoTracker} from '@ngx-matomo/tracker';
+import {ExtMatomoTracker} from '../../../commons/ExtMatomoTracker';
+
+const EVENT_CATEGORY = 'waitlist';
 
 @Component({
   selector: 'app-waitlist-item',
@@ -15,12 +19,15 @@ export class WaitlistItemComponent implements OnInit {
   item: WaitlistItem;
   registration: FormGroup;
   user: Userdata | null;
+  private tracker: ExtMatomoTracker;
 
   constructor(
     private router: Router,
     private apiService: WaitlistApiService,
     private formBuilder: FormBuilder,
+    tracker: MatomoTracker,
   ) {
+    this.tracker = new ExtMatomoTracker(tracker);
   }
 
   get url(): string {
@@ -60,7 +67,10 @@ export class WaitlistItemComponent implements OnInit {
   register() {
     if (this.user) {
       this.apiService.registerForShooting(this.user, this.registrationInfo)
-          .subscribe(() => this.item.registered = '1');
+          .subscribe(() => {
+            this.tracker.trackEvent(EVENT_CATEGORY, 'register', this.item.short);
+            this.item.registered = '1';
+          });
     }
   }
 
