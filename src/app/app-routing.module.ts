@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {OverviewComponent} from './overview/overview.component';
 
 const routes: Routes = [
-  {path: '', component: OverviewComponent, data: {title: 'Verfügbare Services'}},
+  {path: '', redirectTo: '/overview', pathMatch: 'full'},
   {
     path: 'contracts/dashboard',
     loadChildren: () => import('./contract-dashboard/contract-dashboard.module').then(m => m.ContractDashboardModule),
@@ -16,6 +15,7 @@ const routes: Routes = [
   {path: 'waitlist', loadChildren: () => import('./waitlist/waitlist.module').then(m => m.WaitlistModule)},
   {path: 'review/dashboard', loadChildren: () => import('./review-dashboard/review-dashboard.module').then(m => m.ReviewDashboardModule)},
   {path: 'review', loadChildren: () => import('./review/review.module').then(m => m.ReviewModule)},
+  {path: 'overview', loadChildren: () => import('./root/root.module').then(m => m.RootModule)},
   {path: '**', redirectTo: '/', pathMatch: 'full'},
 ];
 
