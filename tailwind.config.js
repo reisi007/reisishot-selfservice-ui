@@ -1,10 +1,15 @@
-const extensions = ['hover', 'focus', 'disabled', 'visited']
-const isProd = process.env.NODE_ENV === 'production';
+function isProd() {
+  return process.env.NODE_ENV === 'production'
+}
+
+function extensions() {
+  return ['hover', 'focus', 'disabled', 'visited']
+}
 
 module.exports = {
-  mode: isProd ? 'aot' : 'jit',
+  mode: isProd() ? 'aot' : 'jit',
   purge: {
-    enabled: isProd,
+    enabled: isProd(),
     content: [
       './src/**/*.html',
       './src/**/*.scss'
@@ -13,7 +18,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      fontWeight: extensions,
+      fontWeight: extensions(),
       fontFamily: {
         sans: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
       },
@@ -27,9 +32,9 @@ module.exports = {
   },
   variants: {
     extend: {
-      opacity: extensions,
-      textColor: extensions,
-      backgroundColor: extensions
+      opacity: extensions(),
+      textColor: extensions(),
+      backgroundColor: extensions()
     },
   },
   plugins: [],

@@ -18,7 +18,7 @@ export class OverviewComponent {
       adminUrl: 'review/dashboard',
     },
     {
-      name: 'Neuen Vertrag erstellen',
+      name: 'Verträge verwalten',
       url: 'contracts',
       adminUrl: 'contracts/dashboard',
     },
