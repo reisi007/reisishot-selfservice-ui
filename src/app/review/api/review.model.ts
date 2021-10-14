@@ -1,9 +1,9 @@
 export interface Review {
   email: string;
-  rating: number;
+  rating?: number;
   name: string;
-  review_private: string | null;
-  review_public: string;
+  review_private?: string;
+  review_public?: string;
 }
 
 export interface UpdatableReview extends Review {

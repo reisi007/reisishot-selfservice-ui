@@ -31,7 +31,7 @@ export class ReviewComponent implements OnInit {
       access_key: this.formBuilder.control(''),
       email: this.formBuilder.control('', [Validators.email, Validators.required]),
       review_private: this.formBuilder.control('', []),
-      review_public: this.formBuilder.control('', [Validators.required, Validators.pattern(this.minWordRegexp)]),
+      review_public: this.formBuilder.control('', [Validators.pattern(this.minWordRegexp)]),
     });
   }
 

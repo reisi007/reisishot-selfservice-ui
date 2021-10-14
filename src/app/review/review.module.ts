@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AdminReviewComponent} from './landing/admin-review-landing/admin-review.component';
 import {LoadingReviewLandingComponent} from './landing/loading-review-landing/loading-review-landing.component';
 import {ReviewLandingComponent} from './landing/review-landing/review-landing.component';
+import {MarkdownModule} from '../markdown/markdown.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import {ReviewLandingComponent} from './landing/review-landing/review-landing.co
     LoadingReviewLandingComponent,
     ReviewLandingComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, ReviewRoutingModule],
+  imports: [CommonModule, ReactiveFormsModule, ReviewRoutingModule, MarkdownModule],
   exports: [RatingComponent],
 })
 export class ReviewModule {

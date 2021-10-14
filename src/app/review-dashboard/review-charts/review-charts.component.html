@@ -1,15 +1,20 @@
 <div class="content-center">
-    <div *ngIf="ratingValues" class="mx-auto">
-        <rg-gauge-chart
-                *ngFor="let width of [ratingSize]; trackBy: tbf"
-                [bottomLabel]="''+ratingValues.avg+' / 100' "
-                [canvasWidth]="width"
-                [name]="'Durchschnittliche Bewertung'"
-                [needleValue]="ratingValues.avg"
-                [options]="ratingOptions"
-        ></rg-gauge-chart>
-        <div>
-            <app-rating [editable]="false" [max]="100" [min]="0" [style]="'3x'" [value]="ratingValues.avg"></app-rating>
-        </div>
+  <div *ngIf="ratingValues" class="mx-auto">
+    <rg-gauge-chart
+      *ngFor="let width of [ratingSize]; trackBy: tbf"
+      [bottomLabel]="''+ratingValues.avg+' / 100' "
+      [canvasWidth]="width"
+      [name]="'Durchschnittliche Bewertung'"
+      [needleValue]="ratingValues.avg"
+      [options]="ratingOptions"
+    ></rg-gauge-chart>
+    <div class="flex items-center justify-center">
+      <div class="p-4">
+        <app-rating [editable]="false" [max]="100"
+                    [min]="0" [style]="'3x'" [value]="ratingValues.avg"
+                    class="inline-block"></app-rating>
+      </div>
+      <span class="text-3xl"> ({{ratingValues.count}})</span>
     </div>
+  </div>
 </div>

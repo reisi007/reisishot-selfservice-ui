@@ -13,11 +13,13 @@ export class ReviewApiService extends ApiService {
     super();
   }
 
+
   public loadReview(email: string, accessKey: string): Observable<LoadedReview> {
     return this.http
                .get<LoadedReview>(ApiService.buildUrl('api', 'reviews_get.php'), {headers: ApiService.buildHeaders(email, accessKey)})
                .pipe(
                  map(review => {
+                   // noinspection SuspiciousTypeOfGuard
                    if (typeof review.rating === 'string') {
                      review.rating = parseInt(review.rating, 10);
                    }

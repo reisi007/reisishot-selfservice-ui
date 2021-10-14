@@ -7,16 +7,38 @@ import {LoadedReview} from '../../api/review.model';
   styleUrls: ['./admin-review.component.scss'],
 })
 export class AdminReviewComponent implements OnInit {
-  review: LoadedReview | null | undefined;
+  review?: LoadedReview;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.review = history.state.review as LoadedReview | null;
+    this.review = history.state.review as LoadedReview;
   }
 
   loadedReview(review: LoadedReview) {
     this.review = review;
+  }
+
+  asText(review: LoadedReview): string {
+    const lines = new Array<string>();
+    lines.push(
+      '---',
+      'video: ???',
+      'image: ???',
+      'images: ???',
+      'type: boudoir | beauty | business | sport | pärchen | live',
+      'name: ' + review.name,
+      'date: ' + review.creation_date.split(' ')[0],
+    );
+    if (review.rating) {
+      lines.push('rating: ' + review.rating);
+    }
+    lines.push('---');
+    if (review.review_public) {
+      lines.push(review.review_public);
+    }
+
+    return lines.join('\r\n');
   }
 }

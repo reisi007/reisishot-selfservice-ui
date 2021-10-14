@@ -6,10 +6,12 @@ import {ReviewDashboardComponent} from './main/review-dashboard.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ReviewChartsComponent} from './review-charts/review-charts.component';
 import {ReviewModule} from '../review/review.module';
+import {DisplayReviewComponent} from './display-review/display-review.component';
+import {MarkdownModule} from '../markdown/markdown.module';
 
 @NgModule({
-  declarations: [ReviewDashboardComponent, ReviewChartsComponent],
-  imports: [CommonModule, ReactiveFormsModule, ReviewDashboardRoutingModule, GaugeChartModule, ReviewModule],
+  declarations: [ReviewDashboardComponent, ReviewChartsComponent, DisplayReviewComponent],
+  imports: [CommonModule, ReactiveFormsModule, ReviewDashboardRoutingModule, GaugeChartModule, ReviewModule, MarkdownModule],
 })
 export class ReviewDashboardModule {
 }

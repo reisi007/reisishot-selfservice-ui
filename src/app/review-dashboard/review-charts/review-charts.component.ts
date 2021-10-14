@@ -25,7 +25,9 @@ export class ReviewChartsComponent implements OnInit {
   @Input() set reviews(reviews: Array<LoadedReview>) {
     this._reviews = reviews;
     // Update all values
-    const ratings = reviews.map(v => v.rating);
+    const ratings = reviews
+      .filter(v => v.rating !== null)
+      .map(v => v.rating as number);
 
     this.ratingValues = new RatingInformation(ratings.length, ratings.reduce((a, b) => a + b) / ratings.length);
   }

@@ -1,0 +1,18 @@
+<div class=" h-full px-6 py-4 mx-4 border-2 border-reisishot-light rounded-3xl ">
+  <div class="h-full">
+    <h3 class="font-light text-3xl">{{review.name}}</h3>
+    <span class="font-light text-lg">{{review.creation_date}}</span>
+    <div class="my-2">
+      <app-rating *ngIf="review.rating" [editable]="false" [max]="100" [min]="0"
+                  [style]="'1x'" [value]="review.rating??null"></app-rating>
+    </div>
+    <ng-container *ngIf="review.review_private">
+      <h4 class="font-light text-2xl">Nicht veröffentlichen</h4>
+      <p [innerHTML]="review.review_private | markdown" class="whitespace-pre-line leading-relaxed"></p>
+    </ng-container>
+    <ng-container *ngIf="review.review_public">
+      <h4 class="font-light text-2xl">Zu veröffentlichen</h4>
+      <p [innerHTML]="review.review_public | markdown" class="whitespace-pre-line leading-relaxed"></p>
+    </ng-container>
+  </div>
+</div>
