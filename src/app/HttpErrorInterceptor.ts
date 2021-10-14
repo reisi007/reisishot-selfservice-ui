@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -18,7 +19,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
     }
     // Return an observable with a user-facing error message.
-    return throwError('Something bad happened; please try again later.');
+    if (environment.production) {
+      return throwError('Something bad happened; please try again later.');
+    }
+    else {
+      return throwError(JSON.stringify(error));
+    }
   };
 
   intercept(request: HttpRequest<never>, next: HttpHandler): Observable<HttpEvent<unknown>> {
