@@ -16,7 +16,7 @@ import {NgxMatomoRouterModule} from '@ngx-matomo/router';
     HttpClientModule,
     AppRoutingModule,
     NgxMatomoTrackerModule.forRoot({
-      trackerUrl: '//analytics.reisishot.pictures/matomo.php',
+      trackerUrl: '//analytics.reisishot.pictures',
       siteId: 8,
     }),
     NgxMatomoRouterModule,
