@@ -2,8 +2,8 @@ import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../admin-api/waitlist-admin-api';
 import {WaitlistAdminApiService} from '../admin-api/waitlist-admin-api.service';
-import {ReferralApiService} from '../../referral/api/referral-api.service';
-import {ReferralType} from '../../referral/api/referral-api.model';
+import {ReferralApiService} from '../../waitlist/referral-api/referral-api.service';
+import {ReferralType} from '../../waitlist/referral-api/referral-api.model';
 
 @Component({
   selector: 'app-waitlist-dashboard-item',

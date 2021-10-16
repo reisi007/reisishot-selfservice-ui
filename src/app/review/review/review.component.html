@@ -57,9 +57,6 @@
         placeholder="Öffentliche Bewertung"
         rows="10"
       ></textarea>
-      <div *ngIf="reviewData.get('review_public')?.errors?.pattern" class="text-red-500">
-        Bitte schreibe zumindest {{minWordsCnt}} Wörter.
-      </div>
       <div [innerHTML]="reviewData.get('review_public')?.value |markdown"></div>
     </div>
 

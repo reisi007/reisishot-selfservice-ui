@@ -8,3 +8,7 @@ export enum ReferralType {
   SHOOTING_GOOD = 'shooting_good',
   SHOOTING_BAD = 'shooting_bad'
 }
+
+export interface Referrable {
+  referrer: string;
+}

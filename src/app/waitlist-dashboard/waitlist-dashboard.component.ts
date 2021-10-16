@@ -13,7 +13,10 @@ export class WaitlistDashboardComponent implements OnInit {
   passwordForm!: FormGroup;
   items!: Observable<Array<WaitlistItemWithRegistrations>>;
 
-  constructor(private waitlistAdminApi: WaitlistAdminApiService, private formBuilder: FormBuilder) {
+  constructor(
+    private waitlistAdminApi: WaitlistAdminApiService,
+    private formBuilder: FormBuilder,
+  ) {
   }
 
   get credentials(): { user: string; pwd: string } {

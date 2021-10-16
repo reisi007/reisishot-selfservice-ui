@@ -1,6 +1,8 @@
 <div class=" h-full px-6 py-4 mx-4 border-2 border-reisishot-light rounded-3xl ">
   <div class="h-full">
-    <h3 class="font-light text-3xl">{{review.name}}</h3>
+    <a [routerLink]="['/review',review.email,review.access_key,'admin']" class="link-black">
+      <h3 class="font-light text-3xl">{{review.name}}</h3>
+    </a>
     <span class="font-light text-lg">{{review.creation_date}}</span>
     <div class="my-2">
       <app-rating *ngIf="review.rating" [editable]="false" [max]="100" [min]="0"

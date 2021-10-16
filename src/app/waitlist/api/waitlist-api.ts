@@ -1,6 +1,7 @@
 import {Person} from '../../contract/api/createContract';
+import {Referrable} from '../referral-api/referral-api.model';
 
-export interface WaitlistPerson extends Person {
+export interface WaitlistPerson extends Person, Referrable {
   availability: string;
   phone_number: string;
   website: string | null;

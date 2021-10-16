@@ -26,12 +26,12 @@ export class ReviewComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private apiService: ReviewApiService) {
     this.reviewData = this.formBuilder.group({
-      rating: this.formBuilder.control(0, [Validators.min(1)]),
+      rating: this.formBuilder.control(0, Validators.min(1)),
       name: this.formBuilder.control('', [Validators.required]),
       access_key: this.formBuilder.control(''),
       email: this.formBuilder.control('', [Validators.email, Validators.required]),
-      review_private: this.formBuilder.control('', []),
-      review_public: this.formBuilder.control('', [Validators.pattern(this.minWordRegexp)]),
+      review_private: this.formBuilder.control(''),
+      review_public: this.formBuilder.control(''),
     });
   }
 

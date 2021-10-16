@@ -10,6 +10,7 @@ import {MarkdownModule} from '../markdown/markdown.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SecureWaitlistAreaComponent} from './secure-waitlist-area/secure-waitlist-area.component';
 import {UpdatePersonComponent} from './update-person/update-person.component';
+import {ReferrerInfoTopComponent} from './referrer-info-top/referrer-info-top.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {UpdatePersonComponent} from './update-person/update-person.component';
     WaitlistItemComponent,
     SecureWaitlistAreaComponent,
     UpdatePersonComponent,
+    ReferrerInfoTopComponent,
   ],
   imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
 })

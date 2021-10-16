@@ -29,6 +29,7 @@ export abstract class DatefieldSupport {
       availability: this.formBuilder.control('', [Validators.required]),
       phone_number: this.formBuilder.control('', [Validators.required, Validators.pattern('\\+?\\d{5,}')]),
       website: this.formBuilder.control(''),
+      referrer: this.formBuilder.control(undefined),
     });
   }
 }

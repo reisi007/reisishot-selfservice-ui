@@ -21,15 +21,18 @@ export class DisplayContractComponent implements OnInit {
 
   contractData!: ContractData;
 
-  signStatus: Observable<Array<SignStatus>> | undefined;
+  signStatus?: Observable<Array<SignStatus>>;
 
-  contractIsValid: boolean | undefined;
+  contractIsValid?: boolean;
 
-  logs: Observable<Array<LogEntry>> | undefined;
+  logs?: Observable<Array<LogEntry>>;
 
   curUserSigned = true;
 
-  constructor(private route: ActivatedRoute, private apiService: ContractApiService) {
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ContractApiService,
+  ) {
   }
 
   ngOnInit(): void {

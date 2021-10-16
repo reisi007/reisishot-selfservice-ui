@@ -1,13 +1,15 @@
 <div class="text-center p-6">
-    <h1 class="mb-2 font-light text-4xl">Shooting Warteliste</h1>
+  <h1 class="mb-2 font-light text-4xl">Shooting Warteliste</h1>
 
-    <app-waitlist-person></app-waitlist-person>
+  <app-referrer-info-top *ngIf="referrer" [referrer]="referrer"></app-referrer-info-top>
 
-    <app-preview-contract-chooser></app-preview-contract-chooser>
+  <app-waitlist-person></app-waitlist-person>
 
-    <div class="flex flex-wrap">
+  <app-preview-contract-chooser></app-preview-contract-chooser>
+
+  <div class="flex flex-wrap">
     <span *ngFor="let item of publicItems | async" class="w-full xl:w-1/2 p-3 self-stretch">
       <app-waitlist-item [item]="item"></app-waitlist-item>
     </span>
-    </div>
+  </div>
 </div>

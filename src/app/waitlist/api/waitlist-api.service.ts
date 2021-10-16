@@ -38,8 +38,8 @@ export class WaitlistApiService extends ApiService {
     return this.http.post(ApiService.buildUrl('api', 'waitlist-register_post.php'), waitlistPerson);
   }
 
-  public login(email: string): Observable<any> {
-    return this.http.post(ApiService.buildUrl('api', 'waitlist-login_post.php'), {email});
+  public login(data: { email: string, referrer: string }): Observable<any> {
+    return this.http.post(ApiService.buildUrl('api', 'waitlist-login_post.php'), data);
   }
 
   public registerForShooting(user: Userdata, registrationData: WaitlistRecord) {
