@@ -1,6 +1,6 @@
 export interface ReferralInfo {
   email: string;
-  type: ReferralType;
+  action: ReferralType;
 }
 
 export enum ReferralType {

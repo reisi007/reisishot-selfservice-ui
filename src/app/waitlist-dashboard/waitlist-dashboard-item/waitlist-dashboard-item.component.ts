@@ -2,6 +2,8 @@ import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../admin-api/waitlist-admin-api';
 import {WaitlistAdminApiService} from '../admin-api/waitlist-admin-api.service';
+import {ReferralApiService} from '../../referral/api/referral-api.service';
+import {ReferralType} from '../../referral/api/referral-api.model';
 
 @Component({
   selector: 'app-waitlist-dashboard-item',
@@ -13,7 +15,11 @@ export class WaitlistDashboardItemComponent {
 
   private internalUserPwd!: { user: string; pwd: string };
 
-  constructor(private waitlistAdminApi: WaitlistAdminApiService, private router: Router) {
+  constructor(
+    private waitlistAdminApi: WaitlistAdminApiService,
+    private referralApi: ReferralApiService,
+    private router: Router,
+  ) {
   }
 
   get credentials(): { user: string; pwd: string } {
@@ -46,6 +52,26 @@ export class WaitlistDashboardItemComponent {
   public done(idx: number, waitlistRecord: AdminWaitlistRecord) {
     const data = this.credentials;
     this.waitlistAdminApi.removeWaitlistItem(data.user, data.pwd, waitlistRecord.item_id).subscribe(() => this.removeRegistration(idx));
+  }
+
+  public positiv(idx: number, registration: AdminWaitlistRecord) {
+    this.referralApi.addPointsDirect(
+      {
+        email: registration.email,
+        action: ReferralType.SHOOTING_GOOD,
+      }
+      , this.credentials,
+    ).subscribe(() => window.alert('Positive Bewertung erfolgreich abgegeben'));
+  }
+
+  public negativ(idx: number, registration: AdminWaitlistRecord) {
+    this.referralApi.addPointsDirect(
+      {
+        email: registration.email,
+        action: ReferralType.SHOOTING_BAD,
+      }
+      , this.credentials,
+    ).subscribe(() => window.alert('Negative Bewertung erfolgreich abgegeben'));
   }
 
   private removeRegistration(idx: number): void {
