@@ -12,6 +12,7 @@ import {SecureWaitlistAreaComponent} from './secure-waitlist-area/secure-waitlis
 import {UpdatePersonComponent} from './update-person/update-person.component';
 import {ReferrerInfoTopComponent} from './referrer-info-top/referrer-info-top.component';
 import {ReferralCustomerInfoComponent} from './referral-customer-info/referral-customer-info.component';
+import {ContactMeComponent} from './contact-me/contact-me.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {ReferralCustomerInfoComponent} from './referral-customer-info/referral-c
     UpdatePersonComponent,
     ReferrerInfoTopComponent,
     ReferralCustomerInfoComponent,
+    ContactMeComponent,
   ],
   imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
 })

@@ -6,6 +6,8 @@
   <div [routerLink]="['personal_information']" class="button w-full md:w-1/3 mx-auto mt-5">Persönliche Daten ändern
   </div>
 
+  <app-contact-me></app-contact-me>
+
   <div class="flex flex-wrap">
     <span *ngFor="let item of items" class="w-full xl:w-1/2 p-3 self-stretch">
       <app-waitlist-item [item]="item" [person]="user"></app-waitlist-item>
