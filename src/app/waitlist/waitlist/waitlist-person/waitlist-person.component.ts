@@ -4,6 +4,9 @@ import {WaitlistApiService} from '../../api/waitlist-api.service';
 import {WaitlistPerson} from '../../api/waitlist-api';
 import {DatefieldSupport} from '../../../commons/datefield-support';
 import {ActivatedRoute, Params} from '@angular/router';
+import {MatomoTracker} from '@ngx-matomo/tracker';
+import {ExtMatomoTracker} from '../../../commons/ExtMatomoTracker';
+import {Referrable} from '../../referral-api/referral-api.model';
 
 @Component({
   selector: 'app-waitlist-person',
@@ -12,6 +15,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 })
 export class WaitlistPersonComponent extends DatefieldSupport implements OnInit {
   email!: FormGroup;
+  matomo: ExtMatomoTracker;
 
   formSubmitted = false;
   errorLogin = false;
@@ -21,8 +25,10 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
     formBuilder: FormBuilder,
     private apiService: WaitlistApiService,
     private route: ActivatedRoute,
+    matomo: MatomoTracker,
   ) {
     super(formBuilder);
+    this.matomo = new ExtMatomoTracker(matomo);
   }
 
   private static setReferrer(fg: FormGroup, routeData: Params) {
@@ -46,14 +52,26 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
 
   doRegister(): void {
     const person = this.person.getRawValue() as WaitlistPerson;
-    this.apiService.register(person).subscribe(() => (this.formSubmitted = true));
+    this.apiService.register(person).subscribe(() => {
+      if (person.referrer) {
+        this.matomo.trackEvent('referral', 'register', person.referrer);
+      }
+      this.formSubmitted = true;
+    });
+
   }
 
   doLogin(): void {
-    const email = this.email.getRawValue() as { email: string, referrer: string };
+    const email = this.email.getRawValue() as { email: string } & Referrable;
+
     this.apiService.login(email).subscribe(
-      () => (this.formSubmitted = true),
-      () => (this.errorLogin = true),
+      () => {
+        if (email.referrer) {
+          this.matomo.trackEvent('referral', 'login', email.referrer);
+        }
+        this.formSubmitted = true;
+      },
+      () => this.errorLogin = true,
     );
   }
 }

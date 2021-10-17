@@ -4,6 +4,7 @@ import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
 import {Userdata, WaitlistItem, WaitlistPerson, WaitlistRecord} from './waitlist-api';
 import {map} from 'rxjs/operators';
+import {Referrable} from '../referral-api/referral-api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +48,7 @@ export class WaitlistApiService extends ApiService {
     return this.http.post(ApiService.buildUrl('api', 'waitlist-register_post.php'), waitlistPerson);
   }
 
-  public login(data: { email: string, referrer: string }): Observable<any> {
+  public login(data: { email: string } & Referrable): Observable<any> {
     return this.http.post(ApiService.buildUrl('api', 'waitlist-login_post.php'), data);
   }
 

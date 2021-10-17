@@ -10,5 +10,5 @@ export enum ReferralType {
 }
 
 export interface Referrable {
-  referrer: string;
+  referrer?: string;
 }
