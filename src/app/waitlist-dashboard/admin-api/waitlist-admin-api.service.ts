@@ -3,6 +3,7 @@ import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
 import {WaitlistItemWithRegistrations} from './waitlist-admin-api';
 import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,25 @@ export class WaitlistAdminApiService extends ApiService {
   }
 
   public getWaitlistItems(user: string, pwd: string): Observable<Array<WaitlistItemWithRegistrations>> {
-    return this.http.get<Array<WaitlistItemWithRegistrations>>(ApiService.buildUrl('api', 'waitlist-admin_get.php'), {
-      headers: ApiService.buildHeaders(user, pwd),
-    });
+    return this.http
+               .get<Array<WaitlistItemWithRegistrations>>(
+                 ApiService.buildUrl('api', 'waitlist-admin_get.php'),
+                 {headers: ApiService.buildHeaders(user, pwd)},
+               )
+               .pipe(
+                 map(wi => {
+                   wi.forEach(i => {
+                     i.registrations.forEach(registration => {
+                         // noinspection SuspiciousTypeOfGuard
+                         if (typeof registration.points === 'string') {
+                           registration.points = parseInt(registration.points, 10);
+                         }
+                       },
+                     );
+                   });
+                   return wi;
+                 }),
+               );
   }
 
   public ignoreWaitlistItem(user: string, pwd: string, id: number): Observable<any> {

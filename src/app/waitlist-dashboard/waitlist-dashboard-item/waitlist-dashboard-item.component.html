@@ -3,6 +3,7 @@
   <table *ngIf="item.registrations.length > 0" class="mx-auto">
     <thead>
     <tr>
+      <th class="border border-black px-2 py-1">Punkte</th>
       <th class="border border-black px-2 py-1">Name</th>
       <th class="border border-black px-2 py-1">Verfügbarkeit</th>
       <th class="border border-black px-2 py-1">Freitext</th>
@@ -15,6 +16,13 @@
     <tbody>
     <tr *ngFor="let registration of item.registrations; let i = index"
         [ngClass]="{'bg-gray-100': registration.done_internal === '1'}">
+      <td [ngClass]="{
+          'bg-red-800 text-white': registration.points < 0,
+          'bg-reisishot text-white': registration.points >= 100
+          }"
+          class="border border-black px-2 py-1">
+        {{registration.points}}
+      </td>
       <td class="border border-black px-2 py-1">{{registration.firstName}} {{registration.lastName}}</td>
       <td class="border border-black px-2 py-1">{{registration.availability}}</td>
       <td class="border border-black px-2 py-1">{{registration.text }}</td>

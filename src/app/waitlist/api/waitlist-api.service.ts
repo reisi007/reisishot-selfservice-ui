@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
 import {Userdata, WaitlistItem, WaitlistPerson, WaitlistRecord} from './waitlist-api';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,15 @@ export class WaitlistApiService extends ApiService {
   public loadPerson(user: Userdata): Observable<WaitlistPerson> {
     return this.http.get<WaitlistPerson>(ApiService.buildUrl('api', 'waitlist-person_get.php'), {
       headers: ApiService.buildHeaders(user.email, user.access_key),
-    });
+    }).pipe(
+      map(wp => {
+        // noinspection SuspiciousTypeOfGuard
+        if (typeof wp.points === 'string') {
+          wp.points = parseInt(wp.points, 10);
+        }
+        return wp;
+      }),
+    );
   }
 
   public storePerson(user: Userdata, person: WaitlistPerson): Observable<any> {

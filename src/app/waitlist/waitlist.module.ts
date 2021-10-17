@@ -11,6 +11,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {SecureWaitlistAreaComponent} from './secure-waitlist-area/secure-waitlist-area.component';
 import {UpdatePersonComponent} from './update-person/update-person.component';
 import {ReferrerInfoTopComponent} from './referrer-info-top/referrer-info-top.component';
+import {ReferralCustomerInfoComponent} from './referral-customer-info/referral-customer-info.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {ReferrerInfoTopComponent} from './referrer-info-top/referrer-info-top.co
     SecureWaitlistAreaComponent,
     UpdatePersonComponent,
     ReferrerInfoTopComponent,
+    ReferralCustomerInfoComponent,
   ],
   imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
 })

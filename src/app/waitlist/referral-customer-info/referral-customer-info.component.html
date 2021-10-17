@@ -1,0 +1,19 @@
+<div class="border-solid border-reisishot border-2 rounded-lg p-2 mt-4">
+  <h2 class="text-2xl font-light">Hallo {{user.firstName}} {{user.lastName}}!</h2>
+  <p>
+    Ich würde mich freuen, wenn du mich weiterempfehlen würdest. <br/>
+    Wenn Personen sich über deinen Link anmelden, sammelst du Punkte.<br/>
+    Diese Punkte wirst du in Zukunft für bestimmte Vorteile einlösen können.
+  </p>
+  <p>
+    Je mehr Punkte du auf deinem Konto hast, desto besser ist deine Platzierung in der Warteliste.
+  </p>
+  <p class="text-3xl font-light text-reisishot">Dein aktueller Punktestand: {{user.points}} Punkte</p>
+  <label>
+    Dein Referral Link:&nbsp;
+    <input [style]="'width: '+(44 + user.email.length )+'ch'"
+           [value]="'https://service.reisishot.pictures/waitlist/'+user.email"
+           class="bg-gray-50 rounded-2xl text-center" readonly
+           type="text"/>
+  </label>
+</div>

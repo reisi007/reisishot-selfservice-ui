@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Userdata, WaitlistItem} from '../api/waitlist-api';
+import {Userdata, WaitlistItem, WaitlistPerson} from '../api/waitlist-api';
 import {WaitlistApiService} from '../api/waitlist-api.service';
 
 @Component({
@@ -11,7 +11,9 @@ import {WaitlistApiService} from '../api/waitlist-api.service';
 export class SecureWaitlistAreaComponent implements OnInit {
   user!: Userdata;
 
-  items: Array<WaitlistItem> | undefined;
+  items?: Array<WaitlistItem>;
+
+  waitlistPerson?: WaitlistPerson;
 
   constructor(private router: Router, private route: ActivatedRoute, private apiService: WaitlistApiService) {
   }
@@ -26,6 +28,10 @@ export class SecureWaitlistAreaComponent implements OnInit {
       this.apiService.getPrivateItems(this.user).subscribe(
         data => (this.items = data),
         () => this.router.navigate(['waitlist']),
+      );
+
+      this.apiService.loadPerson(this.user).subscribe(
+        wp => this.waitlistPerson = wp,
       );
     });
   }

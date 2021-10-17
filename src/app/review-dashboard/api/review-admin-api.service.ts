@@ -19,6 +19,7 @@ export class ReviewAdminApiService extends ApiService {
                .pipe(
                  map(data => {
                    return data.map(review => {
+                     // noinspection SuspiciousTypeOfGuard
                      if (typeof review.rating === 'string') {
                        review.rating = parseInt(review.rating, 10);
                      }

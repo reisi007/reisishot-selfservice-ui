@@ -4,7 +4,8 @@ import {Referrable} from '../referral-api/referral-api.model';
 export interface WaitlistPerson extends Person, Referrable {
   availability: string;
   phone_number: string;
-  website: string | null;
+  website?: string;
+  points: number;
 }
 
 export interface WaitlistRecord {
