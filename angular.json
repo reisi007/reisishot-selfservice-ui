@@ -76,6 +76,7 @@
               "browserTarget": "reisishot-selfservice-ui:build:production"
             },
             "development": {
+              "hmr": true,
               "browserTarget": "reisishot-selfservice-ui:build:development"
             }
           },

@@ -1,0 +1,24 @@
+<h2 class="my-3 text-3xl">Leaderboard</h2>
+
+<table *ngIf="items" class="mx-auto w-full lg:w-7/12">
+  <thead>
+  <tr>
+    <th class="border border-black px-2 py-1">Platz</th>
+    <th class="border border-black px-2 py-1">Punkte</th>
+    <th class="border border-black px-2 py-1">Referrer</th>
+  </tr>
+  </thead>
+  <tbody class="overflow-y-scroll h-60">
+  <tr *ngFor="let item of items; let i = index"
+      [ngClass]="{
+      'bg-red-800 text-white': item.points < 0,
+      'bg-green-100':0 < item.points && item.points < 100,
+      'bg-green-300 text-white':100 <= item.points && item.points < 200,
+      'bg-green-500 text-white': 200 <= item.points
+      }">
+    <td class=" border border-black px-2 py-1">{{i + 1}}</td>
+    <td class=" border border-black px-2 py-1">{{item.points}}</td>
+    <td class=" border border-black px-2 py-1">{{item.referrer}}</td>
+  </tr>
+  </tbody>
+</table>

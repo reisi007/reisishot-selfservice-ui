@@ -8,6 +8,8 @@ import {WaitlistPerson} from '../api/waitlist-api';
 })
 export class ReferralCustomerInfoComponent {
 
+  textCopied = false;
+
   constructor() {
   }
 
@@ -24,4 +26,9 @@ export class ReferralCustomerInfoComponent {
   init(): void {
   }
 
+  select($event: MouseEvent) {
+    const target = $event.target as HTMLTextAreaElement;
+    target.select();
+    navigator.clipboard.writeText(target.value).then(() => this.textCopied = true);
+  }
 }

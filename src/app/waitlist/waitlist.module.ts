@@ -13,6 +13,7 @@ import {UpdatePersonComponent} from './update-person/update-person.component';
 import {ReferrerInfoTopComponent} from './referrer-info-top/referrer-info-top.component';
 import {ReferralCustomerInfoComponent} from './referral-customer-info/referral-customer-info.component';
 import {ContactMeComponent} from './contact-me/contact-me.component';
+import {ReferralPerksComponent} from './referral-customer-info/referral-perks/referral-perks.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {ContactMeComponent} from './contact-me/contact-me.component';
     ReferrerInfoTopComponent,
     ReferralCustomerInfoComponent,
     ContactMeComponent,
+    ReferralPerksComponent,
   ],
   imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
 })

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WaitlistAdminApiService} from './admin-api/waitlist-admin-api.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {WaitlistItemWithRegistrations} from './admin-api/waitlist-admin-api';
+import {LeaderboardEntry, WaitlistItemWithRegistrations} from './admin-api/waitlist-admin-api';
 
 @Component({
   selector: 'app-waitlist-dashboard',
@@ -11,7 +10,8 @@ import {WaitlistItemWithRegistrations} from './admin-api/waitlist-admin-api';
 })
 export class WaitlistDashboardComponent implements OnInit {
   passwordForm!: FormGroup;
-  items!: Observable<Array<WaitlistItemWithRegistrations>>;
+  items!: Array<WaitlistItemWithRegistrations>;
+  leaderboard!: Array<LeaderboardEntry>;
 
   constructor(
     private waitlistAdminApi: WaitlistAdminApiService,
@@ -32,6 +32,9 @@ export class WaitlistDashboardComponent implements OnInit {
 
   fetchAllData(): void {
     const curData = this.credentials;
-    this.items = this.waitlistAdminApi.getWaitlistItems(curData.user, curData.pwd);
+    this.waitlistAdminApi.loadData(curData.user, curData.pwd).subscribe(data => {
+      this.items = data.registrations;
+      this.leaderboard = data.leaderboard;
+    });
   }
 }

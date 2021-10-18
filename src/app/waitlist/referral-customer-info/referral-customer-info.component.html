@@ -9,11 +9,14 @@
     Je mehr Punkte du auf deinem Konto hast, desto besser ist deine Platzierung in der Warteliste.
   </p>
   <p class="text-3xl font-light text-reisishot">Dein aktueller Punktestand: {{user.points}} Punkte</p>
+
+  <app-referral-perks [curPoints]="user.points"></app-referral-perks>
+
   <label>
-    Dein Referral Link:&nbsp;
-    <input [style]="'width: '+(44 + user.email.length )+'ch'"
-           [value]="'https://service.reisishot.pictures/waitlist/'+user.email"
-           class="bg-gray-50 rounded-2xl text-center" readonly
-           type="text"/>
+    Dein Referral Link:
+    <span *ngIf="textCopied" class="block font-light my-1">Der Link wurde in deine Zwischenablage kopiert!</span>
+    <textarea (click)="select($event)"
+              [value]="'https://service.reisishot.pictures/waitlist/'+user.email"
+              class="bg-gray-50 rounded-2xl text-center w-full lg:w-1/2" readonly></textarea>
   </label>
 </div>

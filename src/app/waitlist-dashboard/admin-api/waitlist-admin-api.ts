@@ -8,3 +8,13 @@ export interface AdminWaitlistRecord extends WaitlistRecord, WaitlistPerson {
   done_internal: '0' | '1';
   points: number;
 }
+
+export interface WaitlistAdminData {
+  registrations: Array<WaitlistItemWithRegistrations>,
+  leaderboard: Array<LeaderboardEntry>
+}
+
+export interface LeaderboardEntry {
+  referrer: string;
+  points: number;
+}

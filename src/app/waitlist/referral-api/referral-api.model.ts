@@ -12,3 +12,9 @@ export enum ReferralType {
 export interface Referrable {
   referrer?: string;
 }
+
+export interface Perk {
+  id: string;
+  display: string;
+  value: number;
+}

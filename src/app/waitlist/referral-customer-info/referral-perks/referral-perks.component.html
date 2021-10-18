@@ -1,0 +1,10 @@
+<div class="border-solid border-reisishot border-2 rounded-lg p-2 my-4 w-10/12 lg:w-3/4 mx-auto">
+  <h2 class="text-thin">Vorteile gegen Punkte aktivieren</h2>
+  <ul *ngIf="perks">
+    <li *ngFor="let perk of perks"
+        [ngClass]="{
+            'text-gray-500': perk.value > curPoints
+            }">{{perk.display}}
+      <span class="font-medium">({{perk.value}} Punkte)</span></li>
+  </ul>
+</div>

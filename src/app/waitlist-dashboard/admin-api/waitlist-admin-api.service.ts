@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
-import {WaitlistItemWithRegistrations} from './waitlist-admin-api';
+import {WaitlistAdminData} from './waitlist-admin-api';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
@@ -13,15 +13,15 @@ export class WaitlistAdminApiService extends ApiService {
     super();
   }
 
-  public getWaitlistItems(user: string, pwd: string): Observable<Array<WaitlistItemWithRegistrations>> {
+  public loadData(user: string, pwd: string): Observable<WaitlistAdminData> {
     return this.http
-               .get<Array<WaitlistItemWithRegistrations>>(
+               .get<WaitlistAdminData>(
                  ApiService.buildUrl('api', 'waitlist-admin_get.php'),
                  {headers: ApiService.buildHeaders(user, pwd)},
                )
                .pipe(
-                 map(wi => {
-                   wi.forEach(i => {
+                 map(wad => {
+                   wad.registrations.forEach(i => {
                      i.registrations.forEach(registration => {
                          // noinspection SuspiciousTypeOfGuard
                          if (typeof registration.points === 'string') {
@@ -30,7 +30,14 @@ export class WaitlistAdminApiService extends ApiService {
                        },
                      );
                    });
-                   return wi;
+
+                   wad.leaderboard.forEach(e => {
+                     // noinspection SuspiciousTypeOfGuard
+                     if (typeof e.points === 'string') {
+                       e.points = parseInt(e.points, 10);
+                     }
+                   });
+                   return wad;
                  }),
                );
   }
