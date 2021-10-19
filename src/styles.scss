@@ -79,3 +79,8 @@
 .gauge-chart {
   @apply mx-auto
 }
+
+input[type='date']:before {
+  color: #aaa;
+  content: attr(placeholder) ':\00a0';
+}

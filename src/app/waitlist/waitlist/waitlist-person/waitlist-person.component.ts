@@ -46,8 +46,6 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
       WaitlistPersonComponent.setReferrer(this.email, routeData);
       WaitlistPersonComponent.setReferrer(this.person, routeData);
     });
-
-    this.setupDateField('birthday');
   }
 
   doRegister(): void {

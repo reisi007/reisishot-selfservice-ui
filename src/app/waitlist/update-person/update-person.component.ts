@@ -29,7 +29,6 @@ export class UpdatePersonComponent extends DatefieldSupport implements OnInit {
       this.apiService.loadPerson(this.user).subscribe(
         data => {
           this.person.patchValue(data);
-          this.setupDateField('birthday');
           this.person.valueChanges.subscribe(() => {
             this.dirty = true;
           });

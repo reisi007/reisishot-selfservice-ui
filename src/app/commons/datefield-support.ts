@@ -3,21 +3,10 @@ import {beforeNow} from './datetime.validator';
 
 export abstract class DatefieldSupport {
   person!: FormGroup;
-  dateFieldType: { [key: string]: string | null } = {};
   protected formBuilder: FormBuilder;
 
   protected constructor(formBuilder: FormBuilder) {
     this.formBuilder = formBuilder;
-  }
-
-  setupDateField(fieldName: string) {
-    const value = this.person?.get(fieldName)?.value;
-    if (value == null || (typeof value === 'string' && value.trim() === '')) {
-      this.dateFieldType[fieldName] = 'text';
-    }
-    else {
-      this.dateFieldType[fieldName] = 'date';
-    }
   }
 
   buildForm() {

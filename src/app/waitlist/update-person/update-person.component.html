@@ -1,53 +1,50 @@
 <div class="text-center p-6">
-    <form *ngIf="person.get('email')?.value" [formGroup]="person" class="flex-1 mb-8" onsubmit="return false;">
-        <h3 class="mb-5 font-light text-2xl">Daten ändern</h3>
-        <div>
-            <div>
-                <input class="w-full md:w-7/12" formControlName="firstName" placeholder="Vorname" required type="text"/>
-            </div>
-            <div>
-                <input class="w-full md:w-7/12" formControlName="lastName" placeholder="Nachname" required type="text"/>
-            </div>
-            <div>
-                <input class="w-full md:w-7/12" formControlName="email" placeholder="Deine E-Mail Adresse" required
-                       type="email"/>
-            </div>
-            <div>
-                <input
-                        (blur)="setupDateField('birthday')"
-                        (focus)="dateFieldType['birthday']='date'"
-                        [attr.type]="dateFieldType['birthday']"
-                        class="w-full md:w-7/12"
-                        formControlName="birthday"
-                        placeholder="Dein Geburtstag"
-                        required
-                />
-            </div>
-            <div>
-                <input class="w-full md:w-7/12" formControlName="phone_number" placeholder="Deine Telefonnummer"
-                       required type="tel"/>
-            </div>
-            <div>
-                <input class="w-full md:w-7/12" formControlName="website" placeholder="Link zu deinem Instagram etc."
-                       required type="tel"/>
-            </div>
-            <div>
+  <form *ngIf="person.get('email')?.value" [formGroup]="person" class="flex-1 mb-8" onsubmit="return false;">
+    <h3 class="mb-5 font-light text-2xl">Daten ändern</h3>
+    <div>
+      <div>
+        <input class="w-full md:w-7/12" formControlName="firstName" placeholder="Vorname" required type="text"/>
+      </div>
+      <div>
+        <input class="w-full md:w-7/12" formControlName="lastName" placeholder="Nachname" required type="text"/>
+      </div>
+      <div>
+        <input class="w-full md:w-7/12" formControlName="email" placeholder="Deine E-Mail Adresse" required
+               type="email"/>
+      </div>
+      <div>
+        <input class="w-full md:w-7/12"
+               formControlName="birthday"
+               placeholder="Dein Geburtstag"
+               required
+               type="date"
+        />
+      </div>
+      <div>
+        <input class="w-full md:w-7/12" formControlName="phone_number" placeholder="Deine Telefonnummer"
+               required type="tel"/>
+      </div>
+      <div>
+        <input class="w-full md:w-7/12" formControlName="website" placeholder="Link zu deinem Instagram etc."
+               required type="tel"/>
+      </div>
+      <div>
         <textarea
-                class="w-full md:w-7/12"
-                formControlName="availability"
-                placeholder="Wann hast du Zeit für ein Shooting"
-                required
-                rows="4"
+          class="w-full md:w-7/12"
+          formControlName="availability"
+          placeholder="Wann hast du Zeit für ein Shooting"
+          required
+          rows="4"
         ></textarea>
-            </div>
-            <button
-                    (click)="update()"
-                    [attr.disabled]="!person.valid || !dirty?'':null"
-                    class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4"
-            >
-                Daten speichern
-            </button>
-            <button (click)="goBack() " class="w-full md:w-7/12 py-2 px-4">Ohne speichern verlassen</button>
-        </div>
-    </form>
+      </div>
+      <button
+        (click)="update()"
+        [attr.disabled]="!person.valid || !dirty?'':null"
+        class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4"
+      >
+        Daten speichern
+      </button>
+      <button (click)="goBack() " class="w-full md:w-7/12 py-2 px-4">Ohne speichern verlassen</button>
+    </div>
+  </form>
 </div>
