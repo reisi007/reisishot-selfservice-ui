@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../../commons/ApiService';
 import {HttpClient} from '@angular/common/http';
-import {Perk, ReferralInfo} from './referral-api.model';
+import {Perk, ReferralInfo, ReferralPointEntry} from './referral-api.model';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Userdata} from '../api/waitlist-api';
+import * as dayjs from 'dayjs';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +36,30 @@ export class ReferralApiService extends ApiService {
             }
           });
           return perks;
+        }),
+      );
+  }
+
+  public loadPointHistory(auth: Userdata): Observable<Array<ReferralPointEntry>> {
+    return this.http
+               .get<Array<ReferralPointEntry>>(
+                 ApiService.buildUrl('api', 'referral-points-history_get.php'),
+                 {headers: ApiService.buildHeaders(auth.email, auth.access_key)},
+               ).pipe(
+        map(entries => {
+          entries.forEach(e => {
+            // noinspection SuspiciousTypeOfGuard
+            if (typeof e.points === 'string') {
+              e.points = parseInt(e.points, 10);
+            }
+            // noinspection SuspiciousTypeOfGuard
+            if (typeof e.timestamp === 'string') {
+              console.log(e.timestamp);
+              e.timestamp = dayjs(e.timestamp);
+            }
+          });
+
+          return entries;
         }),
       );
   }

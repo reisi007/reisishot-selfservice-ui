@@ -17,7 +17,7 @@ export class ContractDashboardComponent implements OnInit {
   emailForm!: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
   formSentState = {error: '', completed: false, sent: false};
-  dbPersons!: Observable<Array<Person>>;
+  dbPersons!: Array<Person>;
 
   constructor(private apiService: ContractApiService, private formBuilder: FormBuilder, private router: Router) {
   }
@@ -80,7 +80,7 @@ export class ContractDashboardComponent implements OnInit {
   }
 
   loadPersonsFromDb() {
-    this.dbPersons = this.apiService.loadPersons(this.emails.user, this.emails.pwd);
+    this.apiService.loadPersons(this.emails.user, this.emails.pwd).subscribe(data => this.dbPersons = data);
   }
 
   sendForm() {

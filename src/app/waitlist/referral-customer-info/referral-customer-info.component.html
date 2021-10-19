@@ -8,15 +8,46 @@
   <p>
     Je mehr Punkte du auf deinem Konto hast, desto besser ist deine Platzierung in der Warteliste.
   </p>
-  <p class="text-3xl font-light text-reisishot">Dein aktueller Punktestand: {{user.points}} Punkte</p>
+  <div class="text-3xl font-light text-reisishot">
+    Dein aktueller Punktestand: {{user.points}} Punkte
+    <ng-container>
+      <button (click)="showHistory()" *ngIf="!showReferralPointHistory" class="py-2">Details anzeigen</button>
+      <button (click)="hideHistory()" *ngIf="showReferralPointHistory" class="py-2">Details verstecken</button>
+    </ng-container>
+  </div>
+
+  <table *ngIf="showReferralPointHistory" class="mx-auto w-full lg:w-1/2">
+    <thead>
+    <tr>
+      <th class="border border-black px-2 py-1">Zeitpunkt</th>
+      <th class="border border-black px-2 py-1">Position</th>
+      <th class="border border-black px-2 py-1">Punkte</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="historyData">
+    <tr *ngFor="let item of historyData"
+        [ngClass]="{
+    'bg-reisishot': item.points > 0,
+    'bg-red-800 ': item.points < 0,
+    'text-white': item.points !== 0
+}">
+      <td class="border border-black px-2 py-1">{{item.timestamp.format("DD.MM.YYYY HH:mm:ss")}}</td>
+      <td class="border border-black px-2 py-1">{{item.display}}</td>
+      <td class="border border-black px-2 py-1">{{(item.points > 0 ? "+" : "") + item.points}}</td>
+    </tr>
+    </tbody>
+  </table>
 
   <app-referral-perks [curPoints]="user.points"></app-referral-perks>
 
-  <label>
+  <div>
     Dein Referral Link:
-    <span *ngIf="textCopied" class="block font-light my-1">Der Link wurde in deine Zwischenablage kopiert!</span>
-    <textarea (click)="select($event)"
-              [value]="'https://service.reisishot.pictures/waitlist/'+user.email"
-              class="bg-gray-50 rounded-2xl text-center w-full lg:w-1/2" readonly></textarea>
-  </label>
+    <span *ngIf="referralLinkCopied"
+          class="block font-light my-1">Der Link wurde in deine Zwischenablage kopiert!</span>
+    <div (click)="select($event)" class="p-2 bg-gray-50 rounded-2xl text-center mx-auto w-full lg:w-1/2"
+         contenteditable="true">
+      https://service.reisishot.pictures/waitlist/{{user.email}}
+    </div>
+
+  </div>
 </div>

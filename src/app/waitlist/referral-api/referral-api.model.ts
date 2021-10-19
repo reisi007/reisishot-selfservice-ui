@@ -1,3 +1,5 @@
+import * as dayjs from 'dayjs';
+
 export interface ReferralInfo {
   email: string;
   action: ReferralType;
@@ -17,4 +19,10 @@ export interface Perk {
   id: string;
   display: string;
   value: number;
+}
+
+export interface ReferralPointEntry {
+  points: number;
+  display: string;
+  timestamp: dayjs.Dayjs;
 }

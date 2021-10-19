@@ -1,7 +1,9 @@
 <div class="text-center p-6">
   <h1 class="mb-2 font-light text-4xl">Shooting Warteliste</h1>
 
-  <app-referral-customer-info *ngIf="waitlistPerson" [user]="waitlistPerson"></app-referral-customer-info>
+  <app-referral-customer-info *ngIf="waitlistPerson"
+                              [auth]="user"
+                              [user]="waitlistPerson"></app-referral-customer-info>
 
   <div [routerLink]="['personal_information']" class="button w-full md:w-1/3 mx-auto mt-5">Persönliche Daten ändern
   </div>

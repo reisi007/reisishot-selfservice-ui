@@ -14,11 +14,11 @@
             <h3>Gespeicherte Personen</h3>
 
             <ol *ngIf="dbPersons" class="flex flex-wrap my-2">
-                <li (click)="addStoredPerson(value)" *ngFor="let value of dbPersons | async"
+                <li (click)="addStoredPerson(value)" *ngFor="let value of dbPersons"
                     class="button m-0 p-2 list-none w-full sm:w-1/2">
-                    {{value.firstName}} {{value.lastName}} <br/>
-                    <span class="text-sm">{{value.email}}</span><br/>
-                    {{value.birthday}}
+                  {{value.firstName}} {{value.lastName}} <br/>
+                  <span class="text-sm">{{value.email}}</span><br/>
+                  {{value.birthday}}
                 </li>
             </ol>
 

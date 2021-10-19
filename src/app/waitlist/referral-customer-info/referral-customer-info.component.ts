@@ -1,5 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {WaitlistPerson} from '../api/waitlist-api';
+import {Userdata, WaitlistPerson} from '../api/waitlist-api';
+import {ReferralPointEntry} from '../referral-api/referral-api.model';
+import {ReferralApiService} from '../referral-api/referral-api.service';
 
 @Component({
   selector: 'app-referral-customer-info',
@@ -8,9 +10,15 @@ import {WaitlistPerson} from '../api/waitlist-api';
 })
 export class ReferralCustomerInfoComponent {
 
-  textCopied = false;
+  referralLinkCopied = false;
+  showReferralPointHistory = false;
 
-  constructor() {
+  historyData: Array<ReferralPointEntry> | undefined;
+  @Input() auth!: Userdata;
+
+  constructor(
+    private referralApi: ReferralApiService,
+  ) {
   }
 
   private _user!: WaitlistPerson;
@@ -23,12 +31,19 @@ export class ReferralCustomerInfoComponent {
     this._user = value;
   }
 
-  init(): void {
+  showHistory() {
+    this.showReferralPointHistory = true;
+    this.referralApi.loadPointHistory(this.auth)
+        .subscribe(data => this.historyData = data);
+  }
+
+  hideHistory() {
+    this.showReferralPointHistory = false;
+    this.historyData = undefined;
   }
 
   select($event: MouseEvent) {
-    const target = $event.target as HTMLTextAreaElement;
-    target.select();
-    navigator.clipboard.writeText(target.value).then(() => this.textCopied = true);
+    const target = $event.target as HTMLElement;
+    navigator.clipboard.writeText(target.innerText).then(() => this.referralLinkCopied = true);
   }
 }

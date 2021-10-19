@@ -65,8 +65,9 @@ export class ContractApiService extends ApiService {
   }
 
   public loadPersons(user: string, pwd: string): Observable<Array<Person>> {
-    return this.http.get<Array<Person>>(ApiService.buildUrl('api', 'contract-people_get.php'), {
-      headers: ApiService.buildHeaders(user, pwd),
-    });
+    return this.http.get<Array<Person>>(
+      ApiService.buildUrl('api', 'contract-people_get.php'),
+      {headers: ApiService.buildHeaders(user, pwd)},
+    );
   }
 }
