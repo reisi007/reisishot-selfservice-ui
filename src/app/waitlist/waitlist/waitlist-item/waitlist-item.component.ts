@@ -21,7 +21,12 @@ export class WaitlistItemComponent implements OnInit {
   user: Userdata | null | undefined;
   private tracker: ExtMatomoTracker;
 
-  constructor(private router: Router, private apiService: WaitlistApiService, private formBuilder: FormBuilder, tracker: MatomoTracker) {
+  constructor(
+    private router: Router,
+    private apiService: WaitlistApiService,
+    private formBuilder: FormBuilder,
+    tracker: MatomoTracker,
+  ) {
     this.tracker = new ExtMatomoTracker(tracker);
   }
 
@@ -38,7 +43,8 @@ export class WaitlistItemComponent implements OnInit {
   }
 
   get canRegister(): boolean {
-    return this.item != undefined && this.item.max_waiting == null || this.max_waiting != null && this.max_waiting > 0;
+    return this.item != undefined && this.item.max_waiting == null ||
+           this.max_waiting != null && this.max_waiting > 0;
   }
 
   get max_waiting(): number | null {

@@ -8,6 +8,9 @@ import {MatomoTracker} from '@ngx-matomo/tracker';
 import {ExtMatomoTracker} from '../../../commons/ExtMatomoTracker';
 import {Referrable} from '../../referral-api/referral-api.model';
 
+const CATEGORY_REFERRAL = 'referral';
+const CATEGORY_REGISTER = 'register';
+
 @Component({
   selector: 'app-waitlist-person',
   templateUrl: './waitlist-person.component.html',
@@ -51,9 +54,11 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
   doRegister(): void {
     const person = this.person.getRawValue() as WaitlistPerson;
     this.apiService.register(person).subscribe(() => {
+      const action = 'register';
       if (person.referrer) {
-        this.matomo.trackEvent('referral', 'register', person.referrer);
+        this.matomo.trackEvent(CATEGORY_REFERRAL, action, person.referrer);
       }
+      this.matomo.trackEvent(CATEGORY_REGISTER, action, person.email);
       this.formSubmitted = true;
     });
 
@@ -64,9 +69,11 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
 
     this.apiService.login(email).subscribe(
       () => {
+        const action = 'login';
         if (email.referrer) {
-          this.matomo.trackEvent('referral', 'login', email.referrer);
+          this.matomo.trackEvent(CATEGORY_REFERRAL, action, email.referrer);
         }
+        this.matomo.trackEvent(CATEGORY_REGISTER, action, email.email);
         this.formSubmitted = true;
       },
       () => this.errorLogin = true,
