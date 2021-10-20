@@ -1,7 +1,6 @@
 <ng-container *ngIf="contracts">
-    <h2 class="font-light text-2xl mb-1">Basisverträge ansehen</h2>
-    <ul class="list-none mb-2">
-        <li *ngFor="let item of contracts |async"><a [routerLink]="['/contracts',item.value]"
-                                                     class="text-link">{{item.name}}</a></li>
-    </ul>
+  <h2 class="font-light text-2xl mb-1">Basisverträge ansehen</h2>
+  <ul class="list-none mb-2">
+    <li *ngFor="let item of contracts |async"><a [routerLink]="['/contracts',item.value]">{{item.name}}</a></li>
+  </ul>
 </ng-container>
