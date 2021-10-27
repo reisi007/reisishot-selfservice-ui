@@ -1,0 +1,14 @@
+<div class="border-solid border-black border-2 rounded-lg p-2 m-2">
+  <label>
+    Person:
+    <select>
+      <option (change)="changeEmail($event)" *ngFor="let p of persons" [value]="p.email">{{p.firstName}} {{p.lastName}}
+        - {{p.email}}</option>
+    </select>
+  </label>
+
+  <div *ngIf="selectedMail" class="my-2">
+    Erfahrung für {{selectedMail}} speichern:
+    <app-person-assess [auth]="auth" [email]="selectedMail" class="block"></app-person-assess>
+  </div>
+</div>

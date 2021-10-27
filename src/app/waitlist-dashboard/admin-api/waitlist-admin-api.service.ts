@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
-import {WaitlistAdminData} from './waitlist-admin-api';
+import {AdminWaitlistRecord, WaitlistAdminData} from './waitlist-admin-api';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {WaitlistPerson} from '../../waitlist/api/waitlist-api';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,14 @@ export class WaitlistAdminApiService extends ApiService {
                          if (typeof registration.points === 'string') {
                            registration.points = parseInt(registration.points, 10);
                          }
+                         // noinspection SuspiciousTypeOfGuard
+                         if (typeof registration.person_id === 'string') {
+                           registration.person_id = parseInt(registration.person_id, 10);
+                         }
+                         // noinspection SuspiciousTypeOfGuard
+                         if (typeof registration.item_id === 'string') {
+                           registration.item_id = parseInt(registration.item_id, 10);
+                         }
                        },
                      );
                    });
@@ -42,15 +51,25 @@ export class WaitlistAdminApiService extends ApiService {
                );
   }
 
-  public ignoreWaitlistItem(user: string, pwd: string, id: number): Observable<any> {
-    return this.http.post(ApiService.buildUrl('api', 'waitlist-admin-ignore_post.php?id=' + id), null, {
-      headers: ApiService.buildHeaders(user, pwd),
-    });
+  public ignoreWaitlistItem(user: string, pwd: string, record: AdminWaitlistRecord): Observable<any> {
+    return this.http.post(ApiService.buildUrl('api', 'waitlist-admin-ignore_post.php'),
+      {item: record.item_id, person: record.person_id}, {
+        headers: ApiService.buildHeaders(user, pwd),
+      });
   }
 
-  public removeWaitlistItem(user: string, pwd: string, id: number): Observable<any> {
-    return this.http.post(ApiService.buildUrl('api', 'waitlist-admin-delete_post.php?id=' + id), null, {
-      headers: ApiService.buildHeaders(user, pwd),
-    });
+  public removeWaitlistItem(user: string, pwd: string, record: AdminWaitlistRecord): Observable<any> {
+    return this.http.post(ApiService.buildUrl('api', 'waitlist-admin-delete_post.php'),
+      {item: record.item_id, person: record.person_id}, {
+        headers: ApiService.buildHeaders(user, pwd),
+      });
+  }
+
+  public loadRegisteredPersons(user: string, pwd: string): Observable<Array<WaitlistPerson>> {
+    //TODO fix data when needed
+    return this.http.get<Array<WaitlistPerson>>(
+      ApiService.buildUrl('api', 'waitlist-admin_persons_get.php'),
+      {headers: ApiService.buildHeaders(user, pwd)},
+    );
   }
 }

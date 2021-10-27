@@ -52,18 +52,7 @@
         </button>
       </td>
       <td class="border border-black px-2 py-1">
-        <button
-          (click)="positiv(i,registration)"
-          class="p-2.5 bg-reisishot text-white"
-        >
-          Positiv
-        </button>
-        <button
-          (click)="negativ(i,registration)"
-          class="p-2.5 bg-red-800 text-white"
-        >
-          Negativ
-        </button>
+        <app-person-assess [auth]="internalUserPwd" [email]="registration.email"></app-person-assess>
       </td>
     </tr>
     </tbody>

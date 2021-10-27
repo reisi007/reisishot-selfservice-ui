@@ -1,14 +1,16 @@
 <div [formGroup]="person">
-    <h3 class="mb-1">{{cnt + 1}}. Person</h3>
-    <div>
-        <input class="w-1/2 md:w-1/6" formControlName="firstName" placeholder="Vorname" required type="text"/>
-        <input class="w-1/2 md:w-1/6" formControlName="lastName" placeholder="Nachname" required type="text"/>
-    </div>
-    <div>
-        <input class="w-full md:w-1/3" formControlName="email" placeholder="Deine E-Mail Adresse" required
-               type="email"/>
-    </div>
-    <div>
-        <input class="w-full md:w-1/3" formControlName="birthday" placeholder="Dein Geburtstag" required type="date"/>
-    </div>
+  <h3 class="mb-1">{{cnt + 1}}. Person</h3>
+  <div>
+    <input class="w-1/2 md:w-1/6" formControlName="firstName" placeholder="Vorname" required type="text"/>
+    <input class="w-1/2 md:w-1/6" formControlName="lastName" placeholder="Nachname" required type="text"/>
+  </div>
+  <div>
+    <input class="w-full md:w-1/3" formControlName="email" placeholder="Deine E-Mail Adresse" required
+           type="email"/>
+  </div>
+  <div>
+    <input class="w-full md:w-1/3" data-date-placeholder="Dein Geburtstag"
+           formControlName="birthday" placeholder="Dein Geburtstag JJJJ-MM-TT"
+           required type="date"/>
+  </div>
 </div>

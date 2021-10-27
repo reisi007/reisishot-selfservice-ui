@@ -8,7 +8,9 @@ export interface ReferralInfo {
 export enum ReferralType {
   REGISTER = 'waitlist_register',
   SHOOTING_GOOD = 'shooting_good',
-  SHOOTING_BAD = 'shooting_bad'
+  SHOOTING_REFERRED_GOOD = 'shooting_referred_good',
+  SHOOTING_BAD = 'shooting_bad',
+  SHOOTING_REFERRED_BAD = 'shooting_referred_bad'
 }
 
 export interface Referrable {

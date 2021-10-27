@@ -82,5 +82,5 @@
 
 input[type='date']:before {
   color: #aaa;
-  content: attr(placeholder) ':\00a0';
+  content: attr(data-date-placeholder) ':\00a0';
 }
