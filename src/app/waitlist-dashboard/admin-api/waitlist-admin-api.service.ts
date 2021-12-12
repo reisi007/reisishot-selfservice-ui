@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
-import {AdminWaitlistRecord, WaitlistAdminData} from './waitlist-admin-api';
+import {AdminWaitlistRecord, LeaderboardEntry, WaitlistAdminData} from './waitlist-admin-api';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {WaitlistPerson} from '../../waitlist/api/waitlist-api';
@@ -69,6 +69,14 @@ export class WaitlistAdminApiService extends ApiService {
     //TODO fix data when needed
     return this.http.get<Array<WaitlistPerson>>(
       ApiService.buildUrl('api', 'waitlist-admin_persons_get.php'),
+      {headers: ApiService.buildHeaders(user, pwd)},
+    );
+  }
+
+  public loadLeaderboardByYear(user: string, pwd: string, year: number): Observable<Array<LeaderboardEntry>> {
+    return this.http.post<Array<LeaderboardEntry>>(
+      ApiService.buildUrl('api', 'waitlist-admin-leaderboard_by_year_post.php'),
+      {year},
       {headers: ApiService.buildHeaders(user, pwd)},
     );
   }

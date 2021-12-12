@@ -16,6 +16,7 @@ export interface WaitlistAdminData {
 }
 
 export interface LeaderboardEntry {
+  position: number | undefined;
   referrer: string;
   points: number;
 }

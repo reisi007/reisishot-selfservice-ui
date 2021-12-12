@@ -8,9 +8,10 @@ import {ChangePwdComponent} from './change-pwd/change-pwd.component';
 import {LeaderboardComponent} from './leaderboard/leaderboard.component';
 import {PersonAssessComponent} from './person-assess/person-assess.component';
 import {PersonAssessArbitraryComponent} from './person-assess-arbitrary/person-assess-arbitrary.component';
+import {LeaderboardByYearComponent} from './leaderboard-by-year/leaderboard-by-year.component';
 
 @NgModule({
-  declarations: [WaitlistDashboardComponent, WaitlistDashboardItemComponent, ChangePwdComponent, LeaderboardComponent, PersonAssessComponent, PersonAssessArbitraryComponent],
+  declarations: [WaitlistDashboardComponent, WaitlistDashboardItemComponent, ChangePwdComponent, LeaderboardComponent, PersonAssessComponent, PersonAssessArbitraryComponent, LeaderboardByYearComponent],
   imports: [CommonModule, ReactiveFormsModule, WaitlistDashboardRoutingModule],
 })
 export class WaitlistDashboardModule {

@@ -31,7 +31,9 @@
 
   <app-person-assess-arbitrary *ngIf="items" [auth]="credentials"></app-person-assess-arbitrary>
 
+  <app-leaderboard-by-year *ngIf="leaderboard" [auth]="credentials" class="mt-3"></app-leaderboard-by-year>
+
   <ng-container *ngIf="leaderboard">
-    <app-leaderboard [items]="leaderboard" class="mt-3"></app-leaderboard>
+    <app-leaderboard [items]="leaderboard"></app-leaderboard>
   </ng-container>
 </div>
