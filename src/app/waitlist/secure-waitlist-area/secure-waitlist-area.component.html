@@ -5,6 +5,9 @@
                               [auth]="user"
                               [user]="waitlistPerson"></app-referral-customer-info>
 
+
+  <app-show-all-contracts *ngIf="waitlistPerson" [auth]="user"></app-show-all-contracts>
+
   <div [routerLink]="['personal_information']" class="button w-full md:w-1/3 mx-auto mt-5">Persönliche Daten ändern
   </div>
 

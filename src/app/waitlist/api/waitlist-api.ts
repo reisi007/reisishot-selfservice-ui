@@ -29,3 +29,10 @@ export interface Userdata {
   email: string;
   access_key: string;
 }
+
+export interface UserContract {
+  access_key: string;
+  due_date: string;
+  is_signed: '0' | '1';
+  can_sign: '0' | '1';
+}

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
-import {Userdata, WaitlistItem, WaitlistPerson, WaitlistRecord} from './waitlist-api';
+import {UserContract, Userdata, WaitlistItem, WaitlistPerson, WaitlistRecord} from './waitlist-api';
 import {map} from 'rxjs/operators';
 import {Referrable} from '../referral-api/referral-api.model';
 
@@ -65,6 +65,13 @@ export class WaitlistApiService extends ApiService {
       {
         headers: ApiService.buildHeaders(user.email, user.access_key),
       },
+    );
+  }
+
+  public loadUserContracts(user: Userdata): Observable<Array<UserContract>> {
+    return this.http.get<Array<UserContract>>(
+      ApiService.buildUrl('api', 'waitlistlist_contracts_get.php'),
+      {headers: ApiService.buildHeaders(user.email, user.access_key)},
     );
   }
 }

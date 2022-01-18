@@ -14,6 +14,7 @@ import {ReferrerInfoTopComponent} from './referrer-info-top/referrer-info-top.co
 import {ReferralCustomerInfoComponent} from './referral-customer-info/referral-customer-info.component';
 import {ContactMeComponent} from './contact-me/contact-me.component';
 import {ReferralPerksComponent} from './referral-customer-info/referral-perks/referral-perks.component';
+import {ShowAllContractsComponent} from './show-all-contracts/show-all-contracts.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {ReferralPerksComponent} from './referral-customer-info/referral-perks/re
     ReferralCustomerInfoComponent,
     ContactMeComponent,
     ReferralPerksComponent,
+    ShowAllContractsComponent,
   ],
   imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
 })
