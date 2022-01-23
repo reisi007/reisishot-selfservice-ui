@@ -1,0 +1,9 @@
+<ng-container *ngIf="data && data.length > 0">
+  <h2 class="my-3 text-3xl">Noch nicht unterschriebene Verträge</h2>
+  <ol>
+    <li *ngFor="let item of data">
+      Unterschrift möglich bis <b>{{formatDate(item.due_date)}}</b>:&nbsp;
+      <input [value]="computeUrl(item)" class="w-full md:w-1/2" readonly/>
+    </li>
+  </ol>
+</ng-container>

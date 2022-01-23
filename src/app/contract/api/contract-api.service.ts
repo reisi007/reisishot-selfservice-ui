@@ -54,10 +54,6 @@ export class ContractApiService extends ApiService {
     return this.http.get(ApiService.buildUrl('api', 'contract-template_get.php?filename=' + template), {responseType: 'text'});
   }
 
-  public sendAllContractLinks(email: string) {
-    return this.http.post(ApiService.buildUrl('api', 'contracts-remind_post.php'), {email, baseUrl: window.location.origin});
-  }
-
   public checkContractValidity(email: string, accessKey: string): Observable<IsValidResponse> {
     return this.http.get<IsValidResponse>(ApiService.buildUrl('api', 'contract-valid_get.php'), {
       headers: ApiService.buildHeaders(email, accessKey),

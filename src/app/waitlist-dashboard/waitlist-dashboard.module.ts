@@ -9,9 +9,10 @@ import {LeaderboardComponent} from './leaderboard/leaderboard.component';
 import {PersonAssessComponent} from './person-assess/person-assess.component';
 import {PersonAssessArbitraryComponent} from './person-assess-arbitrary/person-assess-arbitrary.component';
 import {LeaderboardByYearComponent} from './leaderboard-by-year/leaderboard-by-year.component';
+import {PendingSignaturesComponent} from './pending-signatures/pending-signatures.component';
 
 @NgModule({
-  declarations: [WaitlistDashboardComponent, WaitlistDashboardItemComponent, ChangePwdComponent, LeaderboardComponent, PersonAssessComponent, PersonAssessArbitraryComponent, LeaderboardByYearComponent],
+  declarations: [WaitlistDashboardComponent, WaitlistDashboardItemComponent, ChangePwdComponent, LeaderboardComponent, PersonAssessComponent, PersonAssessArbitraryComponent, LeaderboardByYearComponent, PendingSignaturesComponent],
   imports: [CommonModule, ReactiveFormsModule, WaitlistDashboardRoutingModule],
 })
 export class WaitlistDashboardModule {

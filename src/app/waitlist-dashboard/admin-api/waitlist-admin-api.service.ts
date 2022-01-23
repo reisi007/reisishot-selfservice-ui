@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from '../../commons/ApiService';
 import {Observable} from 'rxjs';
-import {AdminWaitlistRecord, LeaderboardEntry, WaitlistAdminData} from './waitlist-admin-api';
+import {AdminWaitlistRecord, LeaderboardEntry, PendingSignaturInformation, WaitlistAdminData} from './waitlist-admin-api';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {WaitlistPerson} from '../../waitlist/api/waitlist-api';
@@ -77,6 +77,13 @@ export class WaitlistAdminApiService extends ApiService {
     return this.http.post<Array<LeaderboardEntry>>(
       ApiService.buildUrl('api', 'waitlist-admin-leaderboard_by_year_post.php'),
       {year},
+      {headers: ApiService.buildHeaders(user, pwd)},
+    );
+  }
+
+  public loadPendingSignatures(user: string, pwd: string): Observable<Array<PendingSignaturInformation>> {
+    return this.http.get<Array<PendingSignaturInformation>>(
+      ApiService.buildUrl('api', 'waitlist-admin-pending_signatures_get.php'),
       {headers: ApiService.buildHeaders(user, pwd)},
     );
   }

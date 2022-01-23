@@ -20,3 +20,9 @@ export interface LeaderboardEntry {
   referrer: string;
   points: number;
 }
+
+export interface PendingSignaturInformation {
+  email: string,
+  access_key: string,
+  due_date: string
+}

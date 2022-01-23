@@ -18,6 +18,7 @@
   </form>
 
   <ng-container *ngIf="items">
+    <app-pending-signatures [credentials]="credentials"></app-pending-signatures>
     <h2 class="my-3 text-3xl ">Anmeldungen zu den Shootings</h2>
     <div class="flex flex-wrap">
       <app-waitlist-dashboard-item
