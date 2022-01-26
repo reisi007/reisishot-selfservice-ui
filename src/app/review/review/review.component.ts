@@ -45,12 +45,12 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(routeData => {
-      if (routeData.mail) {
+      if (routeData['mail']) {
         this.emailDisabled = true;
-        this.reviewData.get('email')?.setValue(routeData.mail);
+        this.reviewData.get('email')?.setValue(routeData['mail']);
       }
-      if (routeData.access_key) {
-        this.reviewData.get('access_key')?.setValue(routeData.access_key);
+      if (routeData['access_key']) {
+        this.reviewData.get('access_key')?.setValue(routeData['access_key']);
       }
     });
   }

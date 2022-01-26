@@ -21,8 +21,8 @@ export class SecureWaitlistAreaComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(routeData => {
       this.user = {
-        email: routeData.email,
-        access_key: routeData.access_key,
+        email: routeData['email'],
+        access_key: routeData['access_key'],
       } as Userdata;
 
       this.apiService.getPrivateItems(this.user).subscribe(
