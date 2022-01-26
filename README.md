@@ -1,3 +1,5 @@
+[![Node.js CI](https://github.com/reisi007/reisishot-selfservice-ui/actions/workflows/angular.yml/badge.svg)](https://github.com/reisi007/reisishot-selfservice-ui/actions/workflows/angular.yml)
+
 # ReisishotSelfserviceUi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.8.
