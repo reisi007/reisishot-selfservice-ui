@@ -1,6 +1,6 @@
-<div class="text-center p-6">
+<div class="p-6 text-center">
   <form *ngIf="person.get('email')?.value" [formGroup]="person" class="flex-1 mb-8" onsubmit="return false;">
-    <h3 class="mb-5 font-light text-2xl">Daten ändern</h3>
+    <h3 class="mb-5 text-2xl font-light">Daten ändern</h3>
     <div>
       <div>
         <input class="w-full md:w-7/12" formControlName="firstName" placeholder="Vorname" required type="text"/>
@@ -41,11 +41,11 @@
       <button
         (click)="update()"
         [attr.disabled]="!person.valid || !dirty?'':null"
-        class="bg-reisishot text-white w-full md:w-7/12 py-2 px-4"
+        class="py-2 px-4 w-full text-white bg-reisishot md:w-7/12"
       >
         Daten speichern
       </button>
-      <button (click)="goBack() " class="w-full md:w-7/12 py-2 px-4">Ohne speichern verlassen</button>
+      <button (click)="goBack() " class="py-2 px-4 w-full md:w-7/12">Ohne speichern verlassen</button>
     </div>
   </form>
 </div>

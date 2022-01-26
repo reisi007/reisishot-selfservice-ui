@@ -3,6 +3,26 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
+  "plugins": [
+    "tailwindcss"
+  ],
+  "extends": [
+    "plugin:tailwindcss/recommended"
+  ],
+  "rules": {
+    "tailwindcss/no-custom-classname": [
+      2,
+      {
+        "whitelist": [
+          "button",
+          "icon",
+          "link-black",
+          "loaded",
+          "rs-.+"
+        ]
+      }
+    ]
+  },
   "overrides": [
     {
       "files": [
@@ -15,8 +35,8 @@
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:tailwindcss/recommended",
+        "plugin:@angular-eslint/recommended"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [

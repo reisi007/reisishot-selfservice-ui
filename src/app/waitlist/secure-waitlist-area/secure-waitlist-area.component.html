@@ -1,5 +1,5 @@
-<div class="text-center p-6">
-  <h1 class="mb-2 font-light text-4xl">Shooting Warteliste</h1>
+<div class="p-6 text-center">
+  <h1 class="mb-2 text-4xl font-light">Shooting Warteliste</h1>
 
   <app-referral-customer-info *ngIf="waitlistPerson"
                               [auth]="user"
@@ -8,13 +8,13 @@
 
   <app-show-all-contracts *ngIf="waitlistPerson" [auth]="user"></app-show-all-contracts>
 
-  <div [routerLink]="['personal_information']" class="button w-full md:w-1/3 mx-auto mt-5">Persönliche Daten ändern
+  <div [routerLink]="['personal_information']" class="mx-auto mt-5 w-full md:w-1/3 button">Persönliche Daten ändern
   </div>
 
   <app-contact-me></app-contact-me>
 
   <div class="flex flex-wrap">
-    <span *ngFor="let item of items" class="w-full xl:w-1/2 p-3 self-stretch">
+    <span *ngFor="let item of items" class="self-stretch p-3 w-full xl:w-1/2">
       <app-waitlist-item [item]="item" [person]="user"></app-waitlist-item>
     </span>
   </div>

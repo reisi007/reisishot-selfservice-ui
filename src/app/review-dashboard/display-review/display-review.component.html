@@ -1,20 +1,20 @@
-<div class=" h-full px-6 py-4 mx-4 border-2 border-reisishot-light rounded-3xl ">
+<div class="py-4 px-6 mx-4 h-full rounded-3xl border-2 border-reisishot-light">
   <div class="h-full">
     <a [routerLink]="['/review',review.email,review.access_key,'admin']" class="link-black">
-      <h3 class="font-light text-3xl">{{review.name}}</h3>
+      <h3 class="text-3xl font-light">{{review.name}}</h3>
     </a>
-    <span class="font-light text-lg">{{review.creation_date}}</span>
+    <span class="text-lg font-light">{{review.creation_date}}</span>
     <div class="my-2">
       <app-rating *ngIf="review.rating" [editable]="false" [max]="100" [min]="0"
                   [style]="'1x'" [value]="review.rating??null"></app-rating>
     </div>
     <ng-container *ngIf="review.review_private">
-      <h4 class="font-light text-2xl">Nicht veröffentlichen</h4>
-      <p [innerHTML]="review.review_private | markdown" class="whitespace-pre-line leading-relaxed"></p>
+      <h4 class="text-2xl font-light">Nicht veröffentlichen</h4>
+      <p [innerHTML]="review.review_private | markdown" class="leading-relaxed whitespace-pre-line"></p>
     </ng-container>
     <ng-container *ngIf="review.review_public">
-      <h4 class="font-light text-2xl">Zu veröffentlichen</h4>
-      <p [innerHTML]="review.review_public | markdown" class="whitespace-pre-line leading-relaxed"></p>
+      <h4 class="text-2xl font-light">Zu veröffentlichen</h4>
+      <p [innerHTML]="review.review_public | markdown" class="leading-relaxed whitespace-pre-line"></p>
     </ng-container>
   </div>
 </div>

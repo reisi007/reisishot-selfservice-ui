@@ -2,7 +2,7 @@
   <app-loading-review (loaded)="loadedReview($event)"></app-loading-review>
 
   <textarea *ngIf="review" [rows]="8+(review.review_public?.split('\n')?.length??0) +1"
-            class="w-11/12 mx-auto p-3 block"
+            class="block p-3 mx-auto w-11/12"
             readonly>
 {{asText(review)}}
 </textarea

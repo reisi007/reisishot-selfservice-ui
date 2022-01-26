@@ -1,16 +1,16 @@
-<div class="border-solid border-black border-2 rounded-lg h-full p-2">
+<div class="p-2 h-full rounded-lg border-2 border-black border-solid">
   <h3 class="my-3 text-2xl">{{item.title}}</h3>
   <table *ngIf="item.registrations.length > 0" class="mx-auto">
     <thead>
     <tr>
-      <th class="border border-black px-2 py-1">Punkte</th>
-      <th class="border border-black px-2 py-1">Name</th>
-      <th class="border border-black px-2 py-1">Verfügbarkeit</th>
-      <th class="border border-black px-2 py-1">Freitext</th>
-      <th class="border border-black px-2 py-1">Vertrag erstellen</th>
-      <th class="border border-black px-2 py-1">Ignorieren</th>
-      <th class="border border-black px-2 py-1">Als abgeschlossen markieren</th>
-      <th class="border border-black px-2 py-1">Erfahrung speichern</th>
+      <th class="py-1 px-2 border border-black">Punkte</th>
+      <th class="py-1 px-2 border border-black">Name</th>
+      <th class="py-1 px-2 border border-black">Verfügbarkeit</th>
+      <th class="py-1 px-2 border border-black">Freitext</th>
+      <th class="py-1 px-2 border border-black">Vertrag erstellen</th>
+      <th class="py-1 px-2 border border-black">Ignorieren</th>
+      <th class="py-1 px-2 border border-black">Als abgeschlossen markieren</th>
+      <th class="py-1 px-2 border border-black">Erfahrung speichern</th>
     </tr>
     </thead>
     <tbody>
@@ -20,38 +20,38 @@
           'bg-red-800 text-white': registration.points < 0,
           'bg-reisishot text-white': registration.points >= 100
           }"
-          class="border border-black px-2 py-1">
+          class="py-1 px-2 border border-black">
         {{registration.points}}
       </td>
-      <td class="border border-black px-2 py-1">{{registration.firstName}} {{registration.lastName}}</td>
-      <td class="border border-black px-2 py-1">{{registration.availability}}</td>
-      <td class="border border-black px-2 py-1">{{registration.text }}</td>
-      <td class="border border-black px-2 py-1">
+      <td class="py-1 px-2 border border-black">{{registration.firstName}} {{registration.lastName}}</td>
+      <td class="py-1 px-2 border border-black">{{registration.availability}}</td>
+      <td class="py-1 px-2 border border-black">{{registration.text }}</td>
+      <td class="py-1 px-2 border border-black">
         <button
           (click)="createContract(i,registration)"
           [disabled]="registration.done_internal === '1'"
-          class="p-2.5 text-white bg-reisishot font-bold"
+          class="p-2.5 font-bold text-white bg-reisishot"
         >
           Vertrag erstellen
         </button>
       </td>
-      <td class="border border-black px-2 py-1">
+      <td class="py-1 px-2 border border-black">
         <button
           (click)="ignore(i,registration)"
           *ngIf="registration?.done_internal === '0'; else ignored"
-          class="p-2.5 bg-gray-800 text-white"
+          class="p-2.5 text-white bg-gray-800"
         >
           Ignorieren
         </button>
         <ng-template #ignored>
-          <button class="p-2.5 bg-gray-800 text-white" disabled>Bereits ignoriert</button>
+          <button class="p-2.5 text-white bg-gray-800" disabled>Bereits ignoriert</button>
         </ng-template>
       </td>
-      <td class="border border-black px-2 py-1">
-        <button (click)="done(i,registration)" class="p-2.5 text-white bg-reisishot font-bold">Abschließen
+      <td class="py-1 px-2 border border-black">
+        <button (click)="done(i,registration)" class="p-2.5 font-bold text-white bg-reisishot">Abschließen
         </button>
       </td>
-      <td class="border border-black px-2 py-1">
+      <td class="py-1 px-2 border border-black">
         <app-person-assess [auth]="internalUserPwd" [email]="registration.email"></app-person-assess>
       </td>
     </tr>

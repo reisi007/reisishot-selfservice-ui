@@ -2,5 +2,5 @@
     <div [innerHTML]="contract | markdown" class="p-4 text-center"></div>
 </div>
 <ng-template #nullMsg>
-    <h1 *ngIf="!loaded" class="bg-red-500 p-4">Dieser Vertrag konnte nicht gefunden werden.</h1>
+    <h1 *ngIf="!loaded" class="p-4 bg-red-500">Dieser Vertrag konnte nicht gefunden werden.</h1>
 </ng-template>

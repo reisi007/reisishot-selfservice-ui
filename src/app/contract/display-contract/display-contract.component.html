@@ -1,14 +1,14 @@
-<div class="text-center p-6">
-    <div *ngIf="contractData; then content else nullMsg"></div>
+<div class="p-6 text-center">
+  <div *ngIf="contractData; then content else nullMsg"></div>
 </div>
 
 <ng-template #content>
-    <div class="bg-reisishot text-white text-xl p-4">
-        Von {{contractData.firstname}} {{contractData.lastname}} ({{email}} / {{formatDate(contractData.birthday)}})
-        bis
-        {{formatDateTime(contractData.due_date)}} zu unterschreiben
-    </div>
-    <div [innerHTML]="contractData.markdown | markdown " class="m-2 p-2 border border-solid border-black"></div>
+  <div class="p-4 text-xl text-white bg-reisishot">
+    Von {{contractData.firstname}} {{contractData.lastname}} ({{email}} / {{formatDate(contractData.birthday)}})
+    bis
+    {{formatDateTime(contractData.due_date)}} zu unterschreiben
+  </div>
+  <div [innerHTML]="contractData.markdown | markdown " class="p-2 m-2 border border-black border-solid"></div>
     <small>Hash: {{contractData.hash_value}} ({{contractData.hash_algo}})</small>
     <div>
         <button (click)="sign()" [disabled]="curUserSigned || contractData === undefined" class="bg-reisishot">
@@ -17,56 +17,56 @@
     </div>
     <div class="py-2">
         <h2 class="pb-2">Status der Unterschriften</h2>
-        <table class="shadow-lg mx-auto">
-            <thead>
-            <tr>
-                <th class="border border-black p-1">E-Mail</th>
-                <th class="border border-black p-1">Daten zur Person</th>
-                <th class="border border-black p-1">Status der Unterschrift</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of signStatus | async">
-                <td class="border border-black p-2">{{item.email}}</td>
-                <td class="border border-black p-2">
-                    {{item.firstname}} {{item.lastname}} {{formatDate(item.birthday)}} - {{calculateAge(item.birthday)}}
-                    Jahre
-                </td>
-                <td *ngIf="item.signed !== '0'; else notSigned" class="border border-black p-2 font-bold bg-reisishot">
-                    ✓ Bereits unterschrieben
-                </td>
-                <ng-template #notSigned>
-                    <td class="border border-black p-2 font-bold bg-red-400">✗ Noch nicht unterschrieben</td>
-                </ng-template>
-            </tr>
+      <table class="mx-auto shadow-lg">
+        <thead>
+        <tr>
+          <th class="p-1 border border-black">E-Mail</th>
+          <th class="p-1 border border-black">Daten zur Person</th>
+          <th class="p-1 border border-black">Status der Unterschrift</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of signStatus | async">
+          <td class="p-2 border border-black">{{item.email}}</td>
+          <td class="p-2 border border-black">
+            {{item.firstname}} {{item.lastname}} {{formatDate(item.birthday)}} - {{calculateAge(item.birthday)}}
+            Jahre
+          </td>
+          <td *ngIf="item.signed !== '0'; else notSigned" class="p-2 font-bold bg-reisishot border border-black">
+            ✓ Bereits unterschrieben
+          </td>
+          <ng-template #notSigned>
+            <td class="p-2 font-bold bg-red-400 border border-black">✗ Noch nicht unterschrieben</td>
+          </ng-template>
+        </tr>
             </tbody>
         </table>
     </div>
-    <div *ngIf="!contractIsValid" class="py-2 bg-red-600 text-white">
-        <h2 class="pb-2 text-xl">Vertrag ist nicht gültig! Signaturen haben sich geändert!</h2>
-    </div>
+  <div *ngIf="!contractIsValid" class="py-2 text-white bg-red-600">
+    <h2 class="pb-2 text-xl">Vertrag ist nicht gültig! Signaturen haben sich geändert!</h2>
+  </div>
     <div class="py-2">
         <h2 class="pb-2">Vollständige Information der Aktionen zum Vertrag</h2>
-        <table class="shadow-lg mx-auto">
-            <thead>
-            <tr>
-                <th class="border border-black p-1">Datum / Uhrzeit</th>
-                <th class="border border-black p-1">E-Mail</th>
-                <th class="border border-black p-1">Aktion</th>
-                <th class="border border-black p-1">Hash value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of logs | async">
-                <td class="border border-black p-2">{{item.timestamp}}</td>
-                <td class="border border-black p-2">{{item.email}}</td>
-                <td class="border border-black p-2">{{item.log_type}}</td>
-                <td class="border border-black p-2 max-w-xs break-words">{{item.hash_value}}</td>
-            </tr>
+      <table class="mx-auto shadow-lg">
+        <thead>
+        <tr>
+          <th class="p-1 border border-black">Datum / Uhrzeit</th>
+          <th class="p-1 border border-black">E-Mail</th>
+          <th class="p-1 border border-black">Aktion</th>
+          <th class="p-1 border border-black">Hash value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of logs | async">
+          <td class="p-2 border border-black">{{item.timestamp}}</td>
+          <td class="p-2 border border-black">{{item.email}}</td>
+          <td class="p-2 border border-black">{{item.log_type}}</td>
+          <td class="p-2 max-w-xs break-words border border-black">{{item.hash_value}}</td>
+        </tr>
             </tbody>
         </table>
     </div>
 </ng-template>
 <ng-template #nullMsg>
-    <h1 class="bg-red-500 p-4">Dieser Vertrag konnte nicht gefunden werden.</h1>
+  <h1 class="p-4 bg-red-500">Dieser Vertrag konnte nicht gefunden werden.</h1>
 </ng-template>

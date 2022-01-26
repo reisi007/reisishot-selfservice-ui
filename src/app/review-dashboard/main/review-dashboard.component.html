@@ -1,4 +1,4 @@
-<div class="text-center p-6">
+<div class="p-6 text-center">
   <form [formGroup]="passwordForm">
     <div>
       <input class="w-full md:w-1/3" formControlName="user" placeholder="Admin Benutzer" type="text"/>
@@ -7,16 +7,16 @@
       <input class="w-full md:w-1/3" formControlName="pwd" placeholder="Passwort" type="password"/>
     </div>
     <div>
-      <button (click)="fetchAllData()" [disabled]="!passwordForm.valid" class="w-11/12 md:w-1/3 bg-reisishot">
+      <button (click)="fetchAllData()" [disabled]="!passwordForm.valid" class="w-11/12 bg-reisishot md:w-1/3">
         Dashboard laden
       </button>
     </div>
   </form>
-  <div class="mt-8 pt-2">
+  <div class="pt-2 mt-8">
     <app-review-charts *ngIf="reviews" [reviews]="reviews"></app-review-charts>
   </div>
   <div class="flex flex-wrap ">
     <app-display-review *ngFor="let review of reviews" [review]="review"
-                        class="w-full my-4 lg:w-6/12 self-stretch"></app-display-review>
+                        class="self-stretch my-4 w-full lg:w-6/12"></app-display-review>
   </div>
 </div>

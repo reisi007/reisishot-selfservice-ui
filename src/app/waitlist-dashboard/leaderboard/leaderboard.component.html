@@ -3,9 +3,9 @@
 <table *ngIf="items && items.length > 0; else noData" class="mx-auto w-full lg:w-7/12">
   <thead>
   <tr>
-    <th class="border border-black px-2 py-1">Platz</th>
-    <th class="border border-black px-2 py-1">Punkte</th>
-    <th class="border border-black px-2 py-1">E-Mail</th>
+    <th class="py-1 px-2 border border-black">Platz</th>
+    <th class="py-1 px-2 border border-black">Punkte</th>
+    <th class="py-1 px-2 border border-black">E-Mail</th>
   </tr>
   </thead>
   <tbody class="overflow-y-scroll h-60">
@@ -16,9 +16,9 @@
       'bg-green-300 text-white':100 <= item.points && item.points < 200,
       'bg-green-500 text-white': 200 <= item.points
       }">
-    <td class="border border-black px-2 py-1">{{item.position}}</td>
-    <td class="border border-black px-2 py-1">{{item.points}}</td>
-    <td class="border border-black px-2 py-1">{{item.referrer}}</td>
+    <td class="py-1 px-2 border border-black">{{item.position}}</td>
+    <td class="py-1 px-2 border border-black">{{item.points}}</td>
+    <td class="py-1 px-2 border border-black">{{item.referrer}}</td>
   </tr>
   </tbody>
 </table>

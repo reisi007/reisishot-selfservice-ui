@@ -1,5 +1,5 @@
-<div class="text-center p-6">
-  <h1 class="mb-2 font-light text-4xl">Shooting Warteliste</h1>
+<div class="p-6 text-center">
+  <h1 class="mb-2 text-4xl font-light">Shooting Warteliste</h1>
 
   <app-referrer-info-top *ngIf="referrer" [referrer]="referrer"></app-referrer-info-top>
 
@@ -12,7 +12,7 @@
   <app-contact-me></app-contact-me>
 
   <div class="flex flex-wrap">
-    <span *ngFor="let item of publicItems | async" class="w-full xl:w-1/2 p-3 self-stretch">
+    <span *ngFor="let item of publicItems | async" class="self-stretch p-3 w-full xl:w-1/2">
       <app-waitlist-item [item]="item"></app-waitlist-item>
     </span>
   </div>

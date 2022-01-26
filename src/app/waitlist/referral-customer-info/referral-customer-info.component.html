@@ -1,4 +1,4 @@
-<div class="border-solid border-reisishot border-2 rounded-lg p-2 mt-4">
+<div class="p-2 mt-4 rounded-lg border-2 border-reisishot border-solid">
   <h2 class="text-2xl font-light">Hallo {{user.firstName}} {{user.lastName}}!</h2>
   <p>
     Ich würde mich freuen, wenn du mich weiterempfehlen würdest. <br/>
@@ -19,9 +19,9 @@
   <table *ngIf="showReferralPointHistory" class="mx-auto w-full lg:w-1/2">
     <thead>
     <tr>
-      <th class="border border-black px-2 py-1">Zeitpunkt</th>
-      <th class="border border-black px-2 py-1">Position</th>
-      <th class="border border-black px-2 py-1">Punkte</th>
+      <th class="py-1 px-2 border border-black">Zeitpunkt</th>
+      <th class="py-1 px-2 border border-black">Position</th>
+      <th class="py-1 px-2 border border-black">Punkte</th>
     </tr>
     </thead>
     <tbody *ngIf="historyData">
@@ -31,9 +31,9 @@
     'bg-red-800 ': item.points < 0,
     'text-white': item.points !== 0
 }">
-      <td class="border border-black px-2 py-1">{{item.timestamp.format("DD.MM.YYYY HH:mm:ss")}}</td>
-      <td class="border border-black px-2 py-1">{{item.display}}</td>
-      <td class="border border-black px-2 py-1">{{(item.points > 0 ? "+" : "") + item.points}}</td>
+      <td class="py-1 px-2 border border-black">{{item.timestamp.format("DD.MM.YYYY HH:mm:ss")}}</td>
+      <td class="py-1 px-2 border border-black">{{item.display}}</td>
+      <td class="py-1 px-2 border border-black">{{(item.points > 0 ? "+" : "") + item.points}}</td>
     </tr>
     </tbody>
   </table>
@@ -43,8 +43,8 @@
   <div>
     Dein Referral Link:
     <span *ngIf="referralLinkCopied"
-          class="block font-light my-1">Der Link wurde in deine Zwischenablage kopiert!</span>
-    <div (click)="select($event)" class="p-2 bg-gray-50 rounded-2xl text-center mx-auto w-full lg:w-1/2"
+          class="block my-1 font-light">Der Link wurde in deine Zwischenablage kopiert!</span>
+    <div (click)="select($event)" class="p-2 mx-auto w-full text-center bg-gray-50 rounded-2xl lg:w-1/2"
          contenteditable="true">
       https://service.reisishot.pictures/waitlist/{{user.email}}
     </div>
