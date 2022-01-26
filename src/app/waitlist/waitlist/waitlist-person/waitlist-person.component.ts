@@ -35,7 +35,7 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
   }
 
   private static setReferrer(fg: FormGroup, routeData: Params) {
-    fg.get('referrer')?.setValue(routeData.referrer);
+    fg.get('referrer')?.setValue(routeData['referrer']);
   }
 
   ngOnInit(): void {

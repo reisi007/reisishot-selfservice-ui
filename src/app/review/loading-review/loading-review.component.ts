@@ -18,8 +18,8 @@ export class LoadingReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(routeData => {
-      const email = routeData.mail;
-      const accessKey = routeData.access_key;
+      const email = routeData['mail'];
+      const accessKey = routeData['access_key'];
 
       this.data = history.state.review as LoadedReview | null;
       if (this.data) {

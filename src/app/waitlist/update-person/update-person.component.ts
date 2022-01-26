@@ -22,8 +22,8 @@ export class UpdatePersonComponent extends DatefieldSupport implements OnInit {
     this.buildForm();
     this.route.params.subscribe(routeData => {
       this.user = {
-        email: routeData.email,
-        access_key: routeData.access_key,
+        email: routeData['email'],
+        access_key: routeData['access_key'],
       } as Userdata;
 
       this.apiService.loadPerson(this.user).subscribe(

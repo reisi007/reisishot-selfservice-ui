@@ -16,7 +16,7 @@ export class PreviewContractComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(routeData => {
-      const filename = routeData.filename;
+      const filename = routeData['filename'];
 
       this.apiService.getContractTemplate(filename).subscribe(
         param => {

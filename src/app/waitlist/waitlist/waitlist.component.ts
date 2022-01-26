@@ -24,7 +24,7 @@ export class WaitlistComponent implements OnInit {
     this.publicItems = this.apiService.getPublicItems();
 
     this.route.params.subscribe(routeData => {
-      this.referrer = routeData.referrer;
+      this.referrer = routeData['referrer'];
     });
   }
 }

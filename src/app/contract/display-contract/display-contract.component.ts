@@ -37,8 +37,8 @@ export class DisplayContractComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(routeData => {
-      this.email = routeData.mail;
-      this.accessKey = routeData.access_key;
+      this.email = routeData['mail'];
+      this.accessKey = routeData['access_key'];
       this.fetchContract().subscribe(contractData => {
         this.contractData = contractData;
 
