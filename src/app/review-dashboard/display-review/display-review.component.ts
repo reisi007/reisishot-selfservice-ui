@@ -10,7 +10,4 @@ export class DisplayReviewComponent {
 
   @Input() review!: LoadedReview;
 
-  constructor() {
-  }
-
 }

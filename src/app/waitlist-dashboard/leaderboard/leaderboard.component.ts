@@ -8,9 +8,6 @@ import {LeaderboardEntry} from '../admin-api/waitlist-admin-api';
 })
 export class LeaderboardComponent {
 
-  constructor() {
-  }
-
   _items!: Array<LeaderboardEntry>;
 
   get items(): Array<LeaderboardEntry> {

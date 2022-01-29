@@ -28,7 +28,7 @@ export class LoadingReviewComponent implements OnInit {
       this.apiService.loadReview(email, accessKey).subscribe(
         review => {
           this.loaded.emit(review);
-          return (this.data = review);
+          return this.data = review;
         },
         _ => this.router.navigate(['review', email], {state: {review: this.data}}),
       );

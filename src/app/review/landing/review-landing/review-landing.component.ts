@@ -6,6 +6,4 @@ import {Component} from '@angular/core';
   styleUrls: ['./review-landing.component.scss'],
 })
 export class ReviewLandingComponent {
-  constructor() {
-  }
 }

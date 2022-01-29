@@ -13,9 +13,6 @@ export class ReviewChartsComponent implements OnInit {
   ratingValues!: RatingInformation;
   ratingSize!: number;
 
-  constructor() {
-  }
-
   _reviews!: Array<LoadedReview>;
 
   get reviews(): Array<LoadedReview> {

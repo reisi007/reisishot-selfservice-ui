@@ -9,9 +9,6 @@ import {LoadedReview} from '../../api/review.model';
 export class AdminReviewComponent implements OnInit {
   review?: LoadedReview;
 
-  constructor() {
-  }
-
   ngOnInit(): void {
     this.review = history.state.review as LoadedReview;
   }

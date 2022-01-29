@@ -12,7 +12,4 @@ export class PersonComponent {
 
   @Input()
   person!: FormGroup;
-
-  constructor() {
-  }
 }
