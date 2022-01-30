@@ -1,4 +1,5 @@
 [![Node.js CI](https://github.com/reisi007/reisishot-selfservice-ui/actions/workflows/angular.yml/badge.svg)](https://github.com/reisi007/reisishot-selfservice-ui/actions/workflows/angular.yml)
+[![Deployed with FTP Deploy Action](https://img.shields.io/badge/Deployed%20with-FTP%20Deploy%20Action-2b9348)](https://github.com/SamKirkland/FTP-Deploy-Action)
 
 # ReisishotSelfserviceUi
 
