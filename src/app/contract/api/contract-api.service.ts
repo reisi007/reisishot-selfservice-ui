@@ -7,6 +7,7 @@ import {SignStatus} from './signStatus';
 import {LogEntry, LogType} from './logEntry';
 import {IsValidResponse} from './IsValidResponse';
 import {ApiService} from '../../commons/ApiService';
+import {NgHttpCachingHeaders} from 'ng-http-caching';
 
 @Injectable({
   providedIn: 'root',
@@ -30,9 +31,13 @@ export class ContractApiService extends ApiService {
     });
   }
 
-  public getSignStatus(email: string, accessKey: string): Observable<Array<SignStatus>> {
+  public getSignStatus(email: string, accessKey: string, cache: boolean): Observable<Array<SignStatus>> {
     return this.http.get<Array<SignStatus>>(ApiService.buildUrl('api', 'contract-signed_status_get.php'), {
-      headers: ApiService.buildHeaders(email, accessKey),
+      headers: {
+        ...ApiService.buildHeaders(email, accessKey),
+        [NgHttpCachingHeaders.DISALLOW_CACHE]: cache ? '0' : '1',
+      },
+
     });
   }
 
