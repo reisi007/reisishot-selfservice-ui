@@ -7,6 +7,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxMatomoTrackerModule} from '@ngx-matomo/tracker';
 import {NgxMatomoRouterModule} from '@ngx-matomo/router';
+import {NgHttpCachingModule} from 'ng-http-caching';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,9 @@ import {NgxMatomoRouterModule} from '@ngx-matomo/router';
       siteId: 8,
     }),
     NgxMatomoRouterModule,
+    NgHttpCachingModule.forRoot({
+      lifetime: 60 * 1000, // 1 minute
+    }),
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}],
   bootstrap: [AppComponent],

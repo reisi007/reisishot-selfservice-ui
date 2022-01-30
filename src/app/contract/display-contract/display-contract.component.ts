@@ -57,7 +57,7 @@ export class DisplayContractComponent implements OnInit {
 
   sign(): void {
     this.apiService.postLogEntry(this.email, this.accessKey, LogType.SIGN).subscribe(() => {
-      this.fetchSignStatus();
+      this.fetchSignStatus(false);
       this.fetchLogs();
     });
   }
@@ -78,8 +78,8 @@ export class DisplayContractComponent implements OnInit {
     return this.apiService.getContractData(this.email, this.accessKey);
   }
 
-  private fetchSignStatus() {
-    this.signStatus = this.apiService.getSignStatus(this.email, this.accessKey);
+  private fetchSignStatus(cache: boolean = true) {
+    this.signStatus = this.apiService.getSignStatus(this.email, this.accessKey, cache);
     this.signStatus.subscribe(data => {
       this.curUserSigned = data.map(e => e.email === this.contractData?.email && e.signed === '1').reduce((a, b) => a || b);
     });
