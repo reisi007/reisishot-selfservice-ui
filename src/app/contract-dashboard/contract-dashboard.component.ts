@@ -19,7 +19,8 @@ export class ContractDashboardComponent implements OnInit {
   formSentState = {error: '', completed: false, sent: false};
   dbPersons!: Array<Person>;
 
-  constructor(private apiService: ContractApiService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(
+    private apiService: ContractApiService, private formBuilder: FormBuilder, private router: Router) {
   }
 
   get personArray(): FormArray {
