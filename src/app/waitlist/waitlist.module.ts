@@ -15,6 +15,7 @@ import {ReferralCustomerInfoComponent} from './referral-customer-info/referral-c
 import {ContactMeComponent} from './contact-me/contact-me.component';
 import {ReferralPerksComponent} from './referral-customer-info/referral-perks/referral-perks.component';
 import {ShowAllContractsComponent} from './show-all-contracts/show-all-contracts.component';
+import {LazyLoadingImageComponent} from './lazy-loading-image/lazy-loading-image.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {ShowAllContractsComponent} from './show-all-contracts/show-all-contracts
     ContactMeComponent,
     ReferralPerksComponent,
     ShowAllContractsComponent,
+    LazyLoadingImageComponent,
   ],
   imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
 })
