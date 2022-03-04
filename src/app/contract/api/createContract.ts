@@ -1,13 +1,18 @@
-export interface CreateContract {
+export type CreateContract = {
   persons: Array<Person>;
-  user: string;
-  pwd: string;
   contractType: string;
   text: string;
   dueDate: string;
 }
 
-export interface Person {
+type LoginData = {
+  user: string;
+  pwd: string;
+}
+
+export type CreateContractRequest = CreateContract & LoginData
+
+export type Person = {
   firstName: string;
   lastName: string;
   email: string;

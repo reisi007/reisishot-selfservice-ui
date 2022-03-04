@@ -3,8 +3,5 @@
   <div class="flex flex-wrap justify-between content-center h-full">
     <button *ngFor="let item of items" [routerLink]="['..'].concat(item.url)"
             class="mx-auto w-full">{{item.name}}</button>
-
-    <button *ngFor="let item of items" [routerLink]="['..'].concat(item.adminUrl)" class="mx-auto w-full lg:w-1/4">Admin
-      - {{item.name}}</button>
   </div>
 </div>

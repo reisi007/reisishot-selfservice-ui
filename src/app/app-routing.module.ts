@@ -3,17 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {path: '', redirectTo: '/overview', pathMatch: 'full'},
-  {
-    path: 'contracts/dashboard',
-    loadChildren: () => import('./contract-dashboard/contract-dashboard.module').then(m => m.ContractDashboardModule),
-  },
+  {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
   {path: 'contracts', loadChildren: () => import('./contract/contract.module').then(m => m.ContractModule)},
-  {
-    path: 'waitlist/dashboard',
-    loadChildren: () => import('./waitlist-dashboard/waitlist-dashboard.module').then(m => m.WaitlistDashboardModule),
-  },
   {path: 'waitlist', loadChildren: () => import('./waitlist/waitlist.module').then(m => m.WaitlistModule)},
-  {path: 'review/dashboard', loadChildren: () => import('./review-dashboard/review-dashboard.module').then(m => m.ReviewDashboardModule)},
   {path: 'review', loadChildren: () => import('./review/review.module').then(m => m.ReviewModule)},
   {path: 'overview', loadChildren: () => import('./root/root.module').then(m => m.RootModule)},
   {path: '**', redirectTo: '/', pathMatch: 'full'},
