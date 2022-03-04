@@ -1,0 +1,19 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {WaitlistDashboardRoutingModule} from './waitlist-dashboard-routing.module';
+import {WaitlistDashboardComponent} from './waitlist-dashboard.component';
+import {WaitlistDashboardItemComponent} from './waitlist-dashboard-item/waitlist-dashboard-item.component';
+import {ReactiveFormsModule} from '@angular/forms';
+
+import {LeaderboardComponent} from './leaderboard/leaderboard.component';
+import {PersonAssessComponent} from './person-assess/person-assess.component';
+import {PersonAssessArbitraryComponent} from './person-assess-arbitrary/person-assess-arbitrary.component';
+import {LeaderboardByYearComponent} from './leaderboard-by-year/leaderboard-by-year.component';
+import {PendingSignaturesComponent} from './pending-signatures/pending-signatures.component';
+
+@NgModule({
+  declarations: [WaitlistDashboardComponent, WaitlistDashboardItemComponent, LeaderboardComponent, PersonAssessComponent, PersonAssessArbitraryComponent, LeaderboardByYearComponent, PendingSignaturesComponent],
+  imports: [CommonModule, ReactiveFormsModule, WaitlistDashboardRoutingModule],
+})
+export class WaitlistDashboardModule {
+}

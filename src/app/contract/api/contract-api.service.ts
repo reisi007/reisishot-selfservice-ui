@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CreateContract, Person} from './createContract';
+import {CreateContractRequest, Person} from './createContract';
 import {ContractData} from './contractData';
 import {SignStatus} from './signStatus';
 import {LogEntry, LogType} from './logEntry';
@@ -21,7 +21,7 @@ export class ContractApiService extends ApiService {
     return this.http.get<Array<string>>(ApiService.buildUrl('api', 'contract-templates_get.php'));
   }
 
-  public createContract(data: CreateContract): Observable<any> {
+  public createContract(data: CreateContractRequest): Observable<any> {
     return this.http.put(ApiService.buildUrl('api', 'contract_put.php'), data);
   }
 

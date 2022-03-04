@@ -6,21 +6,18 @@ import {Component} from '@angular/core';
   styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent {
-  items: Array<{ name: string; url: string[]; adminUrl: string[] }> = [
+  items: Array<{ name: string; url: string[] }> = [
     {
       name: 'In Warteliste eintragen',
       url: ['waitlist'],
-      adminUrl: ['waitlist', 'dashboard'],
     },
     {
       name: 'Bewertung abgeben',
       url: ['review'],
-      adminUrl: ['review', 'dashboard'],
     },
     {
-      name: 'Verträge verwalten',
-      url: ['contracts'],
-      adminUrl: ['contracts', 'dashboard'],
+      name: 'Admin Dashboard',
+      url: ['dashboard'],
     },
   ];
 }

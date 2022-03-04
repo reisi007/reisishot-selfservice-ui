@@ -1,0 +1,18 @@
+<div class="p-6 text-center">
+  <div>
+    <div class="flex flex-wrap justify-around bg-reisishot rounded-2xl">
+      <a [routerLink]="['/dashboard','login']"
+         class="p-2 m-2 bg-gray-50 rounded-lg border border-black">{{isAdminLoggedIn ? 'Passwort ändern' : 'Login' }}</a>
+      <a [ngClass]="{'bg-gray-300 text-gray-700': !isAdminLoggedIn }"
+         [routerLink]="!isAdminLoggedIn? null: ['/dashboard','waitlist']"
+         class="p-2 m-2 bg-gray-50 rounded-lg border border-black">Warteliste</a>
+      <a [ngClass]="{'bg-gray-300 text-gray-700': !isAdminLoggedIn }"
+         [routerLink]="!isAdminLoggedIn? null: ['/dashboard','reviews']"
+         class="p-2 m-2 bg-gray-50 rounded-lg border border-black">Bewertungen</a>
+      <a [ngClass]="{'bg-gray-300 text-gray-700': !isAdminLoggedIn }"
+         [routerLink]="!isAdminLoggedIn? null: ['/dashboard','contracts']"
+         class="p-2 m-2 bg-gray-50 rounded-lg border border-black">Verträge</a>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
