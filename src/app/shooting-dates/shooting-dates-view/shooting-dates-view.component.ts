@@ -51,56 +51,66 @@ export class ShootingDatesViewComponent implements OnInit {
   private prepareDate(values: Array<ShootingDateEntry>, weeks: number): Array<ShootingDateDisplayEntry> {
     const computedValues = new Array<ShootingDateDisplayEntry>();
     const curWeek = dayjs().isoWeek();
+    const lastWeek = curWeek + weeks;
 
-    // Set all green
-    for (let i = 0; i < weeks; i++) {
-      computedValues.push({
-        kw: curWeek + i,
-        color: Color.GREEN,
+    function initWeeks() {
+      for (let i = 0; i < weeks; i++) {
+        computedValues.push({
+          kw: curWeek + i,
+          color: Color.GREEN,
+        });
+      }
+    }
+
+    function markWeeksUsingCalendarData() {
+      values.forEach((cur) => {
+        const kw = cur.kw;
+        const computedIdx = kw - curWeek;
+
+        if (curWeek <= kw && kw < lastWeek) {
+          computedValues[computedIdx].color = cur.isShooting ? Color.RED : Color.ORANGE;
+        }
       });
     }
 
-    const lastWeek = curWeek + weeks;
-
-    // Mark Shootings
-    values.forEach((cur) => {
-      const kw = cur.kw;
-      const computedIdx = kw - curWeek;
-
-      if (curWeek <= kw && kw < lastWeek) {
-        computedValues[computedIdx].color = cur.isShooting ? Color.RED : Color.ORANGE;
-      }
-    });
-
-    function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number): ShootingDateDisplayEntry | undefined {
-      const realIdx = idx - offset;
-      if (0 <= realIdx && realIdx < array.length) {
-        return array[realIdx];
-      }
-      return undefined;
-    }
-
-    // Post process
-    for (let i = 0; i < weeks; i++) {
-      const cur = computedValues[i];
-      if (cur.color === Color.GREEN) {
-        let redFound = false;
-        let checked = safeAccess(computedValues, i, -1);
-        if (checked) {
-          redFound = checked.color === Color.RED;
+    function markWeeksBetweenShootingsAsYellow() {
+      function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number): ShootingDateDisplayEntry | undefined {
+        const realIdx = idx - offset;
+        if (0 <= realIdx && realIdx < array.length) {
+          return array[realIdx];
         }
-        if (!redFound) {
-          checked = safeAccess(computedValues, i, 1);
+        return undefined;
+      }
+
+      for (let i = 0; i < weeks; i++) {
+        const cur = computedValues[i];
+        if (cur.color === Color.GREEN) {
+          let redFound = false;
+          let checked = safeAccess(computedValues, i, -1);
           if (checked) {
             redFound = checked.color === Color.RED;
           }
-        }
+          if (!redFound) {
+            checked = safeAccess(computedValues, i, 1);
+            if (checked) {
+              redFound = checked.color === Color.RED;
+            }
+          }
 
-        if (redFound) {
-          cur.color = Color.YELLOW;
+          if (redFound) {
+            cur.color = Color.YELLOW;
+          }
         }
       }
     }
+
+    // Set all green
+    initWeeks();
+    // Mark Shootings
+    markWeeksUsingCalendarData();
+    // Post process
+    markWeeksBetweenShootingsAsYellow();
+
     return computedValues;
   }
 }
