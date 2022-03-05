@@ -51,26 +51,27 @@ export class ShootingDatesViewComponent implements OnInit {
   private prepareDate(values: Array<ShootingDateEntry>, weeks: number): Array<ShootingDateDisplayEntry> {
     const computedValues = new Array<ShootingDateDisplayEntry>();
     const curWeek = dayjs().isoWeek();
-
-    // Set all green
-    for (let i = 0; i < weeks; i++) {
-      computedValues.push({
-        kw: curWeek + i,
-        color: Color.GREEN,
-      });
-    }
-
     const lastWeek = curWeek + weeks;
 
-    // Mark Shootings
-    values.forEach((cur) => {
-      const kw = cur.kw;
-      const computedIdx = kw - curWeek;
-
-      if (curWeek <= kw && kw < lastWeek) {
-        computedValues[computedIdx].color = cur.isShooting ? Color.RED : Color.ORANGE;
+    function initWeeks() {
+      for (let i = 0; i < weeks; i++) {
+        computedValues.push({
+          kw: curWeek + i,
+          color: Color.GREEN,
+        });
       }
-    });
+    }
+
+    function markWeeksUsingCalendarData() {
+      values.forEach((cur) => {
+        const kw = cur.kw;
+        const computedIdx = kw - curWeek;
+
+        if (curWeek <= kw && kw < lastWeek) {
+          computedValues[computedIdx].color = cur.isShooting ? Color.RED : Color.ORANGE;
+        }
+      });
+    }
 
     function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number): ShootingDateDisplayEntry | undefined {
       const realIdx = idx - offset;
@@ -80,27 +81,36 @@ export class ShootingDatesViewComponent implements OnInit {
       return undefined;
     }
 
-    // Post process
-    for (let i = 0; i < weeks; i++) {
-      const cur = computedValues[i];
-      if (cur.color === Color.GREEN) {
-        let redFound = false;
-        let checked = safeAccess(computedValues, i, -1);
-        if (checked) {
-          redFound = checked.color === Color.RED;
-        }
-        if (!redFound) {
-          checked = safeAccess(computedValues, i, 1);
+    function markWeeksBetweenShootingsAsYellow() {
+      for (let i = 0; i < weeks; i++) {
+        const cur = computedValues[i];
+        if (cur.color === Color.GREEN) {
+          let redFound = false;
+          let checked = safeAccess(computedValues, i, -1);
           if (checked) {
             redFound = checked.color === Color.RED;
           }
-        }
+          if (!redFound) {
+            checked = safeAccess(computedValues, i, 1);
+            if (checked) {
+              redFound = checked.color === Color.RED;
+            }
+          }
 
-        if (redFound) {
-          cur.color = Color.YELLOW;
+          if (redFound) {
+            cur.color = Color.YELLOW;
+          }
         }
       }
     }
+
+    // Set all green
+    initWeeks();
+    // Mark Shootings
+    markWeeksUsingCalendarData();
+    // Post process
+    markWeeksBetweenShootingsAsYellow();
+
     return computedValues;
   }
 }
