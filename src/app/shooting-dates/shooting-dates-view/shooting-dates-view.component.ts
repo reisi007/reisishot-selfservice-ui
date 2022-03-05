@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Color, ShootingDateDisplayEntry, ShootingDateEntry} from '../api/ShootingDateEntry';
 import {ShootingDateApiService} from '../api/shooting-date-api.service';
 import * as dayjs from 'dayjs';
-import * as isoWeek from 'dayjs/plugin/isoWeek';
+import * as isoWeekPlugin from 'dayjs/plugin/isoWeek';
+import {ActivatedRoute} from '@angular/router';
 
-dayjs.extend(isoWeek);
+dayjs.extend(isoWeekPlugin);
 
 @Component({
   selector: 'app-shooting-dates-view',
@@ -14,44 +15,52 @@ dayjs.extend(isoWeek);
 export class ShootingDatesViewComponent implements OnInit {
 
   data?: Array<ShootingDateDisplayEntry>;
-  readonly weekInAdvance = 8;
 
   constructor(
     private shootingDateService: ShootingDateApiService,
+    private activatedRoute: ActivatedRoute,
   ) {
   }
 
   trackByKw = (index: number, item: ShootingDateDisplayEntry) => item.kw;
 
   ngOnInit(): void {
-    this.shootingDateService.getShootingDates().subscribe({
-      next: value => this.data = this.prepareDate(value),
-    });
+    this.activatedRoute.queryParamMap
+        .subscribe({
+          next: params => {
+            const pWeeks = params.get('weeks');
+            const weeks = pWeeks != null ? parseInt(pWeeks, 10) : 12;
+            this.shootingDateService.getShootingDates()
+                .subscribe({
+                  next: data => this.data = this.prepareDate(data, weeks),
+                });
+          },
+        });
   }
 
-  displayDateByKw(kw: number) {
+  displayDateByKw(kw: number): string {
     const curKw = dayjs().isoWeek();
-    const date =
-      kw < curKw ?
-      dayjs().add(1, 'year').isoWeek(kw) :
-      dayjs().isoWeek(kw);
+    const baseDate = kw < curKw ? dayjs().add(1, 'year') : dayjs();
 
-    return date.format('DD.MM.YYYY');
+    return baseDate
+      .day(1) // Monday
+      .isoWeek(kw)
+      .format('DD.MM.YYYY');
   }
 
-  private prepareDate(values: Array<ShootingDateEntry>): Array<ShootingDateDisplayEntry> {
+  private prepareDate(values: Array<ShootingDateEntry>, weeks: number): Array<ShootingDateDisplayEntry> {
     const computedValues = new Array<ShootingDateDisplayEntry>();
     const curWeek = dayjs().isoWeek();
 
     // Set all green
-    for (let i = 0; i < this.weekInAdvance; i++) {
+    for (let i = 0; i < weeks; i++) {
       computedValues.push({
         kw: curWeek + i,
         color: Color.GREEN,
       });
     }
 
-    const lastWeek = curWeek + this.weekInAdvance;
+    const lastWeek = curWeek + weeks;
 
     // Mark Shootings
     values.forEach((cur) => {
@@ -63,7 +72,7 @@ export class ShootingDatesViewComponent implements OnInit {
       }
     });
 
-    function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number) {
+    function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number): ShootingDateDisplayEntry | undefined {
       const realIdx = idx - offset;
       if (0 <= realIdx && realIdx < array.length) {
         return array[realIdx];
@@ -72,7 +81,7 @@ export class ShootingDatesViewComponent implements OnInit {
     }
 
     // Post process
-    for (let i = 0; i < this.weekInAdvance; i++) {
+    for (let i = 0; i < weeks; i++) {
       const cur = computedValues[i];
       if (cur.color === Color.GREEN) {
         let redFound = false;

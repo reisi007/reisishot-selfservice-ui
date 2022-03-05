@@ -9,6 +9,11 @@ const routes: Routes = [{
   data: {title: 'Admin Dashboard'},
   children: [
     {
+      path: '',
+      pathMatch: 'full',
+      redirectTo: 'login',
+    },
+    {
       path: 'login',
       component: AdminLoginComponent,
     },
