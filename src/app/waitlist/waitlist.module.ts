@@ -16,6 +16,7 @@ import {ContactMeComponent} from './contact-me/contact-me.component';
 import {ReferralPerksComponent} from './referral-customer-info/referral-perks/referral-perks.component';
 import {ShowAllContractsComponent} from './show-all-contracts/show-all-contracts.component';
 import {LazyLoadingImageComponent} from './lazy-loading-image/lazy-loading-image.component';
+import {ShootingDatesModule} from '../shooting-dates/shooting-dates.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import {LazyLoadingImageComponent} from './lazy-loading-image/lazy-loading-image
     ShowAllContractsComponent,
     LazyLoadingImageComponent,
   ],
-  imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule],
+  imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule, ShootingDatesModule],
 })
 export class WaitlistModule {
 }

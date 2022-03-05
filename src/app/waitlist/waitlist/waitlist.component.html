@@ -11,6 +11,10 @@
 
   <app-contact-me></app-contact-me>
 
+  <div class="mt-2">
+    <app-shooting-dates-view></app-shooting-dates-view>
+  </div>
+
   <div class="flex flex-wrap">
     <span *ngFor="let item of publicItems | async" class="self-stretch p-3 w-full xl:w-1/2">
       <app-waitlist-item [item]="item"></app-waitlist-item>
