@@ -88,23 +88,25 @@ export class ShootingDatesViewComponent implements OnInit {
         return undefined;
       }
 
-      for (let i = 0; i < weeks; i++) {
-        const cur = computedValues[i];
-        if (cur.color === Color.GREEN) {
-          let redFound = false;
-          let checked = safeAccess(computedValues, i, -1);
-          if (checked) {
-            redFound = checked.color === Color.RED;
-          }
-          if (!redFound) {
-            checked = safeAccess(computedValues, i, 1);
+      function markWeeksBetweenShootingsAsYellow() {
+        for (let i = 0; i < weeks; i++) {
+          const cur = computedValues[i];
+          if (cur.color === Color.GREEN) {
+            let redFound = false;
+            let checked = safeAccess(computedValues, i, -1);
             if (checked) {
               redFound = checked.color === Color.RED;
             }
-          }
+            if (!redFound) {
+              checked = safeAccess(computedValues, i, 1);
+              if (checked) {
+                redFound = checked.color === Color.RED;
+              }
+            }
 
-          if (redFound) {
-            cur.color = Color.YELLOW;
+            if (redFound) {
+              cur.color = Color.YELLOW;
+            }
           }
         }
       }
