@@ -73,15 +73,15 @@ export class ShootingDatesViewComponent implements OnInit {
       });
     }
 
-    function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number): ShootingDateDisplayEntry | undefined {
-      const realIdx = idx - offset;
-      if (0 <= realIdx && realIdx < array.length) {
-        return array[realIdx];
-      }
-      return undefined;
-    }
-
     function markWeeksBetweenShootingsAsYellow() {
+      function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number): ShootingDateDisplayEntry | undefined {
+        const realIdx = idx - offset;
+        if (0 <= realIdx && realIdx < array.length) {
+          return array[realIdx];
+        }
+        return undefined;
+      }
+
       for (let i = 0; i < weeks; i++) {
         const cur = computedValues[i];
         if (cur.color === Color.GREEN) {
