@@ -7,6 +7,7 @@ import {AdminLoginFormComponent} from './login/admin-login/admin-login-form.comp
 import {ReactiveFormsModule} from '@angular/forms';
 import {AdminLoginService} from './login/admin-login.service';
 import {AdminLoginComponent} from './login/admin-login.component';
+import {ShootingDatesModule} from '../shooting-dates/shooting-dates.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {AdminLoginComponent} from './login/admin-login.component';
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
+    ShootingDatesModule,
   ],
 })
 export class DashboardModule {
