@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Color, ShootingDateDisplayEntry, ShootingDateEntry} from '../api/ShootingDateEntry';
 import {ShootingDateApiService} from '../api/shooting-date-api.service';
 import * as dayjs from 'dayjs';
 import * as isoWeekPlugin from 'dayjs/plugin/isoWeek';
-import {ActivatedRoute} from '@angular/router';
 
 dayjs.extend(isoWeekPlugin);
 
@@ -18,24 +17,32 @@ export class ShootingDatesViewComponent implements OnInit {
 
   constructor(
     private shootingDateService: ShootingDateApiService,
-    private activatedRoute: ActivatedRoute,
   ) {
+  }
+
+  _weeks = 12;
+
+  get weeks(): number {
+    return this._weeks;
+  }
+
+  @Input()
+  set weeks(weeks: number | string | undefined) {
+    if (weeks) {
+      if (typeof weeks === 'number') {
+        this._weeks = weeks;
+      }
+      else {
+        this._weeks = parseInt(weeks, 10);
+      }
+    }
+    this.updateShootingDates();
   }
 
   trackByKw = (index: number, item: ShootingDateDisplayEntry) => item.kw;
 
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap
-        .subscribe({
-          next: params => {
-            const pWeeks = params.get('weeks');
-            const weeks = pWeeks != null ? parseInt(pWeeks, 10) : 12;
-            this.shootingDateService.getShootingDates()
-                .subscribe({
-                  next: data => this.data = this.prepareDate(data, weeks),
-                });
-          },
-        });
+    this.updateShootingDates();
   }
 
   displayDateByKw(kw: number): string {
@@ -46,6 +53,13 @@ export class ShootingDatesViewComponent implements OnInit {
       .day(1) // Monday
       .isoWeek(kw)
       .format('DD.MM.YYYY');
+  }
+
+  private updateShootingDates() {
+    this.shootingDateService.getShootingDates()
+        .subscribe({
+          next: data => this.data = this.prepareDate(data, this.weeks),
+        });
   }
 
   private prepareDate(values: Array<ShootingDateEntry>, weeks: number): Array<ShootingDateDisplayEntry> {
