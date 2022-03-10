@@ -37,4 +37,9 @@ export class ShootingDateInternalCellComponent {
     this._text = text;
   }
 
+  get formattedText(): string {
+    const text = this._text;
+    return text ? '(' + text + ')' : '';
+  }
+
 }

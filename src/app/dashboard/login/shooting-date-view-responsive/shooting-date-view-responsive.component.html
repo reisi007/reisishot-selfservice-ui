@@ -1,11 +1,12 @@
 <ng-container *ngIf="isLoggedIn; then private; else public"></ng-container>
 <ng-template #public>
   <app-shooting-date-view-public [weeks]="weeks">
-    <ng-content></ng-content>
+    <ng-container *ngTemplateOutlet="template"></ng-container>
   </app-shooting-date-view-public>
 </ng-template>
 
 <ng-template #private>
   <app-shooting-date-view-internal [weeks]="weeks">
+    <ng-container *ngTemplateOutlet="template"></ng-container>
   </app-shooting-date-view-internal>
 </ng-template>

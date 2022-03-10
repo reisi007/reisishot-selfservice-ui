@@ -12,6 +12,8 @@ import {ShootingDateViewInternalComponent} from './login/shooting-date-view-inte
 import {
   ShootingDateInternalCellComponent,
 } from './login/shooting-date-view-internal/shooting-date-internal-cell/shooting-date-internal-cell.component';
+import {AdminLoginService} from './login/admin-login.service';
+import {PrivateCalendarApiService} from './login/shooting-date-view-internal/private-calendar-api.service';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import {
     ChangePwdComponent,
     AdminLoginComponent,
   ],
+  providers: [AdminLoginService, PrivateCalendarApiService],
   imports: [
     CommonModule,
     DashboardRoutingModule,

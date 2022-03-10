@@ -84,7 +84,6 @@ export class ShootingDatesViewComponent implements OnInit {
         if (curWeek <= kw && kw < lastWeek) {
           const curComputedValue = {...cur, ...computedValues[computedIdx]};
           computedValues[computedIdx] = curComputedValue;
-          console.log(curComputedValue);
           if (!cur.isShooting) {
             curComputedValue.color = Color.ORANGE;
           }

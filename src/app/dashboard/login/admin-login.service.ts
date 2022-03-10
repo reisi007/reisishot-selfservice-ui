@@ -1,9 +1,5 @@
 import {AdminUserData} from './admin-login/AdminUserData';
-import {Injectable} from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class AdminLoginService {
 
   private _data: AdminUserData | null = null;
