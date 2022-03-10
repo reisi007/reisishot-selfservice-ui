@@ -1,8 +1,9 @@
 <app-change-pwd></app-change-pwd>
 <app-admin-login-form></app-admin-login-form>
 
-<form [formGroup]="weekForm" class="inline-flex justify-around items-center mt-2">
-  <input [max]="max" [min]="min" class="mr-2 accent-reisishot-light" formControlName="weeks" type="range"/>
-  <span>{{weeks}} Wochen</span>
-</form>
-<app-shooting-dates-view [weeks]="weeks"></app-shooting-dates-view>
+<app-shooting-dates-view [weeks]="weeks" class="mt-2">
+  <form [formGroup]="weekForm" class="inline-flex justify-around items-center">
+    <input [max]="max" [min]="min" class="mr-2 accent-reisishot" formControlName="weeks" type="range"/>
+    <span>{{weeks}} Wochen</span>
+  </form>
+</app-shooting-dates-view>
