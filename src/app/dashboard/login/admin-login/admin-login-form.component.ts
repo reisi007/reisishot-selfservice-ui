@@ -19,7 +19,7 @@ export class AdminLoginFormComponent implements OnInit {
   }
 
   get credentialsAvailable(): boolean {
-    return this.adminLoginService.data != null;
+    return this.adminLoginService.hasData;
   }
 
   ngOnInit(): void {

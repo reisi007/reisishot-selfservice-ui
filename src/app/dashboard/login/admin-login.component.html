@@ -1,9 +1,9 @@
 <app-change-pwd></app-change-pwd>
 <app-admin-login-form></app-admin-login-form>
 
-<app-shooting-dates-view [weeks]="weeks" class="mt-2">
+<app-shooting-date-view-responsive [weeks]="weeks" class="mt-2">
   <form [formGroup]="weekForm" class="inline-flex justify-around items-center">
     <input [max]="max" [min]="min" class="mr-2 accent-reisishot" formControlName="weeks" type="range"/>
     <span>{{weeks}} Wochen</span>
   </form>
-</app-shooting-dates-view>
+</app-shooting-date-view-responsive>

@@ -1,26 +1,22 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {Color, ShootingDateDisplayEntry, ShootingDateEntry} from '../api/ShootingDateEntry';
-import {ShootingDateApiService} from '../api/shooting-date-api.service';
 import * as dayjs from 'dayjs';
-import * as isoWeekPlugin from 'dayjs/plugin/isoWeek';
-
-dayjs.extend(isoWeekPlugin);
+import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-shooting-dates-view',
-  templateUrl: './shooting-dates-view.component.html',
-  styleUrls: ['./shooting-dates-view.component.scss'],
+  selector: 'app-shooting-dates-internal',
+  templateUrl: './shooting-dates-internal.component.html',
+  styleUrls: ['./shooting-dates-internal.component.scss'],
 })
 export class ShootingDatesViewComponent implements OnInit {
 
   data?: Array<ShootingDateDisplayEntry>;
+  @Input() calendarEntryProvider!: () => Observable<ShootingDateEntry[]>;
 
-  constructor(
-    private shootingDateService: ShootingDateApiService,
-  ) {
+  constructor() {
   }
 
-  _weeks = 12;
+  _weeks = 0;
 
   get weeks(): number {
     return this._weeks;
@@ -39,24 +35,28 @@ export class ShootingDatesViewComponent implements OnInit {
     this.updateShootingDates();
   }
 
+  _cellTemplate: TemplateRef<any> | null = null;
+
+  get cellTemplate(): TemplateRef<any> | null {
+    return this._cellTemplate;
+  }
+
+  @Input()
+  set cellTemplate(template: TemplateRef<any> | null) {
+    if (template) {
+      this._cellTemplate = template;
+    }
+  }
+
   trackByKw = (index: number, item: ShootingDateDisplayEntry) => item.kw;
 
   ngOnInit(): void {
     this.updateShootingDates();
   }
 
-  displayDateByKw(kw: number): string {
-    const curKw = dayjs().isoWeek();
-    const baseDate = kw < curKw ? dayjs().add(1, 'year') : dayjs();
-
-    return baseDate
-      .day(1) // Monday
-      .isoWeek(kw)
-      .format('DD.MM.YYYY');
-  }
 
   private updateShootingDates() {
-    this.shootingDateService.getShootingDates()
+    this.calendarEntryProvider()
         .subscribe({
           next: data => this.data = this.prepareDate(data, this.weeks),
         });
@@ -82,7 +82,9 @@ export class ShootingDatesViewComponent implements OnInit {
         const computedIdx = kw - curWeek;
 
         if (curWeek <= kw && kw < lastWeek) {
-          const curComputedValue = computedValues[computedIdx];
+          const curComputedValue = {...cur, ...computedValues[computedIdx]};
+          computedValues[computedIdx] = curComputedValue;
+          console.log(curComputedValue);
           if (!cur.isShooting) {
             curComputedValue.color = Color.ORANGE;
           }

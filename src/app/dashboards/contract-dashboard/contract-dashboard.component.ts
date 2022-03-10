@@ -86,19 +86,13 @@ export class ContractDashboardComponent implements OnInit {
   }
 
   loadPersonsFromDb() {
-    const user = this.adminLoginService.data;
-    if (user == null) {
-      return;
-    }
+    const user = this.adminLoginService.dataOrError;
     this.apiService.loadPersons(user.user, user.pwd).subscribe(data => this.dbPersons = data);
   }
 
   sendForm() {
     const contractData = this.emailForm.value as CreateContract;
-    const loginData = this.adminLoginService.data;
-    if (loginData == null) {
-      return;
-    }
+    const loginData = this.adminLoginService.dataOrError;
     this.apiService.createContract({...contractData, ...loginData}).subscribe(
       {
         next: () => (this.formSentState.completed = true),
