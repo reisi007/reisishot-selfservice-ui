@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   }
 
   get isAdminLoggedIn(): boolean {
-    return this.adminLoginService.data != null;
+    return this.adminLoginService.hasData;
   }
 
   ngOnInit(): void {

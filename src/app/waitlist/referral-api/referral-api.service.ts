@@ -54,7 +54,6 @@ export class ReferralApiService extends ApiService {
             }
             // noinspection SuspiciousTypeOfGuard
             if (typeof e.timestamp === 'string') {
-              console.log(e.timestamp);
               e.timestamp = dayjs(e.timestamp);
             }
           });

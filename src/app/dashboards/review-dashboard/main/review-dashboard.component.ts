@@ -19,8 +19,8 @@ export class ReviewDashboardComponent implements OnInit {
   ) {
   }
 
-  get credentials(): AdminUserData | null {
-    return this.adminLoginService.data;
+  get credentials(): AdminUserData {
+    return this.adminLoginService.dataOrError;
   }
 
   ngOnInit(): void {

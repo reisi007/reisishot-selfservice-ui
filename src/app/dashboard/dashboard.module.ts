@@ -5,19 +5,28 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
 import {DashboardComponent} from './dashboard.component';
 import {AdminLoginFormComponent} from './login/admin-login/admin-login-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {AdminLoginService} from './login/admin-login.service';
 import {AdminLoginComponent} from './login/admin-login.component';
 import {ShootingDatesModule} from '../shooting-dates/shooting-dates.module';
+import {ShootingDateViewResponsiveComponent} from './login/shooting-date-view-responsive/shooting-date-view-responsive.component';
+import {ShootingDateViewInternalComponent} from './login/shooting-date-view-internal/shooting-date-view-internal.component';
+import {
+  ShootingDateInternalCellComponent,
+} from './login/shooting-date-view-internal/shooting-date-internal-cell/shooting-date-internal-cell.component';
+import {AdminLoginService} from './login/admin-login.service';
+import {PrivateCalendarApiService} from './login/shooting-date-view-internal/private-calendar-api.service';
 
 
 @NgModule({
   declarations: [
+    ShootingDateViewInternalComponent,
+    ShootingDateInternalCellComponent,
+    ShootingDateViewResponsiveComponent,
     DashboardComponent,
     AdminLoginFormComponent,
     ChangePwdComponent,
     AdminLoginComponent,
   ],
-  providers: [AdminLoginService],
+  providers: [AdminLoginService, PrivateCalendarApiService],
   imports: [
     CommonModule,
     DashboardRoutingModule,

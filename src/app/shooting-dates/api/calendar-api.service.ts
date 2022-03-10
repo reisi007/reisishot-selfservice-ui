@@ -7,7 +7,7 @@ import {ShootingDateEntry} from './ShootingDateEntry';
 @Injectable({
   providedIn: 'root',
 })
-export class ShootingDateApiService extends ApiService {
+export class CalendarApiService extends ApiService {
 
   constructor(private http: HttpClient) {
     super();

@@ -1,0 +1,6 @@
+<ng-template #item let-cur="cur">
+  <app-shooting-date-public-cell [kw]="cur.kw"></app-shooting-date-public-cell>
+</ng-template>
+<app-shooting-dates-internal [calendarEntryProvider]="getData" [cellTemplate]="item" [weeks]="weeks">
+  <ng-content></ng-content>
+</app-shooting-dates-internal>

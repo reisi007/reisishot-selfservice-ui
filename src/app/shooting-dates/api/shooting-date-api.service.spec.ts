@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {ShootingDateApiService} from './shooting-date-api.service';
+import {CalendarApiService} from './calendar-api.service';
 
 describe('ShootingDateApiService', () => {
-  let service: ShootingDateApiService;
+  let service: CalendarApiService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ShootingDateApiService);
+    service = TestBed.inject(CalendarApiService);
   });
 
   it('should be created', () => {
