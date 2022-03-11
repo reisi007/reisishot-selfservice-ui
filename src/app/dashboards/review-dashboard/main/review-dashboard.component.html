@@ -1,5 +1,5 @@
 <div class="p-6 text-center">
-  <app-review-charts *ngIf="reviews" [reviews]="reviews"></app-review-charts>
+  <app-review-info *ngIf="reviews" [reviews]="reviews"></app-review-info>
   <div class="flex flex-wrap ">
     <app-display-review *ngFor="let review of reviews" [review]="review"
                         class="self-stretch my-4 w-full lg:w-6/12"></app-display-review>
