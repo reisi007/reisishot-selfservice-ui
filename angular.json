@@ -65,6 +65,9 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "ci": {
+              "tsConfig": "tsconfig.ci.json"
             }
           },
           "defaultConfiguration": "production"
