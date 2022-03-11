@@ -6,7 +6,7 @@
     <span class="text-lg font-light">{{review.creation_date}}</span>
     <div class="my-2">
       <app-rating *ngIf="review.rating" [editable]="false" [max]="100" [min]="0"
-                  [style]="'1x'" [value]="review.rating??null"></app-rating>
+                  [style]="'1x'" [value]="review.rating"></app-rating>
     </div>
     <ng-container *ngIf="review.review_private">
       <h4 class="text-2xl font-light">Nicht veröffentlichen</h4>

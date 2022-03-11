@@ -1,6 +1,10 @@
 <div class="content-center">
+  <div class="w-full h-20 bg-gradient-to-r from-red-500 via-yellow-300 to-reisishot">
+    <div [style.margin-left.%]="widthAsPercent()"
+         class="pl-[2%] w-0 h-20 bg-transparent border-2 border-black"></div>
+  </div>
   <div *ngIf="ratingValues" class="mx-auto">
-    {{ratingValues.avg}} / 100
+    <span class="text-2xl"> {{ratingValues.avg}} / 100</span>
     <div class="flex justify-center items-center">
       <div class="p-4">
         <app-rating [editable]="false" [max]="100"

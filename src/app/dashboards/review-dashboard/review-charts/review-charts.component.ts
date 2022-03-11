@@ -58,4 +58,8 @@ export class ReviewChartsComponent implements OnInit {
     }
     this.ratingSize = width;
   }
+
+  widthAsPercent() {
+    return Math.max(0, this.ratingValues.avg - 3);
+  }
 }
