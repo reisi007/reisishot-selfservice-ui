@@ -18,15 +18,9 @@ export class DisplayContractComponent implements OnInit {
 
   email!: string;
   accessKey!: string;
-
-  contractData!: ContractData;
-
   signStatus?: Observable<Array<SignStatus>>;
-
   contractIsValid?: boolean;
-
   logs?: Observable<Array<LogEntry>>;
-
   curUserSigned = true;
 
   constructor(
@@ -35,22 +29,37 @@ export class DisplayContractComponent implements OnInit {
   ) {
   }
 
+  _contractData: ContractData | 'NOT LOADED' | 'NOT FOUND' = 'NOT LOADED';
+
+  get contractData(): ContractData | null {
+    if (typeof this._contractData === 'string') {
+      return null;
+    }
+    return this._contractData;
+
+  }
+
   ngOnInit(): void {
     this.route.params.subscribe(routeData => {
       this.email = routeData['mail'];
       this.accessKey = routeData['access_key'];
-      this.fetchContract().subscribe(contractData => {
-        this.contractData = contractData;
+      this.fetchContract().subscribe({
+        next: (contractData) => {
+          this._contractData = contractData;
 
-        timer(500).subscribe(() => {
-          this.apiService.postLogEntry(this.email, this.accessKey, LogType.OPEN).subscribe(() => {
-            timer(0, DisplayContractComponent.UPDATE_INTERVAL).subscribe(() => {
-              this.fetchSignStatus();
-              this.fetchLogs();
-              this.fetchContractStatus();
+          timer(500).subscribe(() => {
+            this.apiService.postLogEntry(this.email, this.accessKey, LogType.OPEN).subscribe(() => {
+              timer(0, DisplayContractComponent.UPDATE_INTERVAL).subscribe(() => {
+                this.fetchSignStatus();
+                this.fetchLogs();
+                this.fetchContractStatus();
+              });
             });
           });
-        });
+        },
+        error: () => {
+          this._contractData = 'NOT FOUND';
+        },
       });
     });
   }
@@ -81,7 +90,13 @@ export class DisplayContractComponent implements OnInit {
   private fetchSignStatus(cache: boolean = true) {
     this.signStatus = this.apiService.getSignStatus(this.email, this.accessKey, cache);
     this.signStatus.subscribe(data => {
-      this.curUserSigned = data.map(e => e.email === this.contractData?.email && e.signed === '1').reduce((a, b) => a || b);
+      this.curUserSigned = data.map(e => {
+        const contractData = this.contractData;
+        if (contractData === null) {
+          return false;
+        }
+        return e.email === contractData.email && e.signed === '1';
+      }).reduce((a, b) => a || b);
     });
   }
 
