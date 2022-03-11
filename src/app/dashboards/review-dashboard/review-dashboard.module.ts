@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ReviewDashboardRoutingModule} from './review-dashboard-routing.module';
 import {ReviewDashboardComponent} from './main/review-dashboard.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ReviewInfoComponent} from './review-charts/review-info.component';
+import {ReviewInfoComponent} from './review-info/review-info.component';
 import {ReviewModule} from '../../review/review.module';
 import {DisplayReviewComponent} from './display-review/display-review.component';
 import {MarkdownModule} from '../../markdown/markdown.module';
