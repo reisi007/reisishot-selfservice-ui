@@ -3,71 +3,71 @@
 </div>
 
 <ng-template #form>
-    <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
-    <p>Personen, für die der erstellte Vertrag gelten soll:</p>
-    <form [formGroup]="emailForm" onsubmit="return false;">
-        <div *ngFor="let item of personArray.controls; let i = index; trackBy: trackByIndex" class="py-2"
-             formArrayName="persons">
-            <app-person [cnt]="i" [person]="$any(item)"></app-person>
-        </div>
-      <div class="p-2 mx-auto w-11/12 border border-gray-200 md:w-1/2">
-        <h3>Gespeicherte Personen</h3>
+  <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
+  <p>Personen, für die der erstellte Vertrag gelten soll:</p>
+  <form [formGroup]="emailForm" onsubmit="return false;">
+    <div *ngFor="let item of personArray.controls; let i = index; trackBy: trackByIndex" class="py-2"
+         formArrayName="persons">
+      <app-person [cnt]="i" [person]="$any(item)"></app-person>
+    </div>
+    <div class="p-2 mx-auto w-11/12 border border-gray-200 md:w-1/2">
+      <h3>Gespeicherte Personen</h3>
 
-        <ol *ngIf="dbPersons" class="flex flex-wrap my-2">
-          <li (click)="addStoredPerson(value)" *ngFor="let value of dbPersons"
-              class="p-2 m-0 w-full list-none sm:w-1/2 button">
-            {{value.firstName}} {{value.lastName}} <br/>
-            <span class="text-sm">{{value.email}}</span><br/>
-            {{value.birthday}}
-          </li>
-        </ol>
-      </div>
-      <div class="m-auto w-full md:w-1/3">
-        <button (click)="addPerson()" class="text-center bg-reisishot">+</button>
-        <button (click)="removePerson()" class="text-center bg-red-500">-</button>
-      </div>
-      <div>
-        <select class="w-full md:w-1/3" formControlName="contractType">
-                <option disabled selected value>Vertrag auswählen</option>
-                <option *ngFor="let item of availableContracts | async"
-                        [value]="item">{{item | prettyFilename}}</option>
-            </select>
-        </div>
-        <div>
-          <label class="flex flex-row items-baseline mx-auto w-full md:w-1/3">
-            <span>Unterschreibbar bis:&nbsp;</span>
-            <input class="grow" formControlName="dueDate" placeholder="Vertrag ist gültig bis"
-                   type="datetime-local"/>
-          </label>
-        </div>
-        <textarea
-          class="block mx-auto w-full md:w-1/3"
-          formControlName="text"
-          placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"
-          rows="4"
-        ></textarea>
-        <div>
-            <div
-              *ngIf="additionalText"
-              [innerHTML]="additionalText | markdown"
-              class="p-1 mx-auto w-full text-center border border-black md:w-1/3"
-            ></div>
-        </div>
-        <div>
-          <button (click)="sendForm()" [disabled]="!emailForm.valid || formSentState?.sent"
-                  class="w-full bg-reisishot md:w-1/3">
-            Neuen Vertrag erstellen
-          </button>
-        </div>
-        <div>
-          <button (click)="previewContract()" [disabled]="!contractType" class="w-full bg-reisishot md:w-1/3">Vertrag
-            anzeigen
-          </button>
-        </div>
-    </form>
+      <ol *ngIf="dbPersons" class="flex flex-wrap my-2">
+        <li (click)="addStoredPerson(value)" *ngFor="let value of dbPersons"
+            class="p-2 m-0 w-full list-none sm:w-1/2 button">
+          {{value.firstName}} {{value.lastName}} <br/>
+          <span class="text-sm">{{value.email}}</span><br/>
+          {{value.birthday}}
+        </li>
+      </ol>
+    </div>
+    <div class="m-auto w-full md:w-1/3">
+      <button (click)="addPerson()" class="text-center bg-reisishot">+</button>
+      <button (click)="removePerson()" class="text-center bg-red-500">-</button>
+    </div>
+    <div>
+      <select class="w-full md:w-1/3" formControlName="contractType">
+        <option disabled selected value>Vertrag auswählen</option>
+        <option *ngFor="let item of availableContracts | async"
+                [value]="item">{{item | prettyFilename}}</option>
+      </select>
+    </div>
+    <div>
+      <label class="flex flex-row items-baseline mx-auto w-full md:w-1/3">
+        <span>Unterschreibbar bis:&nbsp;</span>
+        <input class="grow" formControlName="dueDate" placeholder="Vertrag ist gültig bis"
+               type="datetime-local"/>
+      </label>
+    </div>
+    <textarea
+      class="block mx-auto w-full md:w-1/3"
+      formControlName="text"
+      placeholder="Zusätzlicher Vertragsinhalt (z.B. Datum)"
+      rows="4"
+    ></textarea>
+    <div>
+      <div
+        *ngIf="additionalText"
+        [innerHTML]="additionalText | markdown"
+        class="p-1 mx-auto w-full text-center border border-black md:w-1/3"
+      ></div>
+    </div>
+    <div>
+      <button (click)="sendForm()" [disabled]="!emailForm.valid || formSentState?.sent"
+              class="w-full bg-reisishot md:w-1/3">
+        Neuen Vertrag erstellen
+      </button>
+    </div>
+    <div>
+      <button (click)="previewContract()" [disabled]="!contractType" class="w-full bg-reisishot md:w-1/3">Vertrag
+        anzeigen
+      </button>
+    </div>
+  </form>
   <div *ngIf="formSentState?.error?.length??0  > 0" class="p-8 bg-red-500">{{formSentState?.error}}</div>
 </ng-template>
 
 <ng-template #sent>
-    <h1>Bitte schau in deinen E-Mail Posteingang!</h1>
+  <h1>Bitte schau in deinen E-Mail Posteingang!</h1>
 </ng-template>
