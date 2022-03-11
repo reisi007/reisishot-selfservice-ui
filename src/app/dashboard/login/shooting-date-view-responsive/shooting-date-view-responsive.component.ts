@@ -1,12 +1,12 @@
-import {AfterViewInit, Component, Input, TemplateRef} from '@angular/core';
-import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
+import {Component, Input, TemplateRef} from '@angular/core';
+import {AdminLoginService} from '../admin-login.service';
 
 @Component({
   selector: 'app-shooting-date-view-responsive',
   templateUrl: './shooting-date-view-responsive.component.html',
   styleUrls: ['./shooting-date-view-responsive.component.scss'],
 })
-export class ShootingDateViewResponsiveComponent implements AfterViewInit {
+export class ShootingDateViewResponsiveComponent {
 
   @Input() template!: TemplateRef<any>;
 
@@ -29,9 +29,4 @@ export class ShootingDateViewResponsiveComponent implements AfterViewInit {
   set weeks(weeks: number) {
     this._weeks = weeks;
   }
-
-  ngAfterViewInit(): void {
-    console.log('template', this.template);
-  }
-
 }
