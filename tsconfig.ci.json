@@ -1,0 +1,11 @@
+{
+  // Reuse all the settings in `tsconfig.app.json`.
+  "extends": "./tsconfig.app.json",
+  // Override just the one option we care about for CI.
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      // Make all extended diagnostics emit hard errors.
+      "defaultCategory": "error"
+    }
+  }
+}
