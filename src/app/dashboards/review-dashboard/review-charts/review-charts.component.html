@@ -1,13 +1,6 @@
 <div class="content-center">
   <div *ngIf="ratingValues" class="mx-auto">
-    <rg-gauge-chart
-      *ngFor="let width of [ratingSize]; trackBy: tbf"
-      [bottomLabel]="''+ratingValues.avg+' / 100' "
-      [canvasWidth]="width"
-      [name]="'Durchschnittliche Bewertung'"
-      [needleValue]="ratingValues.avg"
-      [options]="ratingOptions"
-    ></rg-gauge-chart>
+    {{ratingValues.avg}} / 100
     <div class="flex justify-center items-center">
       <div class="p-4">
         <app-rating [editable]="false" [max]="100"

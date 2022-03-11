@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {GaugeChartModule} from 'angular-gauge-chart';
 import {ReviewDashboardRoutingModule} from './review-dashboard-routing.module';
 import {ReviewDashboardComponent} from './main/review-dashboard.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -11,7 +10,7 @@ import {MarkdownModule} from '../../markdown/markdown.module';
 
 @NgModule({
   declarations: [ReviewDashboardComponent, ReviewChartsComponent, DisplayReviewComponent],
-  imports: [CommonModule, ReactiveFormsModule, ReviewDashboardRoutingModule, GaugeChartModule, ReviewModule, MarkdownModule],
+  imports: [CommonModule, ReactiveFormsModule, ReviewDashboardRoutingModule, ReviewModule, MarkdownModule],
 })
 export class ReviewDashboardModule {
 }
