@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, timer} from 'rxjs';
 import {WaitlistApiService} from '../api/waitlist-api.service';
 import {WaitlistItem} from '../api/waitlist-api';
 import {ActivatedRoute} from '@angular/router';
@@ -22,9 +22,29 @@ export class WaitlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.publicItems = this.apiService.getPublicItems();
+    this.scrollToAnchorAfterDataIsLoaded();
 
     this.route.params.subscribe(routeData => {
       this.referrer = routeData['referrer'];
+    });
+  }
+
+  private scrollToAnchorAfterDataIsLoaded() {
+    this.publicItems.subscribe({
+      next: () => {
+        this.route.fragment.subscribe({
+          next: value => {
+            if (value !== null) {
+              timer(400).subscribe({
+                next: () => {
+                  document.getElementById(value)
+                          ?.scrollIntoView({behavior: 'smooth'});
+                },
+              });
+            }
+          },
+        });
+      },
     });
   }
 }
