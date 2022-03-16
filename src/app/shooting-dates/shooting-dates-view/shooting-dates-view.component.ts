@@ -16,7 +16,7 @@ export class ShootingDatesViewComponent implements OnInit {
   constructor() {
   }
 
-  _weeks = 0;
+  private _weeks = 0;
 
   get weeks(): number {
     return this._weeks;

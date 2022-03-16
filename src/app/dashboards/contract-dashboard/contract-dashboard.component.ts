@@ -14,7 +14,6 @@ import {AdminLoginService} from '../../dashboard/login/admin-login.service';
   styleUrls: ['./contract-dashboard.component.scss'],
 })
 export class ContractDashboardComponent implements OnInit {
-  private static LOCAL_PERSONS = 'LOCAL_PERSONS';
   emailForm!: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
   formSentState = {error: '', completed: false, sent: false};
