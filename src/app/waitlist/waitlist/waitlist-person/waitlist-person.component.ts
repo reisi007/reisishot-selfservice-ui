@@ -53,13 +53,18 @@ export class WaitlistPersonComponent extends DatefieldSupport implements OnInit 
 
   doRegister(): void {
     const person = this.person.getRawValue() as WaitlistPerson;
-    this.apiService.register(person).subscribe(() => {
-      const action = 'register';
-      if (person.referrer) {
-        this.matomo.trackEvent(CATEGORY_REFERRAL, action, person.referrer);
-      }
-      this.matomo.trackEvent(CATEGORY_REGISTER, action, person.email);
-      this.formSubmitted = true;
+    this.apiService.register(person).subscribe({
+      next: () => {
+        const action = 'register';
+        if (person.referrer) {
+          this.matomo.trackEvent(CATEGORY_REFERRAL, action, person.referrer);
+        }
+        this.matomo.trackEvent(CATEGORY_REGISTER, action, person.email);
+        this.formSubmitted = true;
+      },
+      error: () => {
+        this.errorRegister = true;
+      },
     });
 
   }
