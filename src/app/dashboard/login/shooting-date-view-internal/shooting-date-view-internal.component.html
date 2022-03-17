@@ -1,5 +1,7 @@
 <ng-template #item let-cur="cur">
-  <app-shooting-date-internal-cell [kw]="cur.kw" [text]="cur.text"></app-shooting-date-internal-cell>
+  <ng-container *ngFor="let curText of cur.text?.split('&&')??['']">
+    <app-shooting-date-internal-cell [kw]="cur.kw" [text]="curText"></app-shooting-date-internal-cell>
+  </ng-container>
 </ng-template>
 <app-shooting-dates-internal [calendarEntryProvider]="getData" [cellTemplate]="item" [weeks]="weeks">
   <ng-content></ng-content>
