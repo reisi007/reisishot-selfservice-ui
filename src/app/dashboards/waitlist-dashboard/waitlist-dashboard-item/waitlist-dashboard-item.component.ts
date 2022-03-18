@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../admin-api/waitlist-admin-api';
 import {WaitlistAdminApiService} from '../admin-api/waitlist-admin-api.service';
 
@@ -14,6 +14,7 @@ export class WaitlistDashboardItemComponent {
 
   constructor(
     private waitlistAdminApi: WaitlistAdminApiService,
+    private route: ActivatedRoute,
     private router: Router,
   ) {
   }
@@ -35,7 +36,7 @@ export class WaitlistDashboardItemComponent {
   }
 
   public createContract(idx: number, waitlistRecord: AdminWaitlistRecord) {
-    this.router.navigate(['contracts', 'dashboard'], {state: {person: waitlistRecord}});
+    this.router.navigate(['..', 'contracts'], {state: {person: waitlistRecord}, relativeTo: this.route});
   }
 
   public ignore(idx: number, waitlistRecord: AdminWaitlistRecord) {
