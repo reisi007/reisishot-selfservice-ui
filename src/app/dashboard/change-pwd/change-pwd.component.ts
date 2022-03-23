@@ -27,7 +27,7 @@ export class ChangePwdComponent extends ApiService implements OnInit {
   }
 
   changePassword() {
-    const data = this.pwdChangeForm.getRawValue() as PwdChangeValue;
+    const data = this.changePasswordData();
 
     this.http
         .post(
@@ -37,9 +37,13 @@ export class ChangePwdComponent extends ApiService implements OnInit {
         )
         .subscribe(() => (this.showForm = false));
   }
+
+  changePasswordData(): PwdChangeValue {
+    return this.pwdChangeForm.getRawValue();
+  }
 }
 
-interface PwdChangeValue {
+export interface PwdChangeValue {
   oldUser: string;
   oldPwd: string;
   newUser: string;

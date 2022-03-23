@@ -14,7 +14,10 @@
     </div>
     <div>
       <button (click)="changePassword()" [disabled]="!pwdChangeForm.valid" class="w-full bg-reisishot md:w-1/3">
-        Passwort ändern
+        Passwort
+        <ng-container *ngIf="changePasswordData().newUser"> für Benutzer "{{changePasswordData().newUser}}"
+        </ng-container>
+        ändern
       </button>
     </div>
   </form>
