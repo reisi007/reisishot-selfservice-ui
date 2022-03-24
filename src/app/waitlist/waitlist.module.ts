@@ -33,7 +33,13 @@ import {ShootingDatesModule} from '../shooting-dates/shooting-dates.module';
     ShowAllContractsComponent,
     LazyLoadingImageComponent,
   ],
-  imports: [CommonModule, WaitlistRoutingModule, MarkdownModule, ReactiveFormsModule, ShootingDatesModule],
+  imports: [
+    CommonModule,
+    WaitlistRoutingModule,
+    MarkdownModule,
+    ReactiveFormsModule,
+    ShootingDatesModule,
+  ],
 })
 export class WaitlistModule {
 }

@@ -5,6 +5,7 @@ import {
   ShootingDateCellComponent,
 } from './shooting-dates-view/shooting-date-view-public/shooting-date-public-cell/shooting-date-cell.component';
 import {ShootingDateViewPublicComponent} from './shooting-dates-view/shooting-date-view-public/shooting-date-view-public.component';
+import {LoadingIndicatorModule} from '../loading-indicator/loading-indicator.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {ShootingDateViewPublicComponent} from './shooting-dates-view/shooting-da
   ],
   imports: [
     CommonModule,
+    LoadingIndicatorModule,
   ],
 })
 export class ShootingDatesModule {

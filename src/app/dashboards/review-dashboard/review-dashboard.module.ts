@@ -9,8 +9,18 @@ import {DisplayReviewComponent} from './display-review/display-review.component'
 import {MarkdownModule} from '../../markdown/markdown.module';
 
 @NgModule({
-  declarations: [ReviewDashboardComponent, ReviewInfoComponent, DisplayReviewComponent],
-  imports: [CommonModule, ReactiveFormsModule, ReviewDashboardRoutingModule, ReviewModule, MarkdownModule],
+  declarations: [
+    ReviewDashboardComponent,
+    ReviewInfoComponent,
+    DisplayReviewComponent,
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ReviewDashboardRoutingModule,
+    ReviewModule,
+    MarkdownModule,
+  ],
 })
 export class ReviewDashboardModule {
 }
