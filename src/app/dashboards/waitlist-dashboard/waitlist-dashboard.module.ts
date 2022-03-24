@@ -12,8 +12,19 @@ import {LeaderboardByYearComponent} from './leaderboard-by-year/leaderboard-by-y
 import {PendingSignaturesComponent} from './pending-signatures/pending-signatures.component';
 
 @NgModule({
-  declarations: [WaitlistDashboardComponent, WaitlistDashboardItemComponent, LeaderboardComponent, PersonAssessComponent, PersonAssessArbitraryComponent, LeaderboardByYearComponent, PendingSignaturesComponent],
-  imports: [CommonModule, ReactiveFormsModule, WaitlistDashboardRoutingModule],
+  declarations: [
+    WaitlistDashboardComponent,
+    WaitlistDashboardItemComponent,
+    LeaderboardComponent,
+    PersonAssessComponent,
+    PersonAssessArbitraryComponent,
+    LeaderboardByYearComponent,
+    PendingSignaturesComponent,
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    WaitlistDashboardRoutingModule],
 })
 export class WaitlistDashboardModule {
 }

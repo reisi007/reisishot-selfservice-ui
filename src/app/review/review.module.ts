@@ -20,8 +20,15 @@ import {MarkdownModule} from '../markdown/markdown.module';
     LoadingReviewLandingComponent,
     ReviewLandingComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, ReviewRoutingModule, MarkdownModule],
-  exports: [RatingComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ReviewRoutingModule,
+    MarkdownModule,
+  ],
+  exports: [
+    RatingComponent,
+  ],
 })
 export class ReviewModule {
 }

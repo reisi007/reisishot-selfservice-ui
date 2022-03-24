@@ -1,6 +1,6 @@
 <h2 class="mb-2">Nächste freien Shootingtermine </h2>
 <ng-content></ng-content>
-<div class="flex flex-wrap justify-center">
+<div *ngIf="data; else loading" class="flex flex-wrap justify-center">
   <div class="w-full md:w-1/2">
     <div *ngFor="let cur of data; trackBy: trackByKw">
       <div [ngClass]="{
@@ -16,3 +16,12 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="block px-4 pt-5 pb-10">
+    <span class="mb-4">Freie Shootingtermine werden geladen...</span>
+    <div class="pt-5 mx-auto w-60 max-w-full">
+      <app-loading-indicator></app-loading-indicator>
+    </div>
+  </div>
+</ng-template>

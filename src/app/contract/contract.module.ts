@@ -6,11 +6,20 @@ import {DisplayContractComponent} from './display-contract/display-contract.comp
 import {PreviewContractComponent} from './preview-contract/preview-contract.component';
 import {MarkdownModule} from '../markdown/markdown.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {LoadingIndicatorComponent} from './display-contract/loading-indicator/loading-indicator.component';
+import {LoadingIndicatorModule} from '../loading-indicator/loading-indicator.module';
 
 @NgModule({
-  declarations: [DisplayContractComponent, PreviewContractComponent, LoadingIndicatorComponent],
-  imports: [CommonModule, ContractRoutingModule, MarkdownModule, ReactiveFormsModule],
+  declarations: [
+    DisplayContractComponent,
+    PreviewContractComponent,
+  ],
+  imports: [
+    CommonModule,
+    ContractRoutingModule,
+    MarkdownModule,
+    ReactiveFormsModule,
+    LoadingIndicatorModule,
+  ],
 })
 export class ContractModule {
 }
