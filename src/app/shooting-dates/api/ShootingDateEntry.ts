@@ -1,12 +1,12 @@
 export type ShootingDateEntry = {
   kw: number,
-  isShooting: boolean,
+  state: ShootingSlotState,
   text?: string
 }
 
-export enum Color {
-  GREEN = 'green',
-  YELLOW = 'yellow',
-  ORANGE = 'orange',
-  RED = 'red'
+export enum ShootingSlotState {
+  FREE = 'FREE',
+  BUSY = 'BUSY',
+  TAKEN = 'TAKEN',
+  BLOCKED = 'BLOCKED',
 }
