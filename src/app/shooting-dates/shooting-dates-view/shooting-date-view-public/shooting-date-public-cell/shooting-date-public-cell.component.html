@@ -1,1 +1,3 @@
-KW {{kw.toString(10).padStart(2, '0')}} - Woche ab {{displayDateByKw(kw)}}
+<ng-container *ngIf="availability">
+  KW {{availability.calendarWeek.kw().toString(10).padStart(2, '0')}} - Woche ab {{availability.calendarWeek.format()}}
+</ng-container>

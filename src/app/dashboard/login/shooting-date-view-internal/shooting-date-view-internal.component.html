@@ -1,7 +1,7 @@
 <ng-template #item let-cur="cur">
   <div class="flex flex-col space-y-4">
     <ng-container *ngFor="let curText of cur.text?.split('&&')??['']">
-      <app-shooting-date-internal-cell [kw]="cur.kw" [text]="curText"></app-shooting-date-internal-cell>
+      <app-shooting-date-internal-cell [availability]="cur" [text]="curText"></app-shooting-date-internal-cell>
     </ng-container>
   </div>
 </ng-template>

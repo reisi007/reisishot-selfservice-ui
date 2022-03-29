@@ -1,7 +1,8 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {Color, ShootingDateDisplayEntry, ShootingDateEntry} from '../api/ShootingDateEntry';
+import {ShootingDateEntry} from '../api/ShootingDateEntry';
 import * as dayjs from 'dayjs';
 import {Observable} from 'rxjs';
+import {CalendarWeekAvailability} from '../CalendarWeekAvailability.model';
 
 @Component({
   selector: 'app-shooting-dates-internal',
@@ -10,7 +11,7 @@ import {Observable} from 'rxjs';
 })
 export class ShootingDatesViewComponent implements OnInit {
 
-  data?: Array<ShootingDateDisplayEntry>;
+  data?: Array<CalendarWeekAvailability>;
   @Input() calendarEntryProvider!: () => Observable<ShootingDateEntry[]>;
 
   constructor() {
@@ -48,7 +49,7 @@ export class ShootingDatesViewComponent implements OnInit {
     }
   }
 
-  trackByKw = (index: number, item: ShootingDateDisplayEntry) => item.kw;
+  trackByKw = (index: number, item: CalendarWeekAvailability) => item.calendarWeek.id();
 
   ngOnInit(): void {
     this.updateShootingDates();
@@ -62,76 +63,30 @@ export class ShootingDatesViewComponent implements OnInit {
         });
   }
 
-  private prepareDate(values: Array<ShootingDateEntry>, weeks: number): Array<ShootingDateDisplayEntry> {
-    const computedValues = new Array<ShootingDateDisplayEntry>();
-    const curWeek = dayjs().isoWeek();
-    const lastWeek = curWeek + weeks;
+  private prepareDate(values: Array<ShootingDateEntry>, displayedWeeks: number): Array<CalendarWeekAvailability> {
 
-    function initWeeks() {
-      for (let i = 0; i < weeks; i++) {
-        computedValues.push({
-          kw: curWeek + i,
-          color: Color.GREEN,
-        });
-      }
-    }
-
-    function markWeeksUsingCalendarData() {
-      values.forEach((cur) => {
-        const kw = cur.kw;
-        const computedIdx = kw - curWeek;
-
-        if (curWeek <= kw && kw < lastWeek) {
-          const curComputedValue = {...cur, ...computedValues[computedIdx]};
-          computedValues[computedIdx] = curComputedValue;
-          if (!cur.isShooting) {
-            curComputedValue.color = Color.ORANGE;
-          }
-          else if (curComputedValue.color === Color.GREEN) {
-            curComputedValue.color = Color.RED;
-          }
-        }
-      });
-    }
-
-    function markWeeksBetweenShootingsAsYellow() {
-      function safeAccess(array: Array<ShootingDateDisplayEntry>, idx: number, offset: number): ShootingDateDisplayEntry | undefined {
-        const realIdx = idx - offset;
-        if (0 <= realIdx && realIdx < array.length) {
-          return array[realIdx];
-        }
-        return undefined;
-      }
-
-      for (let i = 0; i < weeks; i++) {
-        const cur = computedValues[i];
-        if (cur.color === Color.GREEN) {
-          let redFound = false;
-          let checked = safeAccess(computedValues, i, -1);
-          if (checked) {
-            redFound = checked.color === Color.RED;
-          }
-          if (!redFound) {
-            checked = safeAccess(computedValues, i, 1);
-            if (checked) {
-              redFound = checked.color === Color.RED;
-            }
-          }
-
-          if (redFound) {
-            cur.color = Color.YELLOW;
-          }
-        }
-      }
-    }
+    const calculationOffset = 2;
+    const startWeek = dayjs()
+      .add(-calculationOffset, 'days');
+    const weeks = displayedWeeks + 2 * calculationOffset;
 
     // Set all green
-    initWeeks();
-    // Mark Shootings
-    markWeeksUsingCalendarData();
-    // Post process
-    markWeeksBetweenShootingsAsYellow();
+    const computedValues = new Array<CalendarWeekAvailability>();
+    for (let i = 0; i < weeks; i++) {
+      computedValues.push(
+        new CalendarWeekAvailability(startWeek.add(i, 'weeks')),
+      );
+    }
 
-    return computedValues;
+    values.forEach(event => {
+      computedValues.forEach((consumer, idx) => {
+        consumer.process(event);
+      });
+    });
+
+    computedValues.forEach((consumer, idx) => consumer.process(computedValues, idx));
+    computedValues.forEach((consumer) => consumer.process(computedValues, computedValues.length));
+
+    return computedValues.slice(calculationOffset, computedValues.length - calculationOffset);
   }
 }

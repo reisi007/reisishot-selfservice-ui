@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {CalendarWeekAvailability} from '../../../../shooting-dates/CalendarWeekAvailability.model';
 
 @Component({
   selector: 'app-shooting-date-internal-cell',
@@ -28,19 +29,10 @@ export class ShootingDateInternalCellComponent {
                                                                         }
                                                                       });
   emoji = '';
+  @Input()
+  availability !: CalendarWeekAvailability;
 
   constructor() {
-  }
-
-  _kw = 12;
-
-  get kw(): number {
-    return this._kw;
-  }
-
-  @Input()
-  set kw(weeks: number) {
-    this._kw = weeks;
   }
 
   _text = '';
