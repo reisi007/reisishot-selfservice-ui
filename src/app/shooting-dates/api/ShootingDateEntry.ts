@@ -1,9 +1,8 @@
 export type ShootingDateEntry = {
   kw: number,
-  isShooting: boolean
+  isShooting: boolean,
+  text?: string
 }
-
-export type ShootingDateDisplayEntry = { kw: number; color: Color }
 
 export enum Color {
   GREEN = 'green',

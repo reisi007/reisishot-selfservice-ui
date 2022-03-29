@@ -4,10 +4,10 @@
   <div class="w-full md:w-1/2">
     <div *ngFor="let cur of data; trackBy: trackByKw">
       <div [ngClass]="{
-    'bg-reisishot': cur.color === 'green',
-    'text-black bg-yellow-300': cur.color === 'yellow',
-    'bg-red-700': cur.color === 'orange',
-    'bg-red-500': cur.color === 'red'
+    'bg-reisishot': cur.getColor() === 'green',
+    'text-black bg-yellow-300': cur.getColor() === 'yellow',
+    'bg-red-700': cur.getColor() === 'orange',
+    'bg-red-500': cur.getColor() === 'red'
 
     }" class="p-2 text-white"
       >
