@@ -65,9 +65,9 @@ export class ShootingDatesViewComponent implements OnInit {
 
   private prepareDate(values: Array<ShootingDateEntry>, displayedWeeks: number): Array<CalendarWeekAvailability> {
 
-    const calculationOffset = 2;
+    const calculationOffset = 1;
     const startWeek = dayjs()
-      .add(-calculationOffset, 'days');
+      .add(-calculationOffset, 'weeks');
     const weeks = displayedWeeks + 2 * calculationOffset;
 
     // Set all green
@@ -87,6 +87,6 @@ export class ShootingDatesViewComponent implements OnInit {
     computedValues.forEach((consumer, idx) => consumer.process(computedValues, idx));
     computedValues.forEach((consumer) => consumer.process(computedValues, computedValues.length));
 
-    return computedValues.slice(calculationOffset, computedValues.length - calculationOffset);
+    return computedValues.slice(calculationOffset + 1,-calculationOffset);
   }
 }
