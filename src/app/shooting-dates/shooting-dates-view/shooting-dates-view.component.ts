@@ -87,6 +87,6 @@ export class ShootingDatesViewComponent implements OnInit {
     computedValues.forEach((consumer, idx) => consumer.process(computedValues, idx));
     computedValues.forEach((consumer) => consumer.process(computedValues, computedValues.length));
 
-    return computedValues.slice(calculationOffset + 1,-calculationOffset);
+    return computedValues.slice(calculationOffset, -calculationOffset);
   }
 }
