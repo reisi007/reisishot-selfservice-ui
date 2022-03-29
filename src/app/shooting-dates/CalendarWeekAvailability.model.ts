@@ -1,19 +1,24 @@
-import {Color, ShootingDateEntry} from './api/ShootingDateEntry';
+import {ShootingDateEntry, ShootingSlotState} from './api/ShootingDateEntry';
 import * as dayjs from 'dayjs';
 import {CalendarWeek} from './CalendarWeek.model';
 
 export class CalendarWeekAvailability {
-
   calendarWeek: CalendarWeek;
-  private color: Color = Color.GREEN;
+  private color = ShootingSlotState.FREE;
   private text?: string;
 
   constructor(date: dayjs.Dayjs) {
     this.calendarWeek = new CalendarWeek(date);
   }
 
+  private static isFinalRun(event: Array<CalendarWeekAvailability>, idx: number) {
+    return idx > event.length;
+  }
+
   process(event: Array<CalendarWeekAvailability>, index: number): void;
+
   process(event: ShootingDateEntry): void;
+
   process(event: Array<CalendarWeekAvailability> | ShootingDateEntry, index: number | undefined = undefined): void {
     if (Array.isArray(event)) {
       if (index === undefined) {
@@ -26,32 +31,37 @@ export class CalendarWeekAvailability {
     }
   }
 
-  getColor(): Color {
-    return this.color;
+  isFree() {
+    return this.color === ShootingSlotState.FREE;
+  }
+
+  isBusy() {
+    return this.color === ShootingSlotState.BUSY;
+  }
+
+  isTaken() {
+    return this.color === ShootingSlotState.TAKEN;
+  }
+
+  isBlocked() {
+    return this.color === ShootingSlotState.BLOCKED;
   }
 
   private processInternal(event: ShootingDateEntry) {
     if (event.kw !== this.calendarWeek.kw()) {
       return;
     }
-    if (!event.isShooting) {
-      this.color = Color.ORANGE;
-    }
-    else if (this.color === Color.GREEN) {
-      this.color = Color.RED;
-    }
-    this.text = event.text;
 
+    this.text = event.text;
+    this.color = event.state;
   }
 
   private finalize(event: Array<CalendarWeekAvailability>, idx: number) {
-
-    this.markYellow(event, idx);
+    this.markFreeWeeksBetweenShootingsAsBusy(event, idx);
   }
 
-
-  private markYellow(event: Array<CalendarWeekAvailability>, idx: number) {
-    if (idx > event.length || this.color !== Color.GREEN) {
+  private markFreeWeeksBetweenShootingsAsBusy(event: Array<CalendarWeekAvailability>, idx: number) {
+    if (CalendarWeekAvailability.isFinalRun(event, idx) || !this.isFree()) {
       return;
     }
 
@@ -60,10 +70,12 @@ export class CalendarWeekAvailability {
 
     const shouldChangeToYellow = event
       .filter(e => e.calendarWeek.equals(next) || e.calendarWeek.equals(prev))
-      .some(e => e.color === Color.RED);
+      .some(e => e.color === ShootingSlotState.TAKEN);
 
     if (shouldChangeToYellow) {
-      this.color = Color.YELLOW;
+      this.color = ShootingSlotState.BUSY;
     }
   }
+
+
 }
