@@ -29,28 +29,30 @@ export class ShootingDateInternalCellComponent {
                                                                         }
                                                                       });
   emoji = '';
-  @Input()
-  availability !: CalendarWeekAvailability;
 
   constructor() {
   }
 
-  _text = '';
+  private _availability !: CalendarWeekAvailability;
 
-  get text(): string {
-    return this._text;
+  get availability(): CalendarWeekAvailability {
+    return this._availability;
   }
 
   @Input()
-  set text(text: string) {
+  set availability(availability: CalendarWeekAvailability) {
+    const text = availability.text;
     if (text) {
-      this._text = text.split('|')[0].trim();
+      this._availability = availability.withText(text.split('|')[0].trim());
       this.emoji = ShootingDateInternalCellComponent.calculateEmoji(text);
+    }
+    else {
+      this._availability = availability;
     }
   }
 
   get formattedText(): string {
-    const text = this._text;
+    const text = this.availability.text;
     return text ? '(' + text + ')' : '';
   }
 

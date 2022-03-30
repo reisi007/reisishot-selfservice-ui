@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {PrivateCalendarApiService} from './private-calendar-api.service';
 import {ShootingDateEntry} from '../../../shooting-dates/api/ShootingDateEntry';
+import {CalendarWeekAvailability} from '../../../shooting-dates/CalendarWeekAvailability.model';
 
 @Component({
   selector: 'app-shooting-date-view-internal',
@@ -26,6 +27,9 @@ export class ShootingDateViewInternalComponent {
     this._weeks = weeks;
   }
 
-
   getData: () => Observable<ShootingDateEntry[]> = () => this.apiService.getPrivateShootingDates();
+
+  cwa(cur: any): CalendarWeekAvailability {
+    return cur;
+  }
 }
