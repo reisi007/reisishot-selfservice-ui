@@ -3,12 +3,42 @@ import * as dayjs from 'dayjs';
 import {CalendarWeek} from './CalendarWeek.model';
 
 export class CalendarWeekAvailability {
-  calendarWeek: CalendarWeek;
-  private color = ShootingSlotState.FREE;
-  private text?: string;
+  private readonly _calendarWeek: CalendarWeek;
 
-  constructor(date: dayjs.Dayjs) {
-    this.calendarWeek = new CalendarWeek(date);
+  constructor(calendarWeek: CalendarWeek, state: ShootingSlotState, text?: string)
+  constructor(date: dayjs.Dayjs)
+  constructor(first: CalendarWeek | dayjs.Dayjs, state?: ShootingSlotState, text?: string) {
+    if (!first) {
+      throw Error('First param must be a dayjs.Date or a CalendarWeek');
+    }
+
+    if (first instanceof CalendarWeek) {
+      this._calendarWeek = first;
+
+      if (state) {
+        this._state = state;
+      }
+      this._text = text;
+    }
+    else {
+      this._calendarWeek = new CalendarWeek(first);
+    }
+  }
+
+  get calendarWeek(): CalendarWeek {
+    return this._calendarWeek;
+  }
+
+  private _state: ShootingSlotState = ShootingSlotState.FREE;
+
+  get state(): ShootingSlotState {
+    return this._state;
+  }
+
+  private _text?: string;
+
+  get text(): string | undefined {
+    return this._text;
   }
 
   private static isFinalRun(event: Array<CalendarWeekAvailability>, idx: number) {
@@ -32,28 +62,32 @@ export class CalendarWeekAvailability {
   }
 
   isFree() {
-    return this.color === ShootingSlotState.FREE;
+    return this._state === ShootingSlotState.FREE;
   }
 
   isBusy() {
-    return this.color === ShootingSlotState.BUSY;
+    return this._state === ShootingSlotState.BUSY;
   }
 
   isTaken() {
-    return this.color === ShootingSlotState.TAKEN;
+    return this._state === ShootingSlotState.TAKEN;
   }
 
   isBlocked() {
-    return this.color === ShootingSlotState.BLOCKED;
+    return this._state === ShootingSlotState.BLOCKED;
+  }
+
+  withText(text: string | undefined = this._text): CalendarWeekAvailability {
+    return new CalendarWeekAvailability(this.calendarWeek, this.state, text);
   }
 
   private processInternal(event: ShootingDateEntry) {
-    if (event.kw !== this.calendarWeek.kw()) {
+    if (event.kw !== this._calendarWeek.kw()) {
       return;
     }
 
-    this.text = event.text;
-    this.color = event.state;
+    this._text = event.text;
+    this._state = event.state;
   }
 
   private finalize(event: Array<CalendarWeekAvailability>, idx: number) {
@@ -65,17 +99,15 @@ export class CalendarWeekAvailability {
       return;
     }
 
-    const next = this.calendarWeek.next();
-    const prev = this.calendarWeek.prev();
+    const next = this._calendarWeek.next();
+    const prev = this._calendarWeek.prev();
 
     const shouldChangeToYellow = event
-      .filter(e => e.calendarWeek.equals(next) || e.calendarWeek.equals(prev))
-      .some(e => e.color === ShootingSlotState.TAKEN);
+      .filter(e => e._calendarWeek.equals(next) || e._calendarWeek.equals(prev))
+      .some(e => e._state === ShootingSlotState.TAKEN);
 
     if (shouldChangeToYellow) {
-      this.color = ShootingSlotState.BUSY;
+      this._state = ShootingSlotState.BUSY;
     }
   }
-
-
 }
