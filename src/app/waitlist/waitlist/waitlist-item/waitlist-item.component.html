@@ -7,7 +7,8 @@
     <span *ngIf="item.available_to">Anmeldeschluss: {{formatDate(item.available_to)}}</span>
   </div>
   <form *ngIf="item.registered === '0'; else abmelden" [formGroup]="registration" onsubmit="return false;">
-        <textarea *ngIf="person" class="mx-auto w-11/12" formControlName="text" placeholder="Zusätzliche Informationen"
+        <textarea *ngIf="person" class="mx-auto w-11/12" formControlName="text"
+                  placeholder="Zusätzliche Informationen - Details, die du mir sagen möchtest oder wann (in welcher Kalenderwoche) du am besten Zeit für das Shooting hast"
                   rows="4"></textarea>
     <div (click)="register()" class="mx-auto w-full font-medium text-white bg-reisishot button">
       <ng-container *ngIf="!canRegister; else allowRegistration"> Alle Wartelistenplätze belegt</ng-container>
