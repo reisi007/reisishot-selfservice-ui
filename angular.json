@@ -70,7 +70,11 @@
               "namedChunks": true
             },
             "ci": {
-              "tsConfig": "tsconfig.ci.json"
+              "tsConfig": "tsconfig.ci.json",
+              "namedChunks": true,
+              "extractLicenses": false,
+              "buildOptimizer": false,
+              "optimization": false
             }
           },
           "defaultConfiguration": "production"
