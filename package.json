@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~13.2.6",
     "@angular/platform-browser-dynamic": "~13.2.6",
     "@angular/router": "~13.2.6",
+    "@angular/service-worker": "~13.2.7",
     "@ngx-matomo/router": "^2.2.1",
     "@ngx-matomo/tracker": "^2.2.1",
     "dayjs": "~1",
