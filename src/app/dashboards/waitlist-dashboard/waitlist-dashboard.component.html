@@ -1,4 +1,4 @@
-<div class="p-6 text-center">
+<div class="py-6 text-center">
   <h1 class="mb-2">Shooting Warteliste - Admin Dashboard</h1>
 
   <ng-container *ngIf="items && credentials">
@@ -9,7 +9,6 @@
         *ngFor="let item of items "
         [credentials]="credentials"
         [item]="item"
-        class="self-stretch p-3 w-full"
       ></app-waitlist-dashboard-item>
     </div>
   </ng-container>
