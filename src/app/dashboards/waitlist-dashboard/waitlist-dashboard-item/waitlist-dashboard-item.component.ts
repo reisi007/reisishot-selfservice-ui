@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminWaitlistRecord, WaitlistItemWithRegistrations} from '../admin-api/waitlist-admin-api';
 import {WaitlistAdminApiService} from '../admin-api/waitlist-admin-api.service';
+import {calculateAge} from '../../../commons/datetime.formatter';
 
 @Component({
   selector: 'app-waitlist-dashboard-item',
@@ -54,6 +55,9 @@ export class WaitlistDashboardItemComponent {
         .subscribe(() => this.removeRegistration(idx));
   }
 
+  displayAgeInformation(birthday: string): string {
+    return `(${(calculateAge(birthday))} Jahre)`;
+  }
 
   private removeRegistration(idx: number): void {
     this.data?.registrations.splice(idx, 1);

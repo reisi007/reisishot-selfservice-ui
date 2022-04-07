@@ -23,7 +23,6 @@ export class AdminReviewComponent implements OnInit {
       '---',
       'video: ???',
       'image: ???',
-      'images: ???',
       'type: boudoir | beauty | business | sport | pärchen | live',
       'name: ' + review.name,
       'date: ' + review.creation_date.split(' ')[0],
