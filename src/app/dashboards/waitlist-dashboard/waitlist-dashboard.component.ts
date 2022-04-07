@@ -21,8 +21,8 @@ export class WaitlistDashboardComponent implements OnInit {
   ) {
   }
 
-  get credentials(): AdminUserData {
-    return this.adminLoginService.dataOrError;
+  get credentials(): AdminUserData | null {
+    return this.adminLoginService.data;
   }
 
   ngOnInit(): void {
