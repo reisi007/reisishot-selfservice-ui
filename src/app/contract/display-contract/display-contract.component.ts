@@ -2,11 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ContractApiService} from '../api/contract-api.service';
 import {ContractData} from '../api/contractData';
-import * as dayjs from 'dayjs';
 import {SignStatus} from '../api/signStatus';
 import {Observable, timer} from 'rxjs';
 import {LogEntry, LogType} from '../api/logEntry';
-import {formatDate, formatDateTime} from '../../commons/datetime.formatter';
+import {calculateAge, formatDate, formatDateTime} from '../../commons/datetime.formatter';
 
 @Component({
   selector: 'app-display-contract',
@@ -72,7 +71,7 @@ export class DisplayContractComponent implements OnInit {
   }
 
   calculateAge(val: string): string {
-    return dayjs(this.contractData?.due_date).diff(dayjs(val), 'year', true).toFixed(2);
+    return calculateAge(val, this.contractData?.due_date);
   }
 
   formatDateTime(dateTimeString: string): string {

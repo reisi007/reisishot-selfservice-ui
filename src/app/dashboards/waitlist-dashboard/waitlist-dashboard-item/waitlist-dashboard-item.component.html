@@ -23,14 +23,16 @@
           class="py-1 px-2 border border-black">
         {{registration.points}}
       </td>
-      <td class="py-1 px-2 border border-black">{{registration.firstName}} {{registration.lastName}}</td>
+      <td class="py-1 px-2 border border-black">
+        {{registration.firstName}} {{registration.lastName}} {{displayAgeInformation(registration.birthday)}}
+      </td>
       <td class="py-1 px-2 border border-black">{{registration.availability}}</td>
       <td class="py-1 px-2 border border-black">{{registration.text }}</td>
       <td class="py-1 px-2 border border-black">
         <button
-          (click)="createContract(i,registration)"
-          [disabled]="registration.done_internal === '1'"
-          class="p-2.5 font-bold text-white bg-reisishot"
+                (click)="createContract(i,registration)"
+                [disabled]="registration.done_internal === '1'"
+                class="p-2.5 font-bold text-white bg-reisishot"
         >
           Vertrag erstellen
         </button>
