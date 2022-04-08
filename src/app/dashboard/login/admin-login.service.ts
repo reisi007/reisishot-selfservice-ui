@@ -1,33 +1,22 @@
 import {AdminUserData} from './admin-login/AdminUserData';
-import {Injectable, isDevMode} from '@angular/core';
-
-declare global {
-  interface Window {
-    adminLoginData?: AdminUserData | null;
-  }
-}
+import {Injectable} from '@angular/core';
+import {accessState} from '../AppState';
 
 @Injectable()
 export class AdminLoginService {
 
+  private state!: { userData: AdminUserData | null };
+
   constructor() {
-    const loginData = window.adminLoginData;
-    if (loginData) {
-      this._data = loginData;
-    }
+    this.state = accessState('adminLoginService');
   }
 
-  private _data: AdminUserData | null = null;
-
   get data(): AdminUserData | null {
-    return this._data;
+    return this.state.userData || null;
   }
 
   set data(value: AdminUserData | null) {
-    this._data = value;
-    if (isDevMode() && value) {
-      window.adminLoginData = value;
-    }
+    this.state.userData = value;
   }
 
   get dataOrError(): AdminUserData {
