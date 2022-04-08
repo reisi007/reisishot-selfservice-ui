@@ -4,13 +4,12 @@
   <ng-container *ngIf="items && credentials">
     <app-pending-signatures [credentials]="credentials"></app-pending-signatures>
     <h2 class="my-3 text-3xl ">Anmeldungen zu den Shootings</h2>
-    <div class="flex flex-wrap">
-      <app-waitlist-dashboard-item
-        *ngFor="let item of items "
-        [credentials]="credentials"
-        [item]="item"
-      ></app-waitlist-dashboard-item>
-    </div>
+    <app-waitlist-dashboard-item
+      *ngFor="let item of items "
+      [credentials]="credentials"
+      [item]="item"
+    ></app-waitlist-dashboard-item>
+
   </ng-container>
 
   <app-person-assess-arbitrary *ngIf="items && credentials" [auth]="credentials"></app-person-assess-arbitrary>
