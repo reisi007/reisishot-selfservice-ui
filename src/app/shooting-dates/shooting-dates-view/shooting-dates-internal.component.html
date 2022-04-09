@@ -6,9 +6,8 @@
       <div [ngClass]="{
     'bg-reisishot': cur.isFree(),
     'text-black bg-yellow-300': cur.isBusy(),
-     'bg-red-500': cur.isTaken(),
-    'bg-red-700':cur.isBlocked()
-
+    'bg-red-500': cur.isTaken(),
+    'bg-gray-500': cur.isBlocked()
     }" class="p-2 text-white"
       >
         <ng-container *ngTemplateOutlet='cellTemplate; context: {"cur": cur}'></ng-container>

@@ -41,8 +41,8 @@ export class CalendarWeekAvailability {
     return this._text;
   }
 
-  private static isFinalRun(event: Array<CalendarWeekAvailability>, idx: number) {
-    return idx > event.length;
+  private static isFinalRun(computedAvailabilities: Array<CalendarWeekAvailability>, idx: number) {
+    return idx > computedAvailabilities.length;
   }
 
   process(event: Array<CalendarWeekAvailability>, index: number): void;
@@ -94,20 +94,26 @@ export class CalendarWeekAvailability {
     this.markFreeWeeksBetweenShootingsAsBusy(event, idx);
   }
 
-  private markFreeWeeksBetweenShootingsAsBusy(event: Array<CalendarWeekAvailability>, idx: number) {
-    if (CalendarWeekAvailability.isFinalRun(event, idx) || !this.isFree()) {
+  private markFreeWeeksBetweenShootingsAsBusy(computedAvailabilities: Array<CalendarWeekAvailability>, idx: number) {
+    if (CalendarWeekAvailability.isFinalRun(computedAvailabilities, idx) || !(this.isFree() || this.isBusy())) {
       return;
     }
 
     const next = this._calendarWeek.next();
     const prev = this._calendarWeek.prev();
 
-    const shouldChangeToYellow = event
-      .filter(e => e._calendarWeek.equals(next) || e._calendarWeek.equals(prev))
-      .some(e => e._state === ShootingSlotState.TAKEN);
+    const prevAndNextWeek = computedAvailabilities.filter(e => e._calendarWeek.equals(next) || e._calendarWeek.equals(prev));
+    const markAsBlocked = prevAndNextWeek.every(e => e.state === ShootingSlotState.TAKEN);
 
-    if (shouldChangeToYellow) {
+    if (markAsBlocked) {
+      this._state = ShootingSlotState.BLOCKED;
+      return;
+    }
+
+    const markAsBusy = prevAndNextWeek.some(e => e._state === ShootingSlotState.TAKEN);
+    if (markAsBusy) {
       this._state = ShootingSlotState.BUSY;
     }
+
   }
 }

@@ -64,7 +64,6 @@ export class ShootingDatesViewComponent implements OnInit {
   }
 
   private prepareDate(values: Array<ShootingDateEntry>, displayedWeeks: number): Array<CalendarWeekAvailability> {
-
     const calculationOffset = 1;
     const startWeek = dayjs()
       .add(-calculationOffset, 'weeks');
