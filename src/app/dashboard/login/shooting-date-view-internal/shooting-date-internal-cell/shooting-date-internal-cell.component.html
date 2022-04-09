@@ -1,8 +1,8 @@
 <div class="flex">
   <span *ngIf="emoji.length > 0"
         class="inline-flex items-center p-1 text-left align-middle bg-white rounded-lg">{{emoji}}</span>&nbsp;
-  <span class="grow">
-  <app-shooting-date-public-cell [availability]="availability"></app-shooting-date-public-cell>
-  <div class="sm:inline-block">{{formattedText}}</div>
-    </span>
+  <span class="inline-flex grow justify-center items-center space-x-1">
+   <app-shooting-date-public-cell [availability]="availability"></app-shooting-date-public-cell>
+   <div class="sm:inline-block">{{formattedText}}</div>
+  </span>
 </div>
