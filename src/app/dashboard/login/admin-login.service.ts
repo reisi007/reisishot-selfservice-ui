@@ -1,6 +1,6 @@
 import {AdminUserData} from './admin-login/AdminUserData';
 import {Injectable} from '@angular/core';
-import {accessState} from '../AppState';
+import {accessState} from '../../commons/AppState';
 
 @Injectable()
 export class AdminLoginService {
