@@ -28,6 +28,10 @@ const routes: Routes = [{
       path: 'reviews',
       loadChildren: () => import('../dashboards/review-dashboard/review-dashboard.module').then(m => m.ReviewDashboardModule),
     },
+    {
+      path: 'statistics',
+      loadChildren: () => import('../dashboards/statistics-dashboard/statistics-dashboard.module').then(m => m.StatisticsDashboardModule),
+    },
   ],
 }];
 

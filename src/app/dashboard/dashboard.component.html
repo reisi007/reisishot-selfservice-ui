@@ -7,6 +7,9 @@
          [routerLink]="!isAdminLoggedIn? null: ['/dashboard','waitlist']"
          class="p-2 m-2 bg-gray-50 rounded-lg border border-black">Warteliste</a>
       <a [ngClass]="{'bg-gray-300 text-gray-700': !isAdminLoggedIn }"
+         [routerLink]="!isAdminLoggedIn? null: ['/dashboard','statistics']"
+         class="p-2 m-2 bg-gray-50 rounded-lg border border-black">Statistiken</a>
+      <a [ngClass]="{'bg-gray-300 text-gray-700': !isAdminLoggedIn }"
          [routerLink]="!isAdminLoggedIn? null: ['/dashboard','reviews']"
          class="p-2 m-2 bg-gray-50 rounded-lg border border-black">Bewertungen</a>
       <a [ngClass]="{'bg-gray-300 text-gray-700': !isAdminLoggedIn }"
