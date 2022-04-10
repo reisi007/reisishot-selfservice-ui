@@ -1,5 +1,9 @@
 <div class="block p-2">
-  <h3 class="my-3 text-2xl">{{item.title}}</h3>
+  <h3 class="my-3 text-2xl">{{item.title}}
+    <button (click)="showStatisticsDialog = true" class="py-1">Shooting erfassen</button>
+  </h3>
+  <app-add-shooting-statistic-modal (newShow)="showStatisticsDialog = $event" [show]="showStatisticsDialog"
+                                    [waitlistItem]="item"></app-add-shooting-statistic-modal>
   <div class="flex flex-wrap">
     <div *ngFor="let registration of item.registrations; let i = index"
          [ngClass]="{'bg-gray-100': registration.done_internal === '1'}"
@@ -48,3 +52,4 @@
     </div>
   </div>
 </div>
+
