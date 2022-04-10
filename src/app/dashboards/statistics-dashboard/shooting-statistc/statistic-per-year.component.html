@@ -1,0 +1,22 @@
+<form [formGroup]="formShooting" class="inline-flex p-2 space-x-4">
+  <span class="inline-flex items-center">
+    <input formControlName="showMinor" id="showMinor" name="showMinor" type="checkbox">
+    <label for="showMinor">&nbsp;&lt;18 anzeigen</label>
+  </span>
+  <span class="inline-flex items-center">
+    <input formControlName="showGroups" id="showGroups" name="showGroups" type="checkbox">
+    <label for="showGroups">&nbsp;Gruppen Shootings anzeigen</label>
+  </span>
+</form>
+<ng-container *ngFor="let chartData of chartData">
+  <h2 class="mb-2">{{chartData.title}}</h2>
+  <div class="relative portrait:h-[60vh] portrait:md:h-[30vh] landscape:h-[90vh] landscape:md:h-[40vh]">
+    <canvas [datasets]="chartData.dataSet"
+            [labels]="chartData.labels"
+            [legend]="chartData.chartLegend"
+            [options]="chartData.options"
+            [type]="chartData.chartType"
+            baseChart
+    ></canvas>
+  </div>
+</ng-container>

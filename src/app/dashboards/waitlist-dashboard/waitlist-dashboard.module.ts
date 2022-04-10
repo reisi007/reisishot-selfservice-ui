@@ -10,6 +10,9 @@ import {PersonAssessComponent} from './person-assess/person-assess.component';
 import {PersonAssessArbitraryComponent} from './person-assess-arbitrary/person-assess-arbitrary.component';
 import {LeaderboardByYearComponent} from './leaderboard-by-year/leaderboard-by-year.component';
 import {PendingSignaturesComponent} from './pending-signatures/pending-signatures.component';
+import {
+  AddShootingStatisticModalComponent,
+} from './waitlist-dashboard-item/add-shooting-statistic-modal/add-shooting-statistic-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,7 @@ import {PendingSignaturesComponent} from './pending-signatures/pending-signature
     PersonAssessArbitraryComponent,
     LeaderboardByYearComponent,
     PendingSignaturesComponent,
+    AddShootingStatisticModalComponent,
   ],
   imports: [
     CommonModule,

@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
-import {ChartDataset, ChartOptions, ChartType} from 'chart.js';
+import {ChartDataset, ChartOptions, ChartType, TooltipItem} from 'chart.js';
 import {ShootingStatisticsResponse} from '../../review-dashboard/api/Model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
 
 @Component({
-  selector: 'app-shooting-statistic',
-  templateUrl: './shooting-statistic.component.html',
-  styleUrls: ['./shooting-statistic.component.scss'],
+  selector: 'app-statistic-per-year',
+  templateUrl: './statistic-per-year.component.html',
+  styleUrls: ['./statistic-per-year.component.scss'],
 })
-export class ShootingStatisticComponent implements OnInit {
+export class StatisticPerYearComponent implements OnInit {
 
   private static colorOverrides: { [name: string]: string } = {
     'Pärchen Shooting': '#ff69b4',
@@ -22,7 +22,7 @@ export class ShootingStatisticComponent implements OnInit {
     'Hochzeit Shooting': '#d3d3d3',
   };
   formShooting: FormGroup;
-  chartData: ChartConfig<'bar'> | undefined;
+  chartData: Array<ChartConfig<'bar'>> = [];
 
   constructor(private apiService: ShootingStatisticApiService, private adminLoginService: AdminLoginService, formBuilder: FormBuilder) {
     this.formShooting = formBuilder.group({
@@ -78,10 +78,10 @@ export class ShootingStatisticComponent implements OnInit {
           }),
           label: type,
           stack: 'a',
-          backgroundColor: ShootingStatisticComponent.colorOverrides[type],
+          backgroundColor: StatisticPerYearComponent.colorOverrides[type],
           tooltip: {
             callbacks: {
-              label: (context: Context<number>) => {
+              label: (context: TypedTooltipItem<'bar', number>) => {
                 return ` ${context.dataset.label} - ${context.label} (${context.raw} / ${totalPerYear[context.label]})`;
               },
             },
@@ -99,10 +99,10 @@ export class ShootingStatisticComponent implements OnInit {
           }),
           label: type,
           stack: 'a',
-          backgroundColor: ShootingStatisticComponent.colorOverrides[type],
+          backgroundColor: StatisticPerYearComponent.colorOverrides[type],
           tooltip: {
             callbacks: {
-              label: (context: Context<number>) => {
+              label: (context: TypedTooltipItem<'bar', number>) => {
                 return ` ${context.dataset.label} - ${context.label} (${context.raw.toFixed(2)}%)`;
               },
             },
@@ -116,36 +116,43 @@ export class ShootingStatisticComponent implements OnInit {
       responsive: true,
       maintainAspectRatio: false,
     };
-    this.chartData = {
-      labels: allYears,
-      absoluteDataSet: computeAbsoluteDataset(),
-      relativeDataSet: computeRelativeDataset(),
-      chartType: 'bar',
-      chartLegend: true,
-      absoluteOptions: sharedOptions,
-      relativeOptions: {
-        ...sharedOptions,
-        scales: {
-          y: {
-            ticks: {
-              callback: (value) => `${value}%`,
+    this.chartData = [
+      {
+        title: 'Relativ',
+        labels: allYears,
+        dataSet: computeRelativeDataset(),
+        chartType: 'bar',
+        chartLegend: true,
+        options: {
+          ...sharedOptions,
+          scales: {
+            y: {
+              ticks: {
+                callback: (value) => `${value}%`,
+              },
             },
           },
         },
+      }, {
+        title: 'Absolut',
+        labels: allYears,
+        dataSet: computeAbsoluteDataset(),
+        chartType: 'bar',
+        chartLegend: true,
+        options: sharedOptions,
       },
-    };
+    ];
   };
 
 }
 
 type ChartConfig<Type extends ChartType> = {
-  absoluteOptions: ChartOptions<Type>,
-  relativeOptions: ChartOptions<Type>,
+  title: string,
+  options: ChartOptions<Type>,
   labels: string[],
   chartType: Type,
   chartLegend: boolean
-  absoluteDataSet: ChartDataset<Type, number[]>[]
-  relativeDataSet: ChartDataset<Type, number[]>[]
+  dataSet: ChartDataset<Type, number[]>[]
 }
 
-type Context<T> = { label: string; formattedValue: string, raw: T, dataset: { label: string } }
+type TypedTooltipItem<Type extends ChartType, RAW> = TooltipItem<Type> & { raw: RAW }

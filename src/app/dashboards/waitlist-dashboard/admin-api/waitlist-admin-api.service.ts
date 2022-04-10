@@ -51,14 +51,14 @@ export class WaitlistAdminApiService extends ApiService {
                );
   }
 
-  public ignoreWaitlistItem(user: string, pwd: string, record: AdminWaitlistRecord): Observable<any> {
+  public ignoreWaitlistItem(user: string, pwd: string, record: AdminWaitlistRecord): Observable<unknown> {
     return this.http.post(ApiService.buildUrl('api', 'waitlist-admin-ignore_post.php'),
       {item: record.item_id, person: record.person_id}, {
         headers: ApiService.buildHeaders(user, pwd),
       });
   }
 
-  public removeWaitlistItem(user: string, pwd: string, record: AdminWaitlistRecord): Observable<any> {
+  public removeWaitlistItem(user: string, pwd: string, record: AdminWaitlistRecord): Observable<unknown> {
     return this.http.post(ApiService.buildUrl('api', 'waitlist-admin-delete_post.php'),
       {item: record.item_id, person: record.person_id}, {
         headers: ApiService.buildHeaders(user, pwd),
@@ -84,6 +84,14 @@ export class WaitlistAdminApiService extends ApiService {
   public loadPendingSignatures(user: string, pwd: string): Observable<Array<PendingSignaturInformation>> {
     return this.http.get<Array<PendingSignaturInformation>>(
       ApiService.buildUrl('api', 'waitlist-admin-pending_signatures_get.php'),
+      {headers: ApiService.buildHeaders(user, pwd)},
+    );
+  }
+
+  public createNewShootingStatisticsEntry(user: string, pwd: string, itemId: number, isMinor: boolean, isGroup: boolean): Observable<unknown> {
+    return this.http.post(
+      ApiService.buildUrl('api', 'shooting_statistics_post.php'),
+      {itemId, isMinor, isGroup},
       {headers: ApiService.buildHeaders(user, pwd)},
     );
   }

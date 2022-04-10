@@ -11,6 +11,7 @@ import {calculateAge} from '../../../commons/datetime.formatter';
 })
 export class WaitlistDashboardItemComponent {
   internalUserPwd!: { user: string; pwd: string };
+  showStatisticsDialog = false;
   private data!: WaitlistItemWithRegistrations;
 
   constructor(
