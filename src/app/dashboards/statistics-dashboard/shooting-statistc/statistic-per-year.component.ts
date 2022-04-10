@@ -14,7 +14,7 @@ export class StatisticPerYearComponent implements OnInit {
 
   // The order here is used for sorting as well :)
   private static colorOverrides: { [name: string]: string } = {
-    'Porträt Shooting': '#006ad1',
+    'Porträt Shooting': '#0031d1',
     'Tanz / Yoga Shooting': '#1e90ff',
     'Sport Shooting': '#6bb6ff',
     'Boudoir Shooting': '#daa520',
