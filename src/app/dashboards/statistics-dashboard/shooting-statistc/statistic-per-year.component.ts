@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
-import {ChartData, ChartDataset, ChartOptions, ChartType, LegendItem, TooltipItem} from 'chart.js';
+import {ChartDataset, ChartOptions, ChartType, TooltipItem} from 'chart.js';
 import {ShootingStatisticsResponse} from '../../review-dashboard/api/Model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
@@ -140,17 +140,19 @@ export class StatisticPerYearComponent implements OnInit {
 
       return [
         {
-          label: 'Ziel Aufteilung',
+          label: 'Soll',
           data: Object.values(StatisticPerYearComponent.overrides).map(e => e.expectedPercentage),
           backgroundColor: backgroundColor,
           hoverBackgroundColor: hoverBackgroundColor,
           borderColor: hoverBackgroundColor,
+          hoverBorderColor: backgroundColor,
         }, {
           label: maxYearAsString,
           data: Object.keys(StatisticPerYearComponent.overrides).map(s => yearData[s] / totalPerYear[maxYear] * 100),
           backgroundColor: backgroundColor,
           hoverBackgroundColor: hoverBackgroundColor,
           borderColor: hoverBackgroundColor,
+          hoverBorderColor: backgroundColor,
           weight: 2,
         },
       ];
@@ -159,22 +161,11 @@ export class StatisticPerYearComponent implements OnInit {
     const sharedOptions: ChartOptions = {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            sort(a: LegendItem, b: LegendItem, data: ChartData): number {
-              const sa = sortByShootingHelper[a.text] ?? 0;
-              const sb = sortByShootingHelper[b.text] ?? 0;
-              return sa - sb;
-            },
-          },
-        },
-      },
     };
 
     this.chartData = [
       {
-        title: 'Aufteilung - Soll / Ist',
+        title: 'Soll / Ist Statistik',
         labels: Object.keys(StatisticPerYearComponent.overrides),
         dataSet: computeSollIstDataset(),
         chartLegend: true,
