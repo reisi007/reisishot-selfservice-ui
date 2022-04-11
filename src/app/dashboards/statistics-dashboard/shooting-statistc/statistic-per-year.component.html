@@ -8,15 +8,17 @@
     <label for="showGroups">&nbsp;Gruppen Shootings anzeigen</label>
   </span>
 </form>
-<ng-container *ngFor="let chartData of chartData">
-  <h2 class="mb-2">{{chartData.title}}</h2>
-  <div class="relative portrait:h-[60vh] portrait:md:h-[30vh] landscape:h-[90vh] landscape:lg:h-[60vh]">
-    <canvas [datasets]="chartData.dataSet"
-            [labels]="chartData.labels"
-            [legend]="chartData.chartLegend"
-            [options]="chartData.options"
-            [type]="chartData.chartType"
-            baseChart
-    ></canvas>
+<div class="flex flex-col pt-4 space-y-8">
+  <div *ngFor="let chartData of chartData">
+    <h2 class="mb-2">{{chartData.title}}</h2>
+    <div class="relative portrait:h-[60vh] portrait:md:h-[30vh] landscape:h-[90vh] landscape:lg:h-[60vh]">
+      <canvas [datasets]="chartData.dataSet"
+              [labels]="chartData.labels"
+              [legend]="chartData.chartLegend"
+              [options]="chartData.options"
+              [type]="chartData.chartType"
+              baseChart
+      ></canvas>
+    </div>
   </div>
-</ng-container>
+</div>

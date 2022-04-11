@@ -13,17 +13,17 @@ import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
 export class StatisticPerYearComponent implements OnInit {
 
   // The order here is used for sorting as well :)
-  private static colorOverrides: { [name: string]: string } = {
-    'Porträt Shooting': '#0031d1',
-    'Tanz / Yoga Shooting': '#1e90ff',
-    'Sport Shooting': '#6bb6ff',
-    'Boudoir Shooting': '#daa520',
-    'Pärchen Shooting': '#ff69b4',
-    'Hochzeit Shooting': '#d3d3d3',
-    'Haustier Shooting': '#ff6200',
+  public static readonly overrides: { [name: string]: { color: string, expectedPercentage: number } } = {
+    'Porträt Shooting': {color: '#0031d1', expectedPercentage: 30},
+    'Tanz / Yoga Shooting': {color: '#1e90ff', expectedPercentage: 15},
+    'Sport Shooting': {color: '#6bb6ff', expectedPercentage: 5},
+    'Boudoir Shooting': {color: '#daa520', expectedPercentage: 25},
+    'Pärchen Shooting': {color: '#ff69b4', expectedPercentage: 15},
+    'Hochzeit Shooting': {color: '#d3d3d3', expectedPercentage: 0},
+    'Haustier Shooting': {color: '#ff6200', expectedPercentage: 10},
   };
   formShooting: FormGroup;
-  chartData: Array<ChartConfig<'bar'>> = [];
+  chartData: Array<ChartConfig<ChartType>> = [];
 
   constructor(private apiService: ShootingStatisticApiService, private adminLoginService: AdminLoginService, formBuilder: FormBuilder) {
     this.formShooting = formBuilder.group({
@@ -53,6 +53,7 @@ export class StatisticPerYearComponent implements OnInit {
 
   private mapDataForChart(data: ShootingStatisticsResponse) {
     const allYears = Object.keys(data);
+    const yearsAsInt = allYears.map(y => parseInt(y, 10));
 
     function computeTotalPerYear() {
       const o: { [year: string]: number } = {};
@@ -63,7 +64,7 @@ export class StatisticPerYearComponent implements OnInit {
     }
 
     const sortByShootingHelper: { [shooting: string]: number } = {};
-    Object.keys(StatisticPerYearComponent.colorOverrides)
+    Object.keys(StatisticPerYearComponent.overrides)
           .forEach((shootingName, idx) => {
             sortByShootingHelper[shootingName] = idx;
           });
@@ -85,7 +86,7 @@ export class StatisticPerYearComponent implements OnInit {
 
     function computeAbsoluteDataset(): ChartDataset<'bar', number[]>[] {
       return allShootingTypes.map(type => {
-        const color = StatisticPerYearComponent.colorOverrides[type];
+        const color = StatisticPerYearComponent.overrides[type].color;
         return {
           data: allYears.map(year => {
             const value = data[year][type];
@@ -108,7 +109,7 @@ export class StatisticPerYearComponent implements OnInit {
 
     function computeRelativeDataset(): ChartDataset<'bar', number[]>[] {
       return allShootingTypes.map(type => {
-        const color = StatisticPerYearComponent.colorOverrides[type];
+        const color = StatisticPerYearComponent.overrides[type].color;
         return {
           data: allYears.map(year => {
             const value = data[year][type];
@@ -129,7 +130,33 @@ export class StatisticPerYearComponent implements OnInit {
       });
     }
 
-    const sharedOptions: ChartOptions<'bar'> = {
+    function computeSollIstDataset(): ChartDataset<'doughnut', number[]>[] {
+      const backgroundColor = Object.values(StatisticPerYearComponent.overrides).map(e => e.color);
+      const hoverBackgroundColor = Object.values(StatisticPerYearComponent.overrides).map(e => shadeColor(e.color, 35));
+
+      const maxYear = Math.max(...yearsAsInt);
+      const maxYearAsString = String(maxYear);
+      const yearData = data[maxYearAsString];
+
+      return [
+        {
+          label: 'Ziel Aufteilung',
+          data: Object.values(StatisticPerYearComponent.overrides).map(e => e.expectedPercentage),
+          backgroundColor: backgroundColor,
+          hoverBackgroundColor: hoverBackgroundColor,
+          borderColor: hoverBackgroundColor,
+        }, {
+          label: maxYearAsString,
+          data: Object.keys(StatisticPerYearComponent.overrides).map(s => yearData[s] / totalPerYear[maxYear] * 100),
+          backgroundColor: backgroundColor,
+          hoverBackgroundColor: hoverBackgroundColor,
+          borderColor: hoverBackgroundColor,
+          weight: 2,
+        },
+      ];
+    }
+
+    const sharedOptions: ChartOptions = {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
@@ -144,7 +171,25 @@ export class StatisticPerYearComponent implements OnInit {
         },
       },
     };
+
     this.chartData = [
+      {
+        title: 'Aufteilung - Soll / Ist',
+        labels: Object.keys(StatisticPerYearComponent.overrides),
+        dataSet: computeSollIstDataset(),
+        chartLegend: true,
+        chartType: 'doughnut',
+        options: {
+          ...sharedOptions,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (item) => ` ${item.dataset.label} - ${item.label}: ${(item as TypedTooltipItem<'doughnut', number>).raw.toFixed(2)}%`,
+              },
+            },
+          },
+        },
+      },
       {
         title: 'Relativ',
         labels: allYears,
@@ -155,13 +200,15 @@ export class StatisticPerYearComponent implements OnInit {
           ...sharedOptions,
           scales: {
             y: {
+              max: 100,
               ticks: {
                 callback: (value) => `${value}%`,
               },
             },
           },
         },
-      }, {
+      },
+      {
         title: 'Absolut',
         labels: allYears,
         dataSet: computeAbsoluteDataset(),
