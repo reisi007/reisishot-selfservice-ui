@@ -4,6 +4,7 @@ import {StatisticPerYearComponent} from './statistic-per-year.component';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
 import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
 import {ReactiveFormsModule} from '@angular/forms';
+import {OVERRIDES} from '../StatisticUtils';
 
 describe('ShootingStatistcComponent', () => {
   let component: StatisticPerYearComponent;
@@ -29,7 +30,7 @@ describe('ShootingStatistcComponent', () => {
   });
 
   it(('sum of expectedPercentages should be 100'), () => {
-    const sum = Object.values(StatisticPerYearComponent.overrides)
+    const sum = Object.values(OVERRIDES)
                       .map(e => e.expectedPercentage)
                       .filter(e => e > 0)
                       .reduce((a, b) => a + b);

@@ -1,31 +1,27 @@
 import {Component, OnInit} from '@angular/core';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
-import {ChartDataset, ChartOptions, ChartType, TooltipItem} from 'chart.js';
-import {ShootingStatisticsResponse} from '../../review-dashboard/api/Model';
+import {ChartDataset, ChartType} from 'chart.js';
+import {ShootingStatisticsResponsePerYear} from '../api/Model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
+import {ChartConfig, OVERRIDES, shadeColor, SHARED_OPTIONS, TypedTooltipItem} from '../StatisticUtils';
 
 @Component({
-  selector: 'app-statistic-per-year',
-  templateUrl: './statistic-per-year.component.html',
-  styleUrls: ['./statistic-per-year.component.scss'],
+  selector: 'app-shooting-per-year-statistc',
+  templateUrl: './shooting-per-year-statistc.component.html',
+  styleUrls: ['./shooting-per-year-statistc.component.scss'],
 })
 export class StatisticPerYearComponent implements OnInit {
 
-  // The order here is used for sorting as well :)
-  public static readonly overrides: { [name: string]: { color: string, expectedPercentage: number } } = {
-    'Porträt Shooting': {color: '#0031d1', expectedPercentage: 30},
-    'Tanz / Yoga Shooting': {color: '#1e90ff', expectedPercentage: 15},
-    'Sport Shooting': {color: '#6bb6ff', expectedPercentage: 5},
-    'Boudoir Shooting': {color: '#daa520', expectedPercentage: 25},
-    'Pärchen Shooting': {color: '#ff69b4', expectedPercentage: 15},
-    'Hochzeit Shooting': {color: '#d3d3d3', expectedPercentage: 0},
-    'Haustier Shooting': {color: '#ff6200', expectedPercentage: 10},
-  };
+
   formShooting: FormGroup;
   chartData: Array<ChartConfig<ChartType>> = [];
 
-  constructor(private apiService: ShootingStatisticApiService, private adminLoginService: AdminLoginService, formBuilder: FormBuilder) {
+  constructor(
+    private apiService: ShootingStatisticApiService,
+    private adminLoginService: AdminLoginService,
+    formBuilder: FormBuilder,
+  ) {
     this.formShooting = formBuilder.group({
       'showMinor': formBuilder.control(true),
       'showGroups': formBuilder.control(true),
@@ -45,13 +41,13 @@ export class StatisticPerYearComponent implements OnInit {
       return;
     }
 
-    this.apiService.getShootingStatistics(data, showMinor, showGroups)
+    this.apiService.getShootingStatisticsPerYear(data, showMinor, showGroups)
         .subscribe({
           next: data => this.mapDataForChart(data),
         });
   }
 
-  private mapDataForChart(data: ShootingStatisticsResponse) {
+  private mapDataForChart(data: ShootingStatisticsResponsePerYear) {
     const allYears = Object.keys(data);
     const yearsAsInt = allYears.map(y => parseInt(y, 10));
 
@@ -64,7 +60,7 @@ export class StatisticPerYearComponent implements OnInit {
     }
 
     const sortByShootingHelper: { [shooting: string]: number } = {};
-    Object.keys(StatisticPerYearComponent.overrides)
+    Object.keys(OVERRIDES)
           .forEach((shootingName, idx) => {
             sortByShootingHelper[shootingName] = idx;
           });
@@ -86,7 +82,7 @@ export class StatisticPerYearComponent implements OnInit {
 
     function computeAbsoluteDataset(): ChartDataset<'bar', number[]>[] {
       return allShootingTypes.map(type => {
-        const color = StatisticPerYearComponent.overrides[type].color;
+        const color = OVERRIDES[type].color;
         return {
           data: allYears.map(year => {
             const value = data[year][type];
@@ -109,7 +105,7 @@ export class StatisticPerYearComponent implements OnInit {
 
     function computeRelativeDataset(): ChartDataset<'bar', number[]>[] {
       return allShootingTypes.map(type => {
-        const color = StatisticPerYearComponent.overrides[type].color;
+        const color = OVERRIDES[type].color;
         return {
           data: allYears.map(year => {
             const value = data[year][type];
@@ -131,8 +127,8 @@ export class StatisticPerYearComponent implements OnInit {
     }
 
     function computeSollIstDataset(): ChartDataset<'doughnut', number[]>[] {
-      const backgroundColor = Object.values(StatisticPerYearComponent.overrides).map(e => e.color);
-      const hoverBackgroundColor = Object.values(StatisticPerYearComponent.overrides).map(e => shadeColor(e.color, 35));
+      const backgroundColor = Object.values(OVERRIDES).map(e => e.color);
+      const hoverBackgroundColor = Object.values(OVERRIDES).map(e => shadeColor(e.color, 35));
 
       const maxYear = Math.max(...yearsAsInt);
       const maxYearAsString = String(maxYear);
@@ -141,14 +137,14 @@ export class StatisticPerYearComponent implements OnInit {
       return [
         {
           label: 'Soll',
-          data: Object.values(StatisticPerYearComponent.overrides).map(e => e.expectedPercentage),
+          data: Object.values(OVERRIDES).map(e => e.expectedPercentage),
           backgroundColor: backgroundColor,
           hoverBackgroundColor: hoverBackgroundColor,
           borderColor: hoverBackgroundColor,
           hoverBorderColor: backgroundColor,
         }, {
           label: maxYearAsString,
-          data: Object.keys(StatisticPerYearComponent.overrides).map(s => yearData[s] / totalPerYear[maxYear] * 100),
+          data: Object.keys(OVERRIDES).map(s => yearData[s] / totalPerYear[maxYear] * 100),
           backgroundColor: backgroundColor,
           hoverBackgroundColor: hoverBackgroundColor,
           borderColor: hoverBackgroundColor,
@@ -158,20 +154,15 @@ export class StatisticPerYearComponent implements OnInit {
       ];
     }
 
-    const sharedOptions: ChartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-    };
-
     this.chartData = [
       {
         title: 'Soll / Ist Statistik',
-        labels: Object.keys(StatisticPerYearComponent.overrides),
+        labels: Object.keys(OVERRIDES),
         dataSet: computeSollIstDataset(),
         chartLegend: true,
         chartType: 'doughnut',
         options: {
-          ...sharedOptions,
+          ...SHARED_OPTIONS,
           plugins: {
             tooltip: {
               callbacks: {
@@ -188,7 +179,7 @@ export class StatisticPerYearComponent implements OnInit {
         chartType: 'bar',
         chartLegend: true,
         options: {
-          ...sharedOptions,
+          ...SHARED_OPTIONS,
           scales: {
             y: {
               max: 100,
@@ -205,42 +196,8 @@ export class StatisticPerYearComponent implements OnInit {
         dataSet: computeAbsoluteDataset(),
         chartType: 'bar',
         chartLegend: true,
-        options: sharedOptions,
+        options: SHARED_OPTIONS,
       },
     ];
   };
-
-}
-
-type ChartConfig<Type extends ChartType> = {
-  title: string,
-  options: ChartOptions<Type>,
-  labels: string[],
-  chartType: Type,
-  chartLegend: boolean
-  dataSet: ChartDataset<Type, number[]>[]
-}
-
-type TypedTooltipItem<Type extends ChartType, RAW> = TooltipItem<Type> & { raw: RAW }
-
-// https://stackoverflow.com/a/13532993/1870799
-function shadeColor(color: string, percent: number) {
-
-  let r = parseInt(color.substring(1, 3), 16);
-  let g = parseInt(color.substring(3, 5), 16);
-  let b = parseInt(color.substring(5, 7), 16);
-
-  r = Math.round(r * (100 + percent) / 100);
-  g = Math.round(g * (100 + percent) / 100);
-  b = Math.round(b * (100 + percent) / 100);
-
-  r = (r < 255) ? r : 255;
-  g = (g < 255) ? g : 255;
-  b = (b < 255) ? b : 255;
-
-  const RR = ((r.toString(16).length == 1) ? '0' + r.toString(16) : r.toString(16));
-  const GG = ((g.toString(16).length == 1) ? '0' + g.toString(16) : g.toString(16));
-  const BB = ((b.toString(16).length == 1) ? '0' + b.toString(16) : b.toString(16));
-
-  return '#' + RR + GG + BB;
 }
