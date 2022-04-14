@@ -1,50 +1,35 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
 import {ChartDataset, ChartType} from 'chart.js';
 import {ShootingStatisticsResponsePerYear} from '../api/Model';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
 import {ChartConfig, OVERRIDES, shadeColor, SHARED_OPTIONS, TypedTooltipItem} from '../StatisticUtils';
+import {ShootingFormValue} from '../statistics-dashboard.component';
 
 @Component({
   selector: 'app-shooting-per-year-statistc',
   templateUrl: './shooting-per-year-statistc.component.html',
   styleUrls: ['./shooting-per-year-statistc.component.scss'],
 })
-export class StatisticPerYearComponent implements OnInit {
+export class StatisticPerYearComponent {
 
-
-  formShooting: FormGroup;
-  chartData: Array<ChartConfig<ChartType>> = [];
-
-  constructor(
-    private apiService: ShootingStatisticApiService,
-    private adminLoginService: AdminLoginService,
-    formBuilder: FormBuilder,
-  ) {
-    this.formShooting = formBuilder.group({
-      'showMinor': formBuilder.control(true),
-      'showGroups': formBuilder.control(true),
-    });
-
-    this.formShooting.valueChanges.subscribe({next: value => this.loadShootingStatistics(value)});
-  }
-
-  ngOnInit(): void {
-    this.loadShootingStatistics(this.formShooting.value);
-  }
-
-  private loadShootingStatistics(value: { showMinor: boolean, showGroups: boolean }) {
+  @Input()
+  set querySettings(value: ShootingFormValue) {
     const {showMinor, showGroups} = value;
-    const data = this.adminLoginService.data;
-    if (!data) {
-      return;
-    }
+    const data = this.adminLoginService.dataOrError;
 
     this.apiService.getShootingStatisticsPerYear(data, showMinor, showGroups)
         .subscribe({
           next: data => this.mapDataForChart(data),
         });
+  }
+
+  chartData: Array<ChartConfig<ChartType>> = [];
+
+  constructor(
+    private apiService: ShootingStatisticApiService,
+    private adminLoginService: AdminLoginService,
+  ) {
   }
 
   private mapDataForChart(data: ShootingStatisticsResponsePerYear) {

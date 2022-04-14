@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-statistics-dashboard',
@@ -7,7 +8,18 @@ import {Component} from '@angular/core';
 })
 export class StatisticsDashboardComponent {
 
-  constructor() {
+  formShooting: FormGroup;
+
+  constructor(formBuilder: FormBuilder) {
+    this.formShooting = formBuilder.group({
+      'showMinor': formBuilder.control(true),
+      'showGroups': formBuilder.control(true),
+    });
   }
 
+  get shootingFormValue(): ShootingFormValue {
+    return this.formShooting.value;
+  }
 }
+
+export type ShootingFormValue = { showMinor: boolean, showGroups: boolean }
