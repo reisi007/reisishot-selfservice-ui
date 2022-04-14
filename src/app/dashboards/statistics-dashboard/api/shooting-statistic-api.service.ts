@@ -12,7 +12,7 @@ export class ShootingStatisticApiService extends ApiService {
     super();
   }
 
-  public getShootingStatisticsPerYear(adminData: AdminUserData, showMinors: boolean, showGroups: boolean): Observable<ShootingStatisticsResponsePerYear> {
+  private static buildParams(showMinors: boolean, showGroups: boolean) {
     const urlParam = new URLSearchParams();
     if (!showMinors) {
       urlParam.set('showMinors', 'false');
@@ -20,18 +20,24 @@ export class ShootingStatisticApiService extends ApiService {
     if (!showGroups) {
       urlParam.set('showGroups', 'false');
     }
+    return urlParam;
+  }
+
+  public getShootingStatisticsPerYear(adminData: AdminUserData, showMinors: boolean, showGroups: boolean): Observable<ShootingStatisticsResponsePerYear> {
+    const urlParam = ShootingStatisticApiService.buildParams(showMinors, showGroups);
 
     const {user, pwd} = adminData;
     return this.http.get<ShootingStatisticsResponsePerYear>(
-      ApiService.buildUrl('api', 'shooting_statistics_get.php?' + urlParam.toString()), {
+      ApiService.buildUrl('api', `shooting_statistics_get.php?${urlParam.toString()}`), {
         headers: ApiService.buildHeaders(user, pwd),
       },
     );
   }
 
-  public getShootingStatisticsPerMonth(adminData: AdminUserData): Observable<ShootingStatisticsResponsePerMonth> {
+  public getShootingStatisticsPerMonth(adminData: AdminUserData, showMinors: boolean, showGroups: boolean): Observable<ShootingStatisticsResponsePerMonth> {
+    const urlParam = ShootingStatisticApiService.buildParams(showMinors, showGroups);
     return this.http.get<ShootingStatisticsResponsePerMonth>(
-      ApiService.buildUrl('api', 'shooting_statistics_month_get.php'),
+      ApiService.buildUrl('api', `shooting_statistics_month_get.php?${urlParam.toString()}`),
       {headers: ApiService.buildHeaders(adminData.user, adminData.pwd)},
     );
   }

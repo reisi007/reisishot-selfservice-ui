@@ -1,5 +1,15 @@
 <div class="py-6 text-center">
   <h1 class="mb-2">Shooting Statistik</h1>
-  <app-shooting-per-year-statistc></app-shooting-per-year-statistc>
-  <app-shooting-per-month-statistic></app-shooting-per-month-statistic>
+  <form [formGroup]="formShooting" class="inline-flex p-2 space-x-4">
+  <span class="inline-flex items-center">
+    <input formControlName="showMinor" id="showMinor" name="showMinor" type="checkbox">
+    <label for="showMinor">&nbsp;&lt;18 anzeigen</label>
+  </span>
+    <span class="inline-flex items-center">
+    <input formControlName="showGroups" id="showGroups" name="showGroups" type="checkbox">
+    <label for="showGroups">&nbsp;Gruppen Shootings anzeigen</label>
+  </span>
+  </form>
+  <app-shooting-per-year-statistc [querySettings]="shootingFormValue"></app-shooting-per-year-statistc>
+  <app-shooting-per-month-statistic [querySettings]="shootingFormValue"></app-shooting-per-month-statistic>
 </div>
