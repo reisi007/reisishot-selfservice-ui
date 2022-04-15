@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ContractApiService} from '../../contract/api/contract-api.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
@@ -13,10 +13,10 @@ import {AdminLoginService} from '../../dashboard/login/admin-login.service';
   templateUrl: './contract-dashboard.component.html',
   styleUrls: ['./contract-dashboard.component.scss'],
 })
-export class ContractDashboardComponent implements OnInit {
+export class ContractDashboardComponent implements OnInit, AfterViewInit {
   emailForm!: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
-  formSentState = {error: '', completed: false, sent: false};
+  formSentState!: { error: string, completed: boolean, sent: boolean };
   dbPersons!: Array<Person>;
 
   constructor(
@@ -25,6 +25,20 @@ export class ContractDashboardComponent implements OnInit {
     private router: Router,
     private adminLoginService: AdminLoginService,
   ) {
+    this.emailForm = formBuilder.group({
+      persons: formBuilder.array([this.createPerson()]),
+      contractType: formBuilder.control('', [Validators.required]),
+      text: formBuilder.control('', [Validators.required]),
+      dueDate: formBuilder.control('', [Validators.required, afterNow]),
+      baseUrl: formBuilder.control(window.location.origin, [Validators.required]),
+    });
+    this.reset();
+  }
+
+  reset() {
+    this.formSentState = {error: '', completed: false, sent: false};
+    // Dropdown does not look correct otherwise
+    this.emailForm.reset({contractType: ''});
   }
 
   get personArray(): FormArray {
@@ -47,23 +61,17 @@ export class ContractDashboardComponent implements OnInit {
     return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
   }
 
-  ngOnInit(): void {
-    this.emailForm = this.formBuilder.group({
-      persons: this.formBuilder.array([this.createPerson()]),
-      contractType: this.formBuilder.control('', [Validators.required]),
-      text: this.formBuilder.control('', [Validators.required]),
-      dueDate: this.formBuilder.control('', [Validators.required, afterNow]),
-      baseUrl: this.formBuilder.control(window.location.origin, [Validators.required]),
-    });
+  ngOnInit() {
+    this.loadPersonsFromDb();
+  }
 
+  ngAfterViewInit(): void {
     const person = history.state.person as Person | null;
 
     if (person) {
       this.personArray.removeAt(0);
       this.personArray.insert(0, this.createPerson(person));
     }
-
-    this.loadPersonsFromDb();
   }
 
   addPerson() {
