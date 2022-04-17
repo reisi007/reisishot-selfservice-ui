@@ -24,9 +24,14 @@ export class ShootingDatesViewComponent implements OnInit {
   }
 
   @Input()
-  set weeks(weeks: number | undefined) {
+  set weeks(weeks: number | string | undefined) {
     if (weeks) {
-      this._weeks = weeks;
+      if (typeof weeks === 'number') {
+        this._weeks = weeks;
+      }
+      else {
+        this._weeks = parseInt(weeks, 10);
+      }
     }
     this.updateShootingDates();
   }

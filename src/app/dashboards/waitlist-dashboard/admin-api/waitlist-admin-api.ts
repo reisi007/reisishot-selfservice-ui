@@ -5,7 +5,7 @@ export interface WaitlistItemWithRegistrations extends WaitlistItem {
 }
 
 export interface AdminWaitlistRecord extends WaitlistRecord, WaitlistPerson {
-  done_internal: 0 | 1;
+  done_internal: '0' | '1';
   points: number;
   person_id: number;
 }
