@@ -48,13 +48,7 @@ export class WaitlistItemComponent implements OnInit {
   }
 
   get max_waiting(): number | null {
-    const val = this.item?.max_waiting;
-    if (val == null) {
-      return null;
-    }
-    else {
-      return parseInt(val, 10);
-    }
+    return this.item?.max_waiting;
   }
 
   get registrationInfo(): WaitlistRecord {
@@ -69,14 +63,14 @@ export class WaitlistItemComponent implements OnInit {
     if (this.user) {
       this.apiService.registerForShooting(this.user, this.registrationInfo).subscribe(() => {
         this.tracker.trackEvent(EVENT_CATEGORY, 'register', this.item.short);
-        this.item.registered = '1';
+        this.item.registered = 1;
       });
     }
   }
 
   unregister(): void {
     if (this.user) {
-      this.apiService.deleteRegistration(this.user, this.item.id).subscribe(() => (this.item.registered = '0'));
+      this.apiService.deleteRegistration(this.user, this.item.id).subscribe(() => (this.item.registered = 0));
     }
   }
 

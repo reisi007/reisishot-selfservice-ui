@@ -94,7 +94,7 @@ export class DisplayContractComponent implements OnInit {
         if (contractData === null) {
           return false;
         }
-        return e.email === contractData.email && e.signed === '1';
+        return e.email === contractData.email && e.signed === 1;
       }).reduce((a, b) => a || b);
     });
   }
@@ -105,7 +105,7 @@ export class DisplayContractComponent implements OnInit {
 
   private fetchContractStatus() {
     this.apiService.checkContractValidity(this.email, this.accessKey).subscribe(data => {
-      this.contractIsValid = data.result.toLowerCase() === '1';
+      this.contractIsValid = data.result === 1;
     });
   }
 }

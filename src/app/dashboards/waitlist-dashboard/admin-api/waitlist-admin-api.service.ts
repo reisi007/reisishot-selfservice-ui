@@ -3,7 +3,6 @@ import {ApiService} from '../../../commons/ApiService';
 import {Observable} from 'rxjs';
 import {AdminWaitlistRecord, LeaderboardEntry, PendingSignaturInformation, WaitlistAdminData} from './waitlist-admin-api';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
 import {WaitlistPerson} from '../../../waitlist/api/waitlist-api';
 
 @Injectable({
@@ -19,35 +18,6 @@ export class WaitlistAdminApiService extends ApiService {
                .get<WaitlistAdminData>(
                  ApiService.buildUrl('api', 'waitlist-admin_get.php'),
                  {headers: ApiService.buildHeaders(user, pwd)},
-               )
-               .pipe(
-                 map(wad => {
-                   wad.registrations.forEach(i => {
-                     i.registrations.forEach(registration => {
-                         // noinspection SuspiciousTypeOfGuard
-                         if (typeof registration.points === 'string') {
-                           registration.points = parseInt(registration.points, 10);
-                         }
-                         // noinspection SuspiciousTypeOfGuard
-                         if (typeof registration.person_id === 'string') {
-                           registration.person_id = parseInt(registration.person_id, 10);
-                         }
-                         // noinspection SuspiciousTypeOfGuard
-                         if (typeof registration.item_id === 'string') {
-                           registration.item_id = parseInt(registration.item_id, 10);
-                         }
-                       },
-                     );
-                   });
-
-                   wad.leaderboard.forEach(e => {
-                     // noinspection SuspiciousTypeOfGuard
-                     if (typeof e.points === 'string') {
-                       e.points = parseInt(e.points, 10);
-                     }
-                   });
-                   return wad;
-                 }),
                );
   }
 
