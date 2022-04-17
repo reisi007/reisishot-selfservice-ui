@@ -3,9 +3,9 @@
   <ol class="overflow-y-scroll max-h-60">
     <li *ngFor="let item of data">
       <button [ngClass]="{
-         'bg-red-800 text-white visited:text-white no-underline': item.can_sign === 0 && item.is_signed === 0,
-         'bg-yellow-300 text-black visited:text-gray-800 no-underline': item.can_sign === 1 && item.is_signed === 0,
-         'bg-green-300 text-gray-800 visited:text-gray-600 no-underline': item.is_signed === 1
+         'bg-red-800 text-white visited:text-white no-underline': item.can_sign === '0' && item.is_signed ==='0',
+         'bg-yellow-300 text-black visited:text-gray-800 no-underline': item.can_sign === '1' && item.is_signed ==='0',
+         'bg-green-300 text-gray-800 visited:text-gray-600 no-underline': item.is_signed ==='1'
 
 }" [routerLink]="['/contracts',auth.email,item.access_key]"
               class="py-1">

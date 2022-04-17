@@ -21,8 +21,8 @@ export interface WaitlistItem {
   description: string;
   available_from: string;
   available_to: string;
-  max_waiting: number | null; // Is a number
-  registered: 0 | 1;
+  max_waiting: string | null; // Is a number
+  registered: '0' | '1';
 }
 
 export interface Userdata {
@@ -33,6 +33,6 @@ export interface Userdata {
 export interface UserContract {
   access_key: string;
   due_date: string;
-  is_signed: 0 | 1;
-  can_sign: 0 | 1;
+  is_signed: '0' | '1';
+  can_sign: '0' | '1';
 }

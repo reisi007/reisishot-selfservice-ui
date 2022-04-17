@@ -46,7 +46,7 @@ export class WaitlistDashboardItemComponent {
     const item = this.data.registrations[idx];
     this.waitlistAdminApi
         .ignoreWaitlistItem(data.user, data.pwd, item)
-        .subscribe(() => (waitlistRecord.done_internal = 1));
+        .subscribe(() => (waitlistRecord.done_internal = '1'));
   }
 
   public done(idx: number, waitlistRecord: AdminWaitlistRecord) {

@@ -43,7 +43,7 @@
             {{item.firstname}} {{item.lastname}} {{formatDate(item.birthday)}} - {{calculateAge(item.birthday)}}
             Jahre
           </td>
-          <td *ngIf="item.signed !== 0; else notSigned" class="p-2 font-bold bg-reisishot border border-black">
+          <td *ngIf="item.signed !== '0'; else notSigned" class="p-2 font-bold bg-reisishot border border-black">
             ✓ Bereits unterschrieben
           </td>
           <ng-template #notSigned>
