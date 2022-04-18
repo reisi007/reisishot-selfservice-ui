@@ -9,4 +9,5 @@ export enum ShootingSlotState {
   BUSY = 'BUSY',
   TAKEN = 'TAKEN',
   BLOCKED = 'BLOCKED',
+  NOT_YET_OPENED = 'NOT YET OPENED'
 }

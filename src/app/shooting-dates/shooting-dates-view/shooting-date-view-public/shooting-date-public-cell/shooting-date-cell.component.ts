@@ -12,7 +12,6 @@ dayjs.extend(isoWeekPlugin);
 })
 export class ShootingDateCellComponent {
 
-
   @Input()
   availability!: CalendarWeekAvailability;
 

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {ShootingDateEntry} from '../api/ShootingDateEntry';
+import {ShootingDateEntry, ShootingSlotState} from '../api/ShootingDateEntry';
 import * as dayjs from 'dayjs';
 import {Observable} from 'rxjs';
 import {CalendarWeekAvailability} from '../CalendarWeekAvailability.model';
@@ -88,4 +88,25 @@ export class ShootingDatesViewComponent implements OnInit {
 
     return computedValues.slice(calculationOffset, -calculationOffset);
   }
+
+  getCellColor(state: ShootingSlotState): string {
+    switch(state) {
+      case ShootingSlotState.BLOCKED:
+        return 'text-white bg-gray-500';
+      case ShootingSlotState.BUSY:
+        return 'text-black bg-yellow-300';
+      case ShootingSlotState.FREE:
+        return 'text-white bg-reisishot';
+      case ShootingSlotState.TAKEN:
+        return 'text-white bg-red-500';
+      case ShootingSlotState.NOT_YET_OPENED:
+        return 'text-gray-700 bg-gray-300';
+      default:
+        return neverException(state);
+    }
+  }
+}
+
+function neverException(e: never): never {
+  throw Error('This should never happen: ' + e);
 }
