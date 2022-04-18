@@ -8,7 +8,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class AdminLoginComponent {
 
-  readonly min = 8;
+  readonly min = 4;
   readonly max = 20;
 
   weekForm: FormGroup;
@@ -17,7 +17,7 @@ export class AdminLoginComponent {
     private formBuilder: FormBuilder,
   ) {
     this.weekForm = this.formBuilder.group({
-      'weeks': this.formBuilder.control(12, [Validators.min(this.min), Validators.max(this.max)]),
+      'weeks': this.formBuilder.control(8, [Validators.min(this.min), Validators.max(this.max)]),
     });
   }
 

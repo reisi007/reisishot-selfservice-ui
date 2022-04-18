@@ -42,7 +42,7 @@ export class CalendarWeekAvailability {
   }
 
   private static isFinalRun(computedAvailabilities: Array<CalendarWeekAvailability>, idx: number) {
-    return idx > computedAvailabilities.length;
+    return idx >= computedAvailabilities.length;
   }
 
   process(event: Array<CalendarWeekAvailability>, index: number): void;
@@ -61,20 +61,24 @@ export class CalendarWeekAvailability {
     }
   }
 
-  isFree() {
+  isFree(): boolean {
     return this._state === ShootingSlotState.FREE;
   }
 
-  isBusy() {
+  isBusy(): boolean {
     return this._state === ShootingSlotState.BUSY;
   }
 
-  isTaken() {
+  isTaken(): boolean {
     return this._state === ShootingSlotState.TAKEN;
   }
 
-  isBlocked() {
+  isBlocked(): boolean {
     return this._state === ShootingSlotState.BLOCKED;
+  }
+
+  hasNotYetOpened(): boolean {
+    return this._state === ShootingSlotState.NOT_YET_OPENED;
   }
 
   withText(text: string | undefined = this._text): CalendarWeekAvailability {
@@ -91,6 +95,7 @@ export class CalendarWeekAvailability {
   }
 
   private finalize(event: Array<CalendarWeekAvailability>, idx: number) {
+    this.markFreeWeeksAsNotAvailable(event, idx, 6);
     this.markFreeWeeksBetweenShootingsAsBusy(event, idx);
   }
 
@@ -115,5 +120,17 @@ export class CalendarWeekAvailability {
       this._state = ShootingSlotState.BUSY;
     }
 
+  }
+
+  private markFreeWeeksAsNotAvailable(event: Array<CalendarWeekAvailability>, idx: number, firstIndex: number) {
+    if (event[0] !== this || !CalendarWeekAvailability.isFinalRun(event, idx)) {
+      return;
+    }
+    for (let i = firstIndex; i < event.length; i++) {
+      const availability = event[i];
+      if (availability.isFree()) {
+        availability._state = ShootingSlotState.NOT_YET_OPENED;
+      }
+    }
   }
 }
