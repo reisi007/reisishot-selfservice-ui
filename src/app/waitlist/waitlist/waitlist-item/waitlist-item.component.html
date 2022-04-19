@@ -10,7 +10,8 @@
         <textarea *ngIf="person" class="mx-auto w-11/12" formControlName="text"
                   placeholder="Zusätzliche Informationen - Details, die du mir sagen möchtest oder wann (in welcher Kalenderwoche) du am besten Zeit für das Shooting hast"
                   rows="4"></textarea>
-    <div (click)="register()" class="mx-auto w-full font-medium text-white bg-reisishot button">
+    <button (click)="register()" [attr.disabled]="canRegister?null:true"
+            class="mx-auto w-full font-medium text-white bg-reisishot button">
       <ng-container *ngIf="!canRegister; else allowRegistration"> Alle Wartelistenplätze belegt</ng-container>
       <ng-template #allowRegistration>
         <span *ngIf="user; else unknown">Jetzt anmelden</span>
@@ -20,7 +21,7 @@
            class="py-0.5 px-2 mt-3 text-sm font-bold text-reisishot bg-white rounded">
         Nur mehr {{item.max_waiting}} Plätze frei
       </div>
-    </div>
+    </button>
   </form>
   <ng-template #abmelden>
     <div (click)="unregister()" class="mx-auto w-full font-medium text-white bg-red-600 button">Jetzt abmelden</div>
