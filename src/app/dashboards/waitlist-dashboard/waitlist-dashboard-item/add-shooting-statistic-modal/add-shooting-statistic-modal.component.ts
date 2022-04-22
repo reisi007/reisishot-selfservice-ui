@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
 import {WaitlistItemWithRegistrations} from '../../admin-api/waitlist-admin-api';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {WaitlistAdminApiService} from '../../admin-api/waitlist-admin-api.service';
-import {AdminLoginService} from '../../../../dashboard/login/admin-login.service';
+import {AdminLoginDataService} from '../../../../dashboard/login/admin-login-data.service';
 
 @Component({
   selector: 'app-add-shooting-statistic-modal',
@@ -23,7 +23,7 @@ export class AddShootingStatisticModalComponent {
   constructor(
     formBuilder: FormBuilder,
     private apiService: WaitlistAdminApiService,
-    private adminLoginService: AdminLoginService,
+    private adminLoginService: AdminLoginDataService,
   ) {
     this.addStatisticsForm = formBuilder.group({
       'isMinor': formBuilder.control(false),

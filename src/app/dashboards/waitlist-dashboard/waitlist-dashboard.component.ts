@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WaitlistAdminApiService} from './admin-api/waitlist-admin-api.service';
 import {LeaderboardEntry, WaitlistItemWithRegistrations} from './admin-api/waitlist-admin-api';
-import {AdminLoginService} from '../../dashboard/login/admin-login.service';
+import {AdminLoginDataService} from '../../dashboard/login/admin-login-data.service';
 import {AdminUserData} from '../../dashboard/login/admin-login/AdminUserData';
 
 @Component({
@@ -17,7 +17,7 @@ export class WaitlistDashboardComponent implements OnInit {
 
   constructor(
     private waitlistAdminApi: WaitlistAdminApiService,
-    private adminLoginService: AdminLoginService,
+    private adminLoginService: AdminLoginDataService,
   ) {
   }
 

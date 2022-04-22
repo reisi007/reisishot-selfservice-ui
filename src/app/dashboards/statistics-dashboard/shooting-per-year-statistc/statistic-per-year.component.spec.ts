@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientModule} from '@angular/common/http';
 import {StatisticPerYearComponent} from './statistic-per-year.component';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
-import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
+import {AdminLoginDataService} from '../../../dashboard/login/admin-login-data.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {OVERRIDES} from '../StatisticUtils';
 
@@ -14,7 +14,7 @@ describe('ShootingStatistcComponent', () => {
     await TestBed.configureTestingModule({
                    imports: [HttpClientModule, ReactiveFormsModule],
                    declarations: [StatisticPerYearComponent],
-                   providers: [ShootingStatisticApiService, AdminLoginService],
+                   providers: [ShootingStatisticApiService, AdminLoginDataService],
                  })
                  .compileComponents();
   });

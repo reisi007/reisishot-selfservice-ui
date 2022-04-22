@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ReviewAdminApiService} from '../api/review-admin-api.service';
 import {LoadedReview} from '../../../review/api/review.model';
 import {AdminUserData} from '../../../dashboard/login/admin-login/AdminUserData';
-import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
+import {AdminLoginDataService} from '../../../dashboard/login/admin-login-data.service';
 
 @Component({
   selector: 'app-review-dashboard',
@@ -15,7 +15,7 @@ export class ReviewDashboardComponent implements OnInit {
 
   constructor(
     private apiService: ReviewAdminApiService,
-    private adminLoginService: AdminLoginService,
+    private adminLoginService: AdminLoginDataService,
   ) {
   }
 

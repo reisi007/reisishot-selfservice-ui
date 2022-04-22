@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AdminLoginService} from '../admin-login.service';
+import {AdminLoginDataService} from '../admin-login-data.service';
 import {AdminUserData} from './AdminUserData';
+import {AdminLoginService} from './admin-login.service';
 
 @Component({
   selector: 'app-admin-login-form',
@@ -14,12 +15,13 @@ export class AdminLoginFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private adminDataLoginService: AdminLoginDataService,
     private adminLoginService: AdminLoginService,
   ) {
   }
 
   get credentialsAvailable(): boolean {
-    return this.adminLoginService.hasData;
+    return this.adminDataLoginService.hasData;
   }
 
   ngOnInit(): void {
@@ -30,6 +32,9 @@ export class AdminLoginFormComponent implements OnInit {
   }
 
   submitValue() {
-    this.adminLoginService.data = this.passwordForm.value as AdminUserData;
+    this.adminLoginService.login(this.passwordForm.value as AdminUserData).subscribe({
+      next: value => this.adminDataLoginService.data = {user: value.user, pwd: value.hash},
+      error: () => this.adminDataLoginService.data = null,
+    });
   }
 }

@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 import {ApiService} from '../../../commons/ApiService';
 import {HttpClient} from '@angular/common/http';
-import {AdminLoginService} from '../admin-login.service';
+import {AdminLoginDataService} from '../admin-login-data.service';
 import {ShootingDateEntry} from '../../../shooting-dates/api/ShootingDateEntry';
 import {Injectable} from '@angular/core';
 
@@ -10,7 +10,7 @@ export class PrivateCalendarApiService extends ApiService {
 
   constructor(
     private http: HttpClient,
-    private loginService: AdminLoginService,
+    private loginService: AdminLoginDataService,
   ) {
     super();
   }

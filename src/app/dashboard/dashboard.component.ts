@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AdminLoginService} from './login/admin-login.service';
+import {AdminLoginDataService} from './login/admin-login-data.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   constructor(
-    private adminLoginService: AdminLoginService,
+    private adminLoginService: AdminLoginDataService,
     private router: Router,
   ) {
   }

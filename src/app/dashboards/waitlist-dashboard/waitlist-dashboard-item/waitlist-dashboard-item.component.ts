@@ -41,14 +41,6 @@ export class WaitlistDashboardItemComponent {
     this.router.navigate(['..', 'contracts'], {state: {person: waitlistRecord}, relativeTo: this.route});
   }
 
-  public ignore(idx: number, waitlistRecord: AdminWaitlistRecord) {
-    const data = this.credentials;
-    const item = this.data.registrations[idx];
-    this.waitlistAdminApi
-        .ignoreWaitlistItem(data.user, data.pwd, item)
-        .subscribe(() => (waitlistRecord.done_internal = '1'));
-  }
-
   public done(idx: number, waitlistRecord: AdminWaitlistRecord) {
     const data = this.credentials;
     const item = this.data.registrations[idx];
