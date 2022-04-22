@@ -1,5 +1,5 @@
 import {Component, Input, TemplateRef} from '@angular/core';
-import {AdminLoginService} from '../admin-login.service';
+import {AdminLoginDataService} from '../admin-login-data.service';
 
 @Component({
   selector: 'app-shooting-date-view-responsive',
@@ -11,7 +11,7 @@ export class ShootingDateViewResponsiveComponent {
   @Input() template!: TemplateRef<any>;
 
   constructor(
-    private adminLoginService: AdminLoginService,
+    private adminLoginService: AdminLoginDataService,
   ) {
   }
 

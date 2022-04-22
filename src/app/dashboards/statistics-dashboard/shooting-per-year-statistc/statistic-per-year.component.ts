@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
 import {ChartDataset, ChartType} from 'chart.js';
 import {ShootingStatisticsResponsePerYear} from '../api/Model';
-import {AdminLoginService} from '../../../dashboard/login/admin-login.service';
+import {AdminLoginDataService} from '../../../dashboard/login/admin-login-data.service';
 import {ChartConfig, OVERRIDES, shadeColor, SHARED_OPTIONS, TypedTooltipItem} from '../StatisticUtils';
 import {ShootingFormValue} from '../statistics-dashboard.component';
 
@@ -28,7 +28,7 @@ export class StatisticPerYearComponent {
 
   constructor(
     private apiService: ShootingStatisticApiService,
-    private adminLoginService: AdminLoginService,
+    private adminLoginService: AdminLoginDataService,
   ) {
   }
 

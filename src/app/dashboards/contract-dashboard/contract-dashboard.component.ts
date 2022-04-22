@@ -6,7 +6,7 @@ import {CreateContract, Person} from '../../contract/api/createContract';
 import {Observable} from 'rxjs';
 import {afterNow, beforeNow} from '../../commons/datetime.validator';
 import {trackByIndex} from '../../trackByUtils';
-import {AdminLoginService} from '../../dashboard/login/admin-login.service';
+import {AdminLoginDataService} from '../../dashboard/login/admin-login-data.service';
 
 @Component({
   selector: 'app-contract-dashboard',
@@ -23,7 +23,7 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
     private apiService: ContractApiService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private adminLoginService: AdminLoginService,
+    private adminLoginService: AdminLoginDataService,
   ) {
     this.emailForm = formBuilder.group({
       persons: formBuilder.array([this.createPerson()]),
