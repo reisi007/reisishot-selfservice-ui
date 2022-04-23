@@ -6,21 +6,21 @@
   <h1 class="w-full">Einen neuen Vertrag erstellen</h1>
   <p>Personen, für die der erstellte Vertrag gelten soll:</p>
   <form [formGroup]="emailForm" onsubmit="return false;">
-    <div *ngFor="let item of personArray.controls; let i = index; trackBy: trackByIndex" class="py-2"
+    <div *ngFor="let item of personArray.controls; let i = index; " class="py-2"
          formArrayName="persons">
       <app-person [cnt]="i" [person]="$any(item)"></app-person>
     </div>
-    <div class="p-2 mx-auto w-11/12 border border-gray-200 md:w-1/2">
-      <h3>Gespeicherte Personen</h3>
-
-      <ol *ngIf="dbPersons" class="flex flex-wrap my-2">
-        <li (click)="addStoredPerson(value)" *ngFor="let value of dbPersons"
-            class="p-2 m-0 w-full list-none sm:w-1/2 button">
+    <div class="py-2 mx-auto w-full border border-gray-200 md:w-1/2">
+      <h3 class="mb-2">Gespeicherte Personen</h3>
+      <input #personSearch class="w-11/12 sm:w-1/2" placeholder="Personen filtern" type="text"/>
+      <div *ngIf="dbPersonsFiltered" class="flex flex-wrap justify-evenly">
+        <button (click)="addStoredPerson(value)" *ngFor="let value of dbPersonsFiltered; trackBy: personContractTrackBy"
+                class="p-2 m-0 mt-4 w-11/12 sm:w-5/12">
           {{value.firstName}} {{value.lastName}} <br/>
           <span class="text-sm">{{value.email}}</span><br/>
-          {{value.birthday}}
-        </li>
-      </ol>
+          {{formatDate(value.birthday)}}
+        </button>
+      </div>
     </div>
     <div class="m-auto w-full md:w-1/3">
       <button (click)="addPerson()" class="text-center bg-reisishot">+</button>
@@ -28,7 +28,7 @@
     </div>
     <div>
       <select class="w-full md:w-1/3" formControlName="contractType">
-        <option disabled selected value>Vertrag auswählen</option>
+        <option disabled selected value="">Vertrag auswählen</option>
         <option *ngFor="let item of availableContracts | async"
                 [value]="item">{{item | prettyFilename}}</option>
       </select>

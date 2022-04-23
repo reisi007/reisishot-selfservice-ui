@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~13.2.6",
     "@angular/router": "~13.2.6",
     "@angular/service-worker": "~13.2.7",
+    "@ngneat/until-destroy": "^9.0.2",
     "@ngx-matomo/router": "^2.2.1",
     "@ngx-matomo/tracker": "^2.2.1",
     "chart.js": "^3.7.1",
