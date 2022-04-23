@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ContractApiService} from '../../contract/api/contract-api.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CreateContract, Person} from '../../contract/api/createContract';
-import {debounceTime, distinctUntilChanged, fromEvent, Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, Observable} from 'rxjs';
 import {afterNow, beforeNow} from '../../commons/datetime.validator';
 import {AdminLoginDataService} from '../../dashboard/login/admin-login-data.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
@@ -22,7 +22,7 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
   formSentState!: { error: string, completed: boolean, sent: boolean };
   dbPersonsRaw!: Array<Person & { search: string }>;
   dbPersonsFiltered!: Array<Person & { search: string }>;
-  @ViewChild('personSearch') input!: ElementRef<HTMLInputElement>;
+  personInputForm!: FormGroup;
 
   constructor(
     private apiService: ContractApiService,
@@ -37,6 +37,9 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
       dueDate: formBuilder.control('', [Validators.required, afterNow]),
       baseUrl: formBuilder.control(window.location.origin, [Validators.required]),
     });
+    this.personInputForm = formBuilder.group({
+      search: formBuilder.control(''),
+    });
     this.reset();
   }
 
@@ -44,6 +47,7 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
     this.formSentState = {error: '', completed: false, sent: false};
     // Dropdown does not look correct otherwise
     this.emailForm.reset({contractType: ''});
+    this.personInputForm.reset({search: ''});
   }
 
   get personArray(): FormArray {
@@ -86,23 +90,32 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
     }
 
 
-    fromEvent<KeyboardEvent>(this.input.nativeElement, 'keyup')
-      .pipe(
-        untilDestroyed(this),
-        map(() => this.input.nativeElement.value),
-        debounceTime(150),
-        map(v => v.toLowerCase()),
-        distinctUntilChanged(),
-      ).subscribe({
-      next: value => {
-        if (value) {
-          this.dbPersonsFiltered = this.dbPersonsRaw.filter(p => p.search.includes(value));
-        }
-        else {
-          this.dbPersonsFiltered = this.dbPersonsRaw;
-        }
+    this.personInputForm.get('search')
+        ?.valueChanges
+        .pipe(
+          untilDestroyed(this),
+          debounceTime(150),
+          map(v => v.toLowerCase()),
+          distinctUntilChanged(),
+        ).subscribe({
+      next: (inputValue: string) => {
+        this.updateDisplayedPersons(inputValue);
       },
     });
+  }
+
+  deletePersonSearch() {
+    this.personInputForm.reset({search: ''});
+    this.updateDisplayedPersons();
+  }
+
+  private updateDisplayedPersons(inputValue: string = '') {
+    if (inputValue) {
+      this.dbPersonsFiltered = this.dbPersonsRaw.filter(p => p.search.includes(inputValue));
+    }
+    else {
+      this.dbPersonsFiltered = this.dbPersonsRaw;
+    }
   }
 
   addPerson() {

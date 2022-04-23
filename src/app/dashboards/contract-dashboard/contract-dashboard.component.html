@@ -12,7 +12,16 @@
     </div>
     <div class="py-2 mx-auto w-full border border-gray-200 md:w-1/2">
       <h3 class="mb-2">Gespeicherte Personen</h3>
-      <input #personSearch class="w-11/12 sm:w-1/2" placeholder="Personen filtern" type="text"/>
+      <form [formGroup]="personInputForm">
+        <input class="inline-block w-11/12 sm:w-1/2" formControlName="search" placeholder="Personen filtern"
+               type="text"/>
+
+        <button (click)="deletePersonSearch()"
+                *ngIf="personInputForm.get('search')?.value"
+                class="relative right-9 py-0.5 px-2.5 m-0 bg-gray-300 rounded-full border-0 opacity-30 hover:opacity-50">
+          X
+        </button>
+      </form>
       <div *ngIf="dbPersonsFiltered" class="flex flex-wrap justify-evenly">
         <button (click)="addStoredPerson(value)" *ngFor="let value of dbPersonsFiltered; trackBy: personContractTrackBy"
                 class="p-2 m-0 mt-4 w-11/12 sm:w-5/12">
