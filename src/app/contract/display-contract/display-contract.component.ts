@@ -6,14 +6,16 @@ import {SignStatus} from '../api/signStatus';
 import {Observable, timer} from 'rxjs';
 import {LogEntry, LogType} from '../api/logEntry';
 import {calculateAge, formatDate, formatDateTime} from '../../commons/datetime.formatter';
+import {UntilDestroy} from '@ngneat/until-destroy';
 
+@UntilDestroy({checkProperties: true})
 @Component({
   selector: 'app-display-contract',
   templateUrl: './display-contract.component.html',
   styleUrls: ['./display-contract.component.scss'],
 })
 export class DisplayContractComponent implements OnInit {
-  static readonly UPDATE_INTERVAL = 5 * 60 * 1000; // 5 minutes
+  static readonly UPDATE_INTERVAL = 60 * 1000; // 1 minutes
 
   email!: string;
   accessKey!: string;
