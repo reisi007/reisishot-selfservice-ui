@@ -1,13 +1,16 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ContractApiService} from '../../contract/api/contract-api.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CreateContract, Person} from '../../contract/api/createContract';
-import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, fromEvent, Observable} from 'rxjs';
 import {afterNow, beforeNow} from '../../commons/datetime.validator';
-import {trackByIndex} from '../../trackByUtils';
 import {AdminLoginDataService} from '../../dashboard/login/admin-login-data.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {map} from 'rxjs/operators';
+import {formatDate} from 'src/app/commons/datetime.formatter';
 
+@UntilDestroy()
 @Component({
   selector: 'app-contract-dashboard',
   templateUrl: './contract-dashboard.component.html',
@@ -17,7 +20,9 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
   emailForm!: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
   formSentState!: { error: string, completed: boolean, sent: boolean };
-  dbPersons!: Array<Person>;
+  dbPersonsRaw!: Array<Person & { search: string }>;
+  dbPersonsFiltered!: Array<Person & { search: string }>;
+  @ViewChild('personSearch') input!: ElementRef<HTMLInputElement>;
 
   constructor(
     private apiService: ContractApiService,
@@ -57,12 +62,19 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
     return this.emailForm.get('contractType')?.value as string | undefined;
   }
 
-  private static calculateKey(p: Person): string {
-    return p.firstName + ' ' + p.lastName + ' ' + p.email + ' ' + p.birthday;
-  }
-
   ngOnInit() {
-    this.loadPersonsFromDb();
+    const {user, pwd} = this.adminLoginService.dataOrError;
+    this.apiService.loadPersons(user, pwd).subscribe(
+      {
+        next: data => {
+          this.dbPersonsRaw = data.map(p => ({
+            ...p,
+            search: p.firstName?.toLowerCase() + ' ' + p.lastName.toLowerCase() + ' ' + p.email.toLowerCase() + ' ' + formatDate(p.birthday),
+          }));
+          this.dbPersonsFiltered = this.dbPersonsRaw;
+        },
+      },
+    );
   }
 
   ngAfterViewInit(): void {
@@ -72,6 +84,28 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
       this.personArray.removeAt(0);
       this.personArray.insert(0, this.createPerson(person));
     }
+
+
+    fromEvent<KeyboardEvent>(this.input.nativeElement, 'keyup')
+      .pipe(
+        untilDestroyed(this),
+        map(() => this.input.nativeElement.value),
+        debounceTime(150),
+        map(v => {
+          console.log(v);
+          return v.toLowerCase();
+        }),
+        distinctUntilChanged(),
+      ).subscribe({
+      next: value => {
+        if (value) {
+          this.dbPersonsFiltered = this.dbPersonsRaw.filter(p => p.search.includes(value));
+        }
+        else {
+          this.dbPersonsFiltered = this.dbPersonsRaw;
+        }
+      },
+    });
   }
 
   addPerson() {
@@ -86,15 +120,6 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
 
   addStoredPerson(p: Person) {
     this.personArray.insert(0, this.createPerson(p));
-  }
-
-  trackByIndex(index: number, o: object) {
-    return trackByIndex(index, o);
-  }
-
-  loadPersonsFromDb() {
-    const user = this.adminLoginService.dataOrError;
-    this.apiService.loadPersons(user.user, user.pwd).subscribe(data => this.dbPersons = data);
   }
 
   sendForm() {
@@ -125,5 +150,13 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
       email: this.formBuilder.control(p?.email || '', [Validators.required, Validators.email]),
       birthday: this.formBuilder.control(p?.birthday || '', [Validators.required, beforeNow]),
     });
+  }
+
+  personContractTrackBy(idx: number, item: Person & { search: string }) {
+    return item.search;
+  }
+
+  formatDate(dateString: string) {
+    return formatDate(dateString);
   }
 }
