@@ -6,7 +6,7 @@ import {SignStatus} from '../api/signStatus';
 import {Observable, timer} from 'rxjs';
 import {LogEntry, LogType} from '../api/logEntry';
 import {calculateAge, formatDate, formatDateTime} from '../../commons/datetime.formatter';
-import {UntilDestroy} from '@ngneat/until-destroy';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @UntilDestroy({checkProperties: true})
 @Component({
@@ -50,11 +50,13 @@ export class DisplayContractComponent implements OnInit {
 
           timer(500).subscribe(() => {
             this.apiService.postLogEntry(this.email, this.accessKey, LogType.OPEN).subscribe(() => {
-              timer(0, DisplayContractComponent.UPDATE_INTERVAL).subscribe(() => {
-                this.fetchSignStatus();
-                this.fetchLogs();
-                this.fetchContractStatus();
-              });
+              timer(0, DisplayContractComponent.UPDATE_INTERVAL)
+                .pipe(untilDestroyed(this))
+                .subscribe(() => {
+                  this.fetchSignStatus();
+                  this.fetchLogs();
+                  this.fetchContractStatus();
+                });
             });
           });
         },

@@ -91,10 +91,7 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
         untilDestroyed(this),
         map(() => this.input.nativeElement.value),
         debounceTime(150),
-        map(v => {
-          console.log(v);
-          return v.toLowerCase();
-        }),
+        map(v => v.toLowerCase()),
         distinctUntilChanged(),
       ).subscribe({
       next: value => {
