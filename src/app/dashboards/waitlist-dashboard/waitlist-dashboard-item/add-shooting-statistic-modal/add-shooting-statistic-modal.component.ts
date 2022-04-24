@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {WaitlistItemWithRegistrations} from '../../admin-api/waitlist-admin-api';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {WaitlistAdminApiService} from '../../admin-api/waitlist-admin-api.service';
@@ -12,13 +12,25 @@ import {AdminLoginDataService} from '../../../../dashboard/login/admin-login-dat
 export class AddShootingStatisticModalComponent {
   @Input()
   waitlistItem!: WaitlistItemWithRegistrations;
-  @ViewChild('dialogElement')
-  dialogRef?: ElementRef;
+
   error?: any;
   isRequestPending = false;
 
   addStatisticsForm: FormGroup;
-  @Output() newShow = new EventEmitter<boolean>();
+
+  @Output()
+  newShow = new EventEmitter<boolean>();
+
+  private _show: boolean = false;
+
+  get show(): boolean {
+    return this._show;
+  }
+
+  @Input()
+  set show(value: boolean) {
+    this._show = value;
+  }
 
   constructor(
     formBuilder: FormBuilder,
@@ -33,25 +45,6 @@ export class AddShootingStatisticModalComponent {
 
   get formData(): { isMinor: boolean, isGroup: boolean } {
     return this.addStatisticsForm.value;
-  }
-
-  get show(): boolean {
-    return this.dialog !== undefined && this.dialog.hasAttribute('open');
-  }
-
-  @Input()
-  set show(value: boolean) {
-    this.newShow.emit(value);
-    if (value) {
-      this.dialog?.setAttribute('open', '');
-    }
-    else {
-      this.dialog?.removeAttribute('open');
-    }
-  }
-
-  get dialog(): HTMLDialogElement | undefined {
-    return this.dialogRef?.nativeElement;
   }
 
 
