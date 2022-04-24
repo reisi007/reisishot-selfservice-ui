@@ -1,28 +1,24 @@
-<div (click)="show = false" [ngClass]="{'hidden': !show}"
-     class="fixed top-0 left-0 w-full h-full bg-black/50">
-  <dialog #dialogElement (click)="$event.stopPropagation()"
-          class="top-1/4 left-1/2 z-50 w-3/4 rounded-lg shadow-lg -translate-x-1/2 -translate-y-1/4 lg:w-1/2">
-    <h3>Eintrag für "{{waitlistItem.title}}" erfassen</h3>
-    <div>
-      <form [formGroup]="addStatisticsForm" class="inline-flex p-2 space-x-4">
+<app-dialog (newShow)="newShow.emit($event)" [show]="show">
+  <h3>Eintrag für "{{waitlistItem.title}}" erfassen</h3>
+  <div>
+    <form [formGroup]="addStatisticsForm" class="inline-flex p-2 space-x-4">
   <span class="inline-flex items-center">
       <label>
     <input formControlName="isMinor" name="isMinor" type="checkbox"/>
         &nbsp;Shooting mit Person &lt;18
   </label>
   </span>
-        <span class="inline-flex items-center">
+      <span class="inline-flex items-center">
             <label>
     <input formControlName="isGroup" name="isGroup" type="checkbox"/>
   &nbsp;Shooting mit mehreren Personen</label>
   </span>
-      </form>
-    </div>
-    <div class="flex flex-wrap justify-center">
-      <button (click)="save()" [attr.disabled]="isRequestPending?true:null" class="py-2 px-4 text-white bg-reisishot">
-        Speichern
-      </button>
-      <button (click)="show = false" class="py-2 px-4">Abbrechen</button>
-    </div>
-  </dialog>
-</div>
+    </form>
+  </div>
+  <div class="flex flex-wrap justify-center">
+    <button (click)="save()" [attr.disabled]="isRequestPending?true:null" class="py-2 px-4 text-white bg-reisishot">
+      Speichern
+    </button>
+    <button (click)="show = false" class="py-2 px-4">Abbrechen</button>
+  </div>
+</app-dialog>

@@ -13,6 +13,7 @@ import {PendingSignaturesComponent} from './pending-signatures/pending-signature
 import {
   AddShootingStatisticModalComponent,
 } from './waitlist-dashboard-item/add-shooting-statistic-modal/add-shooting-statistic-modal.component';
+import {DialogModule} from '../../commons/dialog/dialog.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    WaitlistDashboardRoutingModule],
+    WaitlistDashboardRoutingModule,
+    DialogModule,
+  ],
 })
 export class WaitlistDashboardModule {
 }
