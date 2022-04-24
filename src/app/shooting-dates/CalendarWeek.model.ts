@@ -11,7 +11,7 @@ export class CalendarWeek {
     date: dayjs.Dayjs,
   ) {
     this.internalWeek = date
-      .day(1); // Monday
+      .isoWeekday(1); // Monday
   }
 
   format(format: string = 'DD.MM.YYYY'): string {
