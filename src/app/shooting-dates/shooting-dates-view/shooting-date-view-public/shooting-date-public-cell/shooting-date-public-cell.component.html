@@ -1,4 +1,4 @@
 <ng-container *ngIf="availability">
   KW {{availability.calendarWeek.kw().toString(10).padStart(2, '0')}} - Woche ab {{availability.calendarWeek.format()}}
-  <span *ngIf="availability.hasNotYetOpened()">(Termin wird noch freigeschalten)</span>
+  <span *ngIf="availability.hasNotYetOpened()">(Termin kann noch nicht reserviert werden)</span>
 </ng-container>
