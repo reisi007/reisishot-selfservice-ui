@@ -1,7 +1,7 @@
-<div class="p-2 rounded-lg border-2 border-black border-solid">
+<div class="flex flex-col p-2 h-full rounded-lg border-2 border-black border-solid">
   <a href="{{url}}#{{item.short}}"><h2 [id]="item.short" class="my-3 text-3xl font-light">{{item.title}}</h2></a>
   <app-lazy-loading-image [alt]="item.title" [id]="item.image_id" [ratio]="2/3"></app-lazy-loading-image>
-  <p class="p-2 mx-auto w-full md:w-11/12">{{item.description}}</p>
+  <p class="grow p-2 mx-auto w-full md:w-11/12">{{item.description}}</p>
 
   <div class="block">
     <span *ngIf="item.available_to">Anmeldeschluss: {{formatDate(item.available_to)}}</span>

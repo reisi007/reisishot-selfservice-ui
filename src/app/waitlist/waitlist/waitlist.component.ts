@@ -3,12 +3,14 @@ import {Observable, timer} from 'rxjs';
 import {WaitlistApiService} from '../api/waitlist-api.service';
 import {WaitlistItem} from '../api/waitlist-api';
 import {ActivatedRoute} from '@angular/router';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @Component({
   selector: 'app-waitlist',
   templateUrl: './waitlist.component.html',
   styleUrls: ['./waitlist.component.scss'],
 })
+@UntilDestroy()
 export class WaitlistComponent implements OnInit {
   publicItems!: Observable<Array<WaitlistItem>>;
 
@@ -35,12 +37,14 @@ export class WaitlistComponent implements OnInit {
         this.route.fragment.subscribe({
           next: value => {
             if (value !== null) {
-              timer(400).subscribe({
-                next: () => {
-                  document.getElementById(value)
-                          ?.scrollIntoView({behavior: 'smooth'});
-                },
-              });
+              timer(400)
+                .pipe(untilDestroyed(this))
+                .subscribe({
+                  next: () => {
+                    document.getElementById(value)
+                            ?.scrollIntoView({behavior: 'smooth'});
+                  },
+                });
             }
           },
         });

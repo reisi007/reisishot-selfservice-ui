@@ -13,14 +13,14 @@
 
   <app-contact-me></app-contact-me>
 
-  <div class="mt-2">
+  <div class="my-4">
     <app-shooting-date-view-public [weeks]="8"></app-shooting-date-view-public>
   </div>
 
   <div class="flex flex-wrap">
-    <span *ngFor="let item of items" class="self-stretch p-3 w-full xl:w-1/2">
-      <app-waitlist-item [item]="item" [person]="user"></app-waitlist-item>
-    </span>
+    <ng-container *ngFor="let item of items">
+      <app-waitlist-item [item]="item" [person]="user" class="self-stretch p-3 w-full xl:w-1/2"></app-waitlist-item>
+    </ng-container>
   </div>
 
 </div>

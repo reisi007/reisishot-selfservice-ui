@@ -11,13 +11,13 @@
 
   <app-contact-me></app-contact-me>
 
-  <div class="mt-2">
+  <div class="my-4">
     <app-shooting-date-view-public [weeks]="4"></app-shooting-date-view-public>
   </div>
 
   <div class="flex flex-wrap">
-    <span *ngFor="let item of publicItems | async" class="self-stretch p-3 w-full xl:w-1/2">
-      <app-waitlist-item [item]="item"></app-waitlist-item>
-    </span>
+    <ng-container *ngFor="let item of publicItems | async" class="self-stretch ">
+      <app-waitlist-item [item]="item" class="p-3 w-full xl:w-1/2"></app-waitlist-item>
+    </ng-container>
   </div>
 </div>
