@@ -17,10 +17,9 @@
     <app-shooting-date-view-public [weeks]="8"></app-shooting-date-view-public>
   </div>
 
-  <div class="flex flex-wrap">
-    <ng-container *ngFor="let item of items">
-      <app-waitlist-item [item]="item" [person]="user" class="self-stretch p-3 w-full xl:w-1/2"></app-waitlist-item>
-    </ng-container>
+  <div class="flex flex-wrap items-stretch">
+    <app-waitlist-item *ngFor="let item of items" [item]="item" [person]="user"
+                       class="p-3 w-full xl:w-1/2"></app-waitlist-item>
   </div>
 
 </div>

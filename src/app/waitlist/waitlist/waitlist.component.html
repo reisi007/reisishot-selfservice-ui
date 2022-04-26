@@ -15,9 +15,10 @@
     <app-shooting-date-view-public [weeks]="4"></app-shooting-date-view-public>
   </div>
 
-  <div class="flex flex-wrap">
-    <ng-container *ngFor="let item of publicItems | async" class="self-stretch ">
-      <app-waitlist-item [item]="item" class="p-3 w-full xl:w-1/2"></app-waitlist-item>
+  <div class="flex flex-wrap items-stretch">
+    <ng-container>
+      <app-waitlist-item *ngFor="let item of publicItems | async" [item]="item"
+                         class="p-3 w-full xl:w-1/2"></app-waitlist-item>
     </ng-container>
   </div>
 </div>
