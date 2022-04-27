@@ -2,11 +2,14 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {AdminLoginComponent} from './login/admin-login.component';
+import {AdminProtectedAreaGuardService} from './admin-protected-area-guard.service';
+import {AdminLoginDataService} from './login/admin-login-data.service';
 
 const routes: Routes = [{
   path: '',
   component: DashboardComponent,
   data: {title: 'Admin Dashboard'},
+  canActivateChild: [AdminProtectedAreaGuardService],
   children: [
     {
       path: '',
@@ -37,6 +40,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  providers: [AdminProtectedAreaGuardService, AdminLoginDataService],
   exports: [RouterModule],
 })
 export class DashboardRoutingModule {
