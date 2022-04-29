@@ -55,4 +55,12 @@ export class WaitlistDashboardItemComponent {
   private removeRegistration(idx: number): void {
     this.data?.registrations.splice(idx, 1);
   }
+
+  setDateAssigned(cur: AdminWaitlistRecord, value: boolean) {
+    const data = this.credentials;
+    this.waitlistAdminApi.setDateAssigned(data.user, data.pwd, cur.item_id, cur.person_id, value)
+        .subscribe({
+          next: () => cur.date_assigned = value ? '1' : '0',
+        });
+  }
 }
