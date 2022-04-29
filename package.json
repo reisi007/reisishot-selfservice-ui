@@ -27,11 +27,13 @@
     "@ngx-matomo/tracker": "^2.2.1",
     "chart.js": "^3.7.1",
     "dayjs": "~1.11.0",
+    "letterparser": "^0.0.8",
     "markdown-it": "^12.3.2",
     "ng-http-caching": "^13.0.3",
     "ng2-charts": "^3.0.8",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
+    "util": "^0.12.4",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
