@@ -19,7 +19,6 @@ export class Mail2DiskService extends ApiService {
       distinctUntilChanged(),
       map(s => [extract(s), parse(s)]),
     );
-
   }
 
   private getLatestMailInternal(): Observable<string> {
