@@ -28,7 +28,7 @@ export class ShootingStatisticApiService extends ApiService {
 
     const {user, pwd} = adminData;
     return this.http.get<ShootingStatisticsResponsePerYear>(
-      ApiService.buildUrl('api', `shooting_statistics_get.php?${urlParam.toString()}`), {
+      ApiService.buildUrl('api', `waitlist-admin-shooting_statistics_get.php?${urlParam.toString()}`), {
         headers: ApiService.buildHeaders(user, pwd),
       },
     );
@@ -37,7 +37,7 @@ export class ShootingStatisticApiService extends ApiService {
   public getShootingStatisticsPerMonth(adminData: AdminUserData, showMinors: boolean, showGroups: boolean): Observable<ShootingStatisticsResponsePerMonth> {
     const urlParam = ShootingStatisticApiService.buildParams(showMinors, showGroups);
     return this.http.get<ShootingStatisticsResponsePerMonth>(
-      ApiService.buildUrl('api', `shooting_statistics_month_get.php?${urlParam.toString()}`),
+      ApiService.buildUrl('api', `waitlist-admin-shooting_statistics_month_get.php?${urlParam.toString()}`),
       {headers: ApiService.buildHeaders(adminData.user, adminData.pwd)},
     );
   }

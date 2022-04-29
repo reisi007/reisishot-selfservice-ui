@@ -83,8 +83,16 @@ export class WaitlistAdminApiService extends ApiService {
 
   public createNewShootingStatisticsEntry(user: string, pwd: string, itemId: number, isMinor: boolean, isGroup: boolean): Observable<unknown> {
     return this.http.post(
-      ApiService.buildUrl('api', 'shooting_statistics_post.php'),
+      ApiService.buildUrl('api', 'waitlist-admin-shooting_statistics_post.php'),
       {itemId, isMinor, isGroup},
+      {headers: ApiService.buildHeaders(user, pwd)},
+    );
+  }
+
+  public setDateAssigned(user: string, pwd: string, itemId: number, personId: number, value: boolean) {
+    return this.http.post(
+      ApiService.buildUrl('api', 'waitlist-admin-entry-date-assigned_post.php'),
+      {itemId, personId, value},
       {headers: ApiService.buildHeaders(user, pwd)},
     );
   }

@@ -7,6 +7,7 @@ export interface WaitlistItemWithRegistrations extends WaitlistItem {
 export interface AdminWaitlistRecord extends WaitlistRecord, WaitlistPerson {
   points: number;
   person_id: number;
+  date_assigned: '0' | '1';
 }
 
 export interface WaitlistAdminData {
