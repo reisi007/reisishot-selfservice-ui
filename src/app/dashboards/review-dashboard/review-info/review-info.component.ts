@@ -26,6 +26,6 @@ export class ReviewInfoComponent {
   }
 
   widthAsPercent() {
-    return Math.max(0, this.ratingValues.avg - 1.75);
+    return Math.max(0, this.ratingValues.avg - 1.5);
   }
 }
