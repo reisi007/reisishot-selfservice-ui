@@ -14,7 +14,7 @@ export class Mail2DiskService extends ApiService {
   }
 
   public getLatestMail(): Observable<[LetterparserMail, LetterparserNode]> {
-    return timer(0, 5_000).pipe(
+    return timer(0, 1_000).pipe(
       mergeMap(() => this.getLatestMailInternal()),
       distinctUntilChanged(),
       map(s => [extract(s), parse(s)]),

@@ -23,7 +23,7 @@
     @apply my-4
   }
 
-  html, body, .content, #app {
+  html, body {
     @apply h-full
   }
 
@@ -73,11 +73,6 @@
   a {
     @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600
   }
-}
-
-// Fix for chart library
-.gauge-chart {
-  @apply mx-auto
 }
 
 input[type='date']:before {

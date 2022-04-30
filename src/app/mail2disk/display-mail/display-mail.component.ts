@@ -26,4 +26,10 @@ export class DisplayMailComponent {
       this.htmlUrl = this._sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(new Blob([this.mail.html ?? ''], {type: 'text/html; charset=utf-8'})));
     }
   }
+
+  loadIFrame(event: Event) {
+    const iFrame = event.target as HTMLIFrameElement;
+    let scrollHeight = iFrame.contentWindow?.document?.body?.scrollHeight ?? 0;
+    iFrame.height = scrollHeight.toString(10);
+  }
 }
