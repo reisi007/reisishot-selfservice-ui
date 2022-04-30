@@ -5,5 +5,5 @@
     <app-mail-kv-display *ngFor="let to of mail.to" [value]="to" key="To"></app-mail-kv-display>
   </div>
   <p class="py-1 border-y border-black">{{mail.subject}}</p>
-  <iframe [src]="htmlUrl" class="grow w-full min-h-full"></iframe>
+  <iframe (load)="loadIFrame($event)" [src]="htmlUrl" class="box-content w-full border border-black"></iframe>
 </div>
