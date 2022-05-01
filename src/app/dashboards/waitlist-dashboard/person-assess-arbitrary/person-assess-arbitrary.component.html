@@ -9,6 +9,8 @@
 
   <div *ngIf="selectedMail" class="my-2">
     Erfahrung für {{selectedMail}} speichern:
-    <app-person-assess [auth]="auth" [email]="selectedMail" class="block"></app-person-assess>
+    <div>
+      <app-person-assess [auth]="auth" [email]="selectedMail"></app-person-assess>
+    </div>
   </div>
 </div>
