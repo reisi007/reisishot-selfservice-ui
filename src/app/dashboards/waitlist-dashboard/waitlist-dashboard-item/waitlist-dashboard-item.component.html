@@ -35,18 +35,15 @@
 
       <p>Verfügbarkeit: {{registration.availability}}</p>
       <p *ngIf="registration.text">Weitere Informationen: {{registration.text}}</p>
-      <div>
-        <button
+
+      <button
           (click)="createContract(i,registration)"
           class="p-2.5 font-bold text-white bg-reisishot"
         >
           Vertrag erstellen
         </button>
-      </div>
-      <span>
         <button (click)="done(i,registration)" class="p-2.5 font-bold text-white bg-reisishot">Abschließen
         </button>
-      </span>
       <app-person-assess [auth]="internalUserPwd" [email]="registration.email" class="inline-flex"></app-person-assess>
     </div>
   </div>
