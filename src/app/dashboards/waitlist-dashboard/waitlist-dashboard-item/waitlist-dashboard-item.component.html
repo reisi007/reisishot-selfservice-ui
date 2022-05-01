@@ -35,8 +35,8 @@
 
       <p>Verfügbarkeit: {{registration.availability}}</p>
       <p *ngIf="registration.text">Weitere Informationen: {{registration.text}}</p>
-
-      <button
+      <div class="grid mx-auto sm:grid-cols-2 lg:w-3/4 xl:grid-cols-4 xl:w-full 2xl:w-3/4">
+        <button
           (click)="createContract(i,registration)"
           class="p-2.5 font-bold text-white bg-reisishot"
         >
@@ -44,7 +44,8 @@
         </button>
         <button (click)="done(i,registration)" class="p-2.5 font-bold text-white bg-reisishot">Abschließen
         </button>
-      <app-person-assess [auth]="internalUserPwd" [email]="registration.email" class="inline-flex"></app-person-assess>
+        <app-person-assess [auth]="internalUserPwd" [email]="registration.email"></app-person-assess>
+      </div>
     </div>
   </div>
 </div>
