@@ -32,6 +32,15 @@ module.exports = function (config) {
         {type: 'text-summary'}
       ]
     },
+    customLaunchers: {
+      Headless: {
+        base: "ChromeHeadless",
+        flags: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox"
+        ]
+      }
+    },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

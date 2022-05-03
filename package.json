@@ -8,6 +8,7 @@
     "build:ci": "cross-env NODE_ENV=production ng build -c ci",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:ci": "ng test --browsers=Headless --no-watch",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix"
   },
