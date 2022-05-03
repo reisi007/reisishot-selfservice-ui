@@ -1,4 +1,4 @@
-<div class="block py-2">
+<div class="py-2">
   <h3 class="my-3 text-2xl">{{item.title}}
     <button (click)="showStatisticsDialog = true" class="py-1">Shooting erfassen</button>
   </h3>
@@ -11,7 +11,7 @@
          'border-gray-300' :registration.date_assigned === '1',
          'border-red-500': registration.ignored === '1'
         }"
-         class="overflow-hidden relative grow py-4 px-2 my-4 w-full rounded-2xl border sm:mx-4 sm:w-1/2 lg:w-1/3">
+         class="flex overflow-hidden relative flex-col grow items-stretch py-4 px-2 my-4 w-full rounded-2xl border sm:mx-4 sm:w-1/2 lg:w-1/3">
 
       <span [ngClass]="{
 'sm:bg-reisishot': registration.date_assigned === '0',
@@ -20,9 +20,11 @@
       <div class="pb-2 text-xl font-semibold text-center">
         {{registration.firstName}} {{registration.lastName}} {{displayAgeInformation(registration.birthday)}}
       </div>
-      <button (click)="setDateAssigned(registration,registration.date_assigned === '0')" class="py-0">
-        Als  {{ registration.date_assigned === '0' ? 'gelesen' : 'ungelesen'}} markieren
-      </button>
+      <div>
+        <button (click)="setDateAssigned(registration,registration.date_assigned === '0')" class="py-0">
+          Als  {{ registration.date_assigned === '0' ? 'gelesen' : 'ungelesen'}} markieren
+        </button>
+      </div>
       <div
         [ngClass]="{
           'bg-red-800 text-white': registration.points < 0,
@@ -33,7 +35,7 @@
         <span class="underline">{{registration.points}}</span>&nbsp;<span class="text-base">Punkte</span>
       </div>
 
-      <p>Verfügbarkeit: {{registration.availability}}</p>
+      <p class="grow">Verfügbarkeit: {{registration.availability}}</p>
       <p *ngIf="registration.text">Weitere Informationen: {{registration.text}}</p>
       <div class="grid mx-auto sm:grid-cols-2 lg:w-3/4 xl:grid-cols-4 xl:w-full 2xl:w-3/4">
         <button
