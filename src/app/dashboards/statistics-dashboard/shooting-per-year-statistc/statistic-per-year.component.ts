@@ -65,6 +65,9 @@ export class StatisticPerYearComponent {
       ),
     ];
 
+    const maxYear = Math.max(...yearsAsInt);
+    const maxYearAsString = String(maxYear);
+
     function computeAbsoluteDataset(): ChartDataset<'bar', number[]>[] {
       return allShootingTypes.map(type => {
         const color = OVERRIDES[type].color;
@@ -115,8 +118,6 @@ export class StatisticPerYearComponent {
       const backgroundColor = Object.values(OVERRIDES).map(e => e.color);
       const hoverBackgroundColor = Object.values(OVERRIDES).map(e => shadeColor(e.color, 35));
 
-      const maxYear = Math.max(...yearsAsInt);
-      const maxYearAsString = String(maxYear);
       const yearData = data[maxYearAsString];
 
       return [
@@ -139,9 +140,34 @@ export class StatisticPerYearComponent {
       ];
     }
 
+    const perYearDataset = (() => {
+      const dataset: { [key: string]: number } = {};
+      Object.values(data).forEach(value => {
+        Object.entries(value).forEach(([k, d]) => {
+          dataset[k] = (dataset[k] || 0) + d;
+        });
+      });
+      return dataset;
+    })();
+
+    function computeAllYearsDataset(): ChartDataset<'bar', number[]>[] {
+      const backgroundColor = Object.values(OVERRIDES).map(e => e.color);
+      const hoverBackgroundColor = Object.values(OVERRIDES).map(e => shadeColor(e.color, 35));
+
+      return [{
+        label: 'Gesamt',
+        data: Object.keys(OVERRIDES).map((type) => perYearDataset[type]),
+        backgroundColor: backgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor,
+        borderColor: hoverBackgroundColor,
+        hoverBorderColor: backgroundColor,
+      }];
+
+    }
+
     this.chartData = [
       {
-        title: 'Soll / Ist Statistik',
+        title: `Soll / Ist Statistik ${maxYearAsString}`,
         labels: Object.keys(OVERRIDES),
         dataSet: computeSollIstDataset(),
         chartLegend: true,
@@ -158,7 +184,7 @@ export class StatisticPerYearComponent {
         },
       },
       {
-        title: 'Relativ',
+        title: 'Relativ pro Jahr',
         labels: allYears,
         dataSet: computeRelativeDataset(),
         chartType: 'bar',
@@ -176,12 +202,28 @@ export class StatisticPerYearComponent {
         },
       },
       {
-        title: 'Absolut',
+        title: 'Absolut pro Jahr',
         labels: allYears,
         dataSet: computeAbsoluteDataset(),
         chartType: 'bar',
         chartLegend: true,
         options: SHARED_OPTIONS,
+      }, {
+        title: 'Absolut Gesamt',
+        labels: Object.values(allShootingTypes),
+        dataSet: computeAllYearsDataset(),
+        chartType: 'doughnut',
+        chartLegend: true,
+        options: {
+          ...SHARED_OPTIONS,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (item) => ` ${item.label} - ${item.parsed} / ${Object.values(perYearDataset).reduce((a, b) => a + b)}`,
+              },
+            },
+          },
+        },
       },
     ];
   };
