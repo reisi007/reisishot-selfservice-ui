@@ -10,5 +10,5 @@ export function formatDate(dateString: string): string {
 
 export function calculateAge(birthday: string, relativeTo?: string): string {
   const age = dayjs(relativeTo).diff(dayjs(birthday), 'year', true);
-  return (Math.floor(age * 100) / 100).toString(10);
+  return (Math.floor(age * 100) / 100).toFixed(2);
 }
