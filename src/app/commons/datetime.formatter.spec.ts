@@ -1,18 +1,17 @@
 import * as dayjs from 'dayjs';
-import {calculateAge} from './datetime.formatter';
+import {calculateAge, TEMPLATE_STRING_AS_DATE} from './datetime.formatter';
 
 describe('Datetime Utils', () => {
 
   describe('calculateAge', () => {
-    const DATE_FORMAT = 'YYYY-MM-DD';
-
     it('age is never rounded up', () => {
       const begin = dayjs().startOf('day');
       const end = begin.add(18, 'years').add(-1, 'second');
 
-      let startDate = begin.format(DATE_FORMAT);
-      let endDate = end.format(DATE_FORMAT);
-      const age = calculateAge(startDate, endDate);
+      const age = calculateAge(
+        begin.format(TEMPLATE_STRING_AS_DATE),
+        end.format(TEMPLATE_STRING_AS_DATE),
+      );
 
       expect(age).toEqual('17.99');
     });

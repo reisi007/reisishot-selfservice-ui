@@ -1,6 +1,6 @@
-<div class="p-6 h-full text-center">
-  <h1>Reisishot - Florian Reisinger Photography Service</h1>
-  <div class="flex flex-wrap justify-between content-center h-full">
+<div class="box-border flex flex-col p-6 h-full text-center">
+  <h1 class="self-center">ReisiShot - Florian Reisinger Photography Service</h1>
+  <div class="flex flex-wrap grow justify-between content-center">
     <button *ngFor="let item of items" [routerLink]="['..'].concat(item.url)"
             class="mx-auto w-full">{{item.name}}</button>
   </div>
