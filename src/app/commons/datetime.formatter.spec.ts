@@ -1,5 +1,5 @@
 import * as dayjs from 'dayjs';
-import {calculateAge, TEMPLATE_DATE} from './datetime.formatter';
+import {calculateAge, TEMPLATE_STRING_AS_DATE} from './datetime.formatter';
 
 describe('Datetime Utils', () => {
 
@@ -9,8 +9,8 @@ describe('Datetime Utils', () => {
       const end = begin.add(18, 'years').add(-1, 'second');
 
       const age = calculateAge(
-        begin.format(TEMPLATE_DATE),
-        end.format(TEMPLATE_DATE),
+        begin.format(TEMPLATE_STRING_AS_DATE),
+        end.format(TEMPLATE_STRING_AS_DATE),
       );
 
       expect(age).toEqual('17.99');

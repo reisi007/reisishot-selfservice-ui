@@ -1,5 +1,6 @@
 import * as dayjs from 'dayjs';
 
+export const TEMPLATE_STRING_AS_DATE = 'YYYY-MM-DD';
 export const TEMPLATE_DATE = 'DD.MM.YYYY';
 export const TEMPLATE_DATETIME = TEMPLATE_DATE + ' HH:mm';
 
