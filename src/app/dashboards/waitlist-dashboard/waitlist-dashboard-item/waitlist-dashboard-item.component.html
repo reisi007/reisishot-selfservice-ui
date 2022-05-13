@@ -21,7 +21,7 @@
         {{registration.firstName}} {{registration.lastName}} {{displayAgeInformation(registration.birthday)}}
       </div>
       <div>
-        <button (click)="setDateAssigned(registration,registration.date_assigned === '0')" class="py-0">
+        <button (click)="setDateAssigned(registration,registration.date_assigned === '0')" class="py-0 mb-4">
           Als  {{ registration.date_assigned === '0' ? 'gelesen' : 'ungelesen'}} markieren
         </button>
       </div>
@@ -30,7 +30,7 @@
           'bg-red-800 text-white': registration.points < 0,
           'bg-reisishot text-white': registration.points >= 100
           }"
-        class="mx-auto text-lg font-semibold text-center rounded"
+        class="py-2 px-4 mx-auto text-lg font-semibold text-center rounded-lg"
       >
         <span class="underline">{{registration.points}}</span>&nbsp;<span class="text-base">Punkte</span>
       </div>
