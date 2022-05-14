@@ -12,13 +12,13 @@
     </div>
     <div class="py-2 mx-auto w-full border border-gray-200 md:w-1/2">
       <h3 class="mb-2">Gespeicherte Personen</h3>
-      <form [formGroup]="personInputForm">
-        <input class="inline-block w-11/12 sm:w-1/2" formControlName="search" placeholder="Personen filtern"
+      <form [formGroup]="personInputForm" class="inline-block relative w-11/12 sm:w-1/2">
+        <input class="w-full" formControlName="search" placeholder="Personen filtern"
                type="text"/>
 
         <button (click)="deletePersonSearch()"
                 *ngIf="personInputForm.get('search')?.value"
-                class="relative right-9 py-0.5 px-2.5 m-0 bg-gray-300 rounded-full border-0 opacity-30 hover:opacity-50">
+                class="absolute top-1 right-2 py-0.5 px-2.5 m-0 bg-gray-300 rounded-full border-0 opacity-30 hover:opacity-50">
           X
         </button>
       </form>
@@ -63,7 +63,7 @@
       ></div>
     </div>
     <div>
-      <button (click)="sendForm()" [disabled]="!emailForm.valid || formSentState?.sent"
+      <button (click)="sendForm()" [disabled]="(!emailForm.valid || formSentState.sent)?true:null"
               class="w-full bg-reisishot md:w-1/3">
         Neuen Vertrag erstellen
       </button>
@@ -74,7 +74,7 @@
       </button>
     </div>
   </form>
-  <div *ngIf="formSentState?.error?.length??0  > 0" class="p-8 bg-red-500">{{formSentState?.error}}</div>
+  <div *ngIf="formSentState.error ?? 0 > 0" class="p-8 bg-red-500">{{formSentState.error}}</div>
 </ng-template>
 
 <ng-template #sent>
