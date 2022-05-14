@@ -19,7 +19,7 @@ import {formatDate} from 'src/app/commons/datetime.formatter';
 export class ContractDashboardComponent implements OnInit, AfterViewInit {
   emailForm!: FormGroup;
   availableContracts: Observable<string[]> = this.apiService.getContracts();
-  formSentState!: { error: string, completed: boolean, sent: boolean };
+  formSentState!: { error?: string, completed: boolean, sent: boolean };
   dbPersonsRaw!: Array<Person & { search: string }>;
   dbPersonsFiltered!: Array<Person & { search: string }>;
   personInputForm!: FormGroup;
@@ -35,18 +35,17 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
       contractType: formBuilder.control('', [Validators.required]),
       text: formBuilder.control('', [Validators.required]),
       dueDate: formBuilder.control('', [Validators.required, afterNow]),
-      baseUrl: formBuilder.control(window.location.origin, [Validators.required]),
+      baseUrl: formBuilder.control('', [Validators.required]),
     });
     this.personInputForm = formBuilder.group({
       search: formBuilder.control(''),
     });
-    this.reset();
   }
 
   reset() {
-    this.formSentState = {error: '', completed: false, sent: false};
+    this.formSentState = {error: undefined, completed: false, sent: false};
     // Dropdown does not look correct otherwise
-    this.emailForm.reset({contractType: ''});
+    this.emailForm.reset({contractType: '', baseUrl: window.location.origin});
     this.personInputForm.reset({search: ''});
   }
 
@@ -67,6 +66,7 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.reset();
     const {user, pwd} = this.adminLoginService.dataOrError;
     this.apiService.loadPersons(user, pwd).subscribe(
       {
