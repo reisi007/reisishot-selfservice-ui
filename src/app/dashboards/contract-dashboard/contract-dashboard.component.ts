@@ -135,7 +135,7 @@ export class ContractDashboardComponent implements OnInit, AfterViewInit {
   sendForm() {
     const contractData = this.emailForm.value as CreateContract;
     const loginData = this.adminLoginService.dataOrError;
-    this.apiService.createContract({...contractData, ...loginData}).subscribe(
+    this.apiService.createContract(contractData, loginData).subscribe(
       {
         next: () => (this.formSentState.completed = true),
         error: () => {

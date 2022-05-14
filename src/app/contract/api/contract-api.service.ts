@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CreateContractRequest, Person} from './createContract';
+import {CreateContract, Person} from './createContract';
 import {ContractData} from './contractData';
 import {SignStatus} from './signStatus';
 import {LogEntry, LogType} from './logEntry';
 import {IsValidResponse} from './IsValidResponse';
 import {ApiService} from '../../commons/ApiService';
 import {NgHttpCachingHeaders} from 'ng-http-caching';
+import {AdminUserData} from '../../dashboard/login/admin-login/AdminUserData';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +22,8 @@ export class ContractApiService extends ApiService {
     return this.http.get<Array<string>>(ApiService.buildUrl('api', 'contract-templates_get.php'));
   }
 
-  public createContract(data: CreateContractRequest): Observable<any> {
-    return this.http.put(ApiService.buildUrl('api', 'contract_put.php'), data);
+  public createContract(data: CreateContract, {user, pwd}: AdminUserData): Observable<any> {
+    return this.http.put(ApiService.buildUrl('api', 'contract_put.php'), data, {headers: ApiService.buildHeaders(user, pwd)});
   }
 
   public getContractData(email: string, accessKey: string): Observable<ContractData> {
