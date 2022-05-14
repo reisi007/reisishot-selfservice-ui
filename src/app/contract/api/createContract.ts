@@ -4,14 +4,6 @@ export type CreateContract = {
   text: string;
   dueDate: string;
 }
-
-type LoginData = {
-  user: string;
-  pwd: string;
-}
-
-export type CreateContractRequest = CreateContract & LoginData
-
 export type Person = {
   firstName: string;
   lastName: string;
