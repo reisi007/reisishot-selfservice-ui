@@ -1,10 +1,20 @@
 import {Component, Input} from '@angular/core';
 import {ShootingStatisticApiService} from '../api/shooting-statistic-api.service';
-import {ChartDataset, ChartType} from 'chart.js';
+import {Chart, ChartDataset, ChartType} from 'chart.js';
 import {ShootingStatisticsResponsePerYear} from '../api/Model';
+
 import {AdminLoginDataService} from '../../../dashboard/login/admin-login-data.service';
 import {ChartConfig, OVERRIDES, shadeColor, SHARED_OPTIONS, TypedTooltipItem} from '../StatisticUtils';
 import {ShootingFormValue} from '../statistics-dashboard.component';
+
+declare module 'chart.js' {
+  interface PluginOptionsByType<TType extends ChartType> {
+    center: TType extends 'doughnut' ? Partial<TextCenterOptions> : never;
+  }
+}
+
+type TextCenterOptions = { text: string | ((chart: Chart) => string), color: string, fontStyle: string, sidePadding: number, minFontSize: number, maxFontSize: number, lineHeight: number }
+
 
 @Component({
   selector: 'app-shooting-per-year-statistc',
@@ -30,13 +40,104 @@ export class StatisticPerYearComponent {
     private apiService: ShootingStatisticApiService,
     private adminLoginService: AdminLoginDataService,
   ) {
+    Chart.register([{
+      id: 'center',
+      beforeDraw: function(chart, _, options1) {
+        const options = options1 as Partial<TextCenterOptions>;
+        if (options && options['text']) {
+          let n;
+          // Get ctx from string
+          const ctx = chart.ctx;
+          const {
+            fontStyle = 'Arial',
+            text: txt,
+            color = '#000',
+            minFontSize = 20,
+            maxFontSize = 75,
+            sidePadding = 20,
+            lineHeight = 25,
+          } = options;
+          const text = typeof txt === 'string' ? txt : txt(chart);
+
+          const [chartMeta] = chart.getDatasetMeta(chart.getVisibleDatasetCount() - 1).data;
+          const {innerRadius: ir} = chartMeta.getProps(['innerRadius']);
+          const innerRadius = ir as number;
+
+          const sidePaddingCalculated = (sidePadding / 100) * (innerRadius * 2);
+          // Start with a base font of 30px
+          ctx.font = '30px ' + fontStyle;
+
+          // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+          const stringWidth = ctx.measureText(text).width;
+
+          const elementWidth = (innerRadius * 2) - sidePaddingCalculated;
+
+          // Find out how much the font can grow in width.
+          const widthRatio = elementWidth / stringWidth;
+          const newFontSize = Math.floor(30 * widthRatio);
+          const elementHeight = (innerRadius * 2);
+
+          // Pick a new font size so it will not be larger than the height of label.
+          let fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+
+          let wrapText = false;
+
+
+          if (minFontSize && fontSizeToUse < minFontSize) {
+            fontSizeToUse = minFontSize;
+            wrapText = true;
+          }
+
+          // Set font settings to draw it correctly.
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+          var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+          ctx.font = fontSizeToUse + 'px ' + fontStyle;
+          ctx.fillStyle = color;
+
+          if (!wrapText) {
+            ctx.fillText(text, centerX, centerY);
+            return;
+          }
+
+          var words = text.split(' ');
+          var line = '';
+          var lines = [];
+
+          // Break words up into multiple lines if necessary
+          for (n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + ' ';
+            const metrics = ctx.measureText(testLine);
+            const testWidth = metrics.width;
+            if (testWidth > elementWidth && n > 0) {
+              lines.push(line);
+              line = words[n] + ' ';
+            }
+            else {
+              line = testLine;
+            }
+          }
+
+          // Move the center up depending on line height and number of lines
+          centerY -= (lines.length / 2) * lineHeight;
+
+          for (n = 0; n < lines.length; n++) {
+            ctx.fillText(lines[n], centerX, centerY);
+            centerY += lineHeight;
+          }
+          //Draw text in center
+          ctx.fillText(line, centerX, centerY);
+        }
+      },
+    }]);
   }
 
   private mapDataForChart(data: ShootingStatisticsResponsePerYear) {
     const allYears = Object.keys(data);
     const yearsAsInt = allYears.map(y => parseInt(y, 10));
 
-    function computeTotalPerYear() {
+    function computeTotalPerYear(): { [year: string]: number } {
       const o: { [year: string]: number } = {};
       allYears.forEach(year => {
         o[year] = Object.values(data[year]).reduce((a, b) => a + b);
@@ -175,6 +276,9 @@ export class StatisticPerYearComponent {
         options: {
           ...SHARED_OPTIONS,
           plugins: {
+            center: {
+              text: totalPerYear[maxYear].toString(10),
+            },
             tooltip: {
               callbacks: {
                 label: (item) => ` ${item.dataset.label} - ${item.label}: ${(item as TypedTooltipItem<'doughnut', number>).raw.toFixed(2)}%`,
