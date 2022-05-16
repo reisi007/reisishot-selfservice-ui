@@ -263,18 +263,6 @@ export class StatisticPerYearComponent {
         borderColor: hoverBackgroundColor,
         hoverBorderColor: backgroundColor,
       }];
-
-    }
-
-    function sumVisible(chart: Chart, year: number): number {
-      const visibleItems = chart.legend?.legendItems
-                                ?.filter(e => !e.hidden)
-                                ?.map(e => e.text) ?? [];
-
-      const [_sollData, maxYearData] = chart.data.datasets;
-      return visibleItems.map(e => data[year][e])
-                         .filter(e => !Number.isNaN(e))
-                         .reduce((a, b) => (a ?? 0) + (b ?? 0)) as number;
     }
 
     this.chartData = [
@@ -289,7 +277,12 @@ export class StatisticPerYearComponent {
           plugins: {
             center: {
               text: (chart) => {
-                return sumVisible(chart, maxYear).toString(10);
+                const visibleItems = chart.legend?.legendItems
+                                          ?.filter(e => !e.hidden)
+                                          ?.map(e => e.text) ?? [];
+                return visibleItems.map(e => data[maxYear][e])
+                                   .filter(e => !Number.isNaN(e))
+                                   .reduce((a, b) => (a ?? 0) + (b ?? 0)).toString(10);
               },
             },
             tooltip: {
@@ -316,7 +309,6 @@ export class StatisticPerYearComponent {
               },
             },
           },
-          plugins: {},
         },
       },
       {
