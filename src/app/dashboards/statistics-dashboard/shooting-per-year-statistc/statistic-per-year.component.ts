@@ -266,6 +266,17 @@ export class StatisticPerYearComponent {
 
     }
 
+    function sumVisible(chart: Chart, year: number): number {
+      const visibleItems = chart.legend?.legendItems
+                                ?.filter(e => !e.hidden)
+                                ?.map(e => e.text) ?? [];
+
+      const [_sollData, maxYearData] = chart.data.datasets;
+      return visibleItems.map(e => data[year][e])
+                         .filter(e => !Number.isNaN(e))
+                         .reduce((a, b) => (a ?? 0) + (b ?? 0)) as number;
+    }
+
     this.chartData = [
       {
         title: `Soll / Ist Statistik ${maxYearAsString}`,
@@ -277,7 +288,9 @@ export class StatisticPerYearComponent {
           ...SHARED_OPTIONS,
           plugins: {
             center: {
-              text: totalPerYear[maxYear].toString(10),
+              text: (chart) => {
+                return sumVisible(chart, maxYear).toString(10);
+              },
             },
             tooltip: {
               callbacks: {
@@ -303,6 +316,7 @@ export class StatisticPerYearComponent {
               },
             },
           },
+          plugins: {},
         },
       },
       {
