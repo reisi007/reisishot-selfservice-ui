@@ -2,13 +2,13 @@
 import {ChartDataset, ChartOptions, ChartType, TooltipItem} from 'chart.js';
 
 export const OVERRIDES: { [name: string]: { color: string, expectedPercentage: number } } = {
-  'Porträt Shooting': {color: '#0031d1', expectedPercentage: 30},
-  'Tanz / Yoga Shooting': {color: '#1e90ff', expectedPercentage: 15},
-  'Sport Shooting': {color: '#6bb6ff', expectedPercentage: 5},
-  'Boudoir Shooting': {color: '#daa520', expectedPercentage: 25},
-  'Pärchen Shooting': {color: '#ff69b4', expectedPercentage: 15},
+  'Porträt Shooting': {color: '#0031d1', expectedPercentage: 40},
+  'Tanz / Yoga Shooting': {color: '#1e90ff', expectedPercentage: 10},
+  'Sport Shooting': {color: '#6bb6ff', expectedPercentage: 7.5},
+  'Boudoir Shooting': {color: '#daa520', expectedPercentage: 27.5},
+  'Pärchen Shooting': {color: '#ff69b4', expectedPercentage: 10},
   'Hochzeit Shooting': {color: '#d3d3d3', expectedPercentage: 0},
-  'Haustier Shooting': {color: '#ff6200', expectedPercentage: 10},
+  'Haustier Shooting': {color: '#ff6200', expectedPercentage: 5},
 };
 
 
