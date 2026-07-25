@@ -28,7 +28,7 @@
     "@ngx-matomo/tracker": "^2.4.1",
     "chart.js": "^3.7.1",
     "dayjs": "~1.11.1",
-    "markdown-it": "^13.0.0",
+    "markdown-it": "^14.3.0",
     "ng-http-caching": "^13.0.10",
     "ng2-charts": "^3.0.10",
     "rxjs": "~7.5.5",
